@@ -11,3 +11,5 @@ Asian alone: P0030005;
 Native Hawaiian or other Pacific Islander alone: P0030006;
 Some Other Race alone: P0030007;
 Two or More Races: P0030008;
+Not Hispanic or Latino: P0040002;
+Hispanic or Latino: P0040003;
