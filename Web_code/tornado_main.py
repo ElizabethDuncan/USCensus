@@ -9,19 +9,19 @@ app.debug = True
 @app.route("/")
 def index():
 	return render_template("index.html")
+
+@app.route("/The_Data")
+def The_Data():
+	return render_template("The_Data.html")
+
+@app.route("/The_Process")
+def The_Process():
+	return render_template("The_Process.html")
+
+@app.route("/About_Us")
+def About_Us():
+	return render_template("About_Us.html")
 """
-@app.route("/design")
-def design():
-	return render_template("design.html")
-
-@app.route("/timeline")
-def timeline():
-	return render_template("timeline.html")
-
-@app.route("/reflection")
-def reflection():
-	return render_template("reflection.html")
-
 @app.route("/team")
 def team():
 	json_team_data = open("data/team.json")
