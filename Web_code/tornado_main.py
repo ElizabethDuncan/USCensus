@@ -1,17 +1,34 @@
 # Access this webpage from a browser at url: http://127.0.0.1:8888/
 
-import tornado.ioloop
-import tornado.web
+from flask import *
+import json
 
-class IndexHandler(tornado.web.RequestHandler):
-    ''' index http normal handler'''
-    def get(self):
-        self.render("index.html")
+app = Flask(__name__)
+app.debug = True
 
-application = tornado.web.Application([
-    (r"/", IndexHandler),
-])
+@app.route("/")
+def index():
+	return render_template("index.html")
+"""
+@app.route("/design")
+def design():
+	return render_template("design.html")
+
+@app.route("/timeline")
+def timeline():
+	return render_template("timeline.html")
+
+@app.route("/reflection")
+def reflection():
+	return render_template("reflection.html")
+
+@app.route("/team")
+def team():
+	json_team_data = open("data/team.json")
+	team_data = json.load(json_team_data)
+	json_team_data.close()
+	return render_template("team.html", team=team_data)
+	"""
 
 if __name__ == "__main__":
-    application.listen(8888)
-    tornado.ioloop.IOLoop.instance().start()
+	app.run()

@@ -1,0 +1,137 @@
+.body 
+{
+	padding-top: 80px;
+	padding-bottom: 40px;
+}
+
+.code-sample
+{
+	width: 200px;
+	padding-bottom: 20px;
+}
+
+.memberProfile
+{
+	clear: both;
+}
+
+.memberProfile img
+{
+	float: left;
+	width: 200px;
+	margin-right: 20px;
+}
+
+.memberProfile p:first-child
+{
+	float: right;
+}
+
+.blogPost
+{
+	float: left;
+	padding: 10px;
+	margin-top: 20px; 
+	border-style: solid;
+	border-width: 1px;
+	border-color: #d4d4d4;
+	background-color: #fafafa;
+	background-image: linear-gradient(to bottom,#fff,#f2f2f2);
+}
+
+#main-title
+{
+	padding-left: 30px;
+}
+
+/* For the main titles of blog posts */
+.blogPost h3
+{
+	text-align: center;
+}
+
+/* For any videos we take of the project */
+.youtube
+{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 760px;
+	height: 515px;
+	padding-bottom: 20px;
+	/*display: inline;
+	float: left;
+	clear: both;
+	width: 420px;
+	height: 315px;*/
+}
+
+/* For any photos we take of the project */
+.picture
+{
+	/*display: block;
+	margin-left: auto;
+	margin-right: auto;*/
+	padding-bottom: 20px;
+	width: 100%;
+	/*display: inline;
+	float: left;
+	clear: both;
+	width: 420px;
+	height: 315px;*/
+}
+
+#chrisBeingDumb
+{
+	text-align: center;
+}
+
+#chrisBeingDumb img
+{
+	width: 400px;
+}
+
+#reflectionPics
+{
+	text-align: center;
+}
+
+#reflectionPics img
+{
+	width: 200px;
+}
+
+.btn
+{
+	width: 100%
+}
+
+h1
+{
+	text-align: center;
+}
+
+h3
+{
+	padding-top: 40px;
+}
+
+h5
+{
+	text-align: center;
+}
+
+#paragraph
+{
+	text-align: center;
+}
+
+#mainTitle
+{
+	font
+}
+
+.centered
+{
+	text-align: center;
+}
