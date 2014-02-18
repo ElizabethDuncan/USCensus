@@ -40,8 +40,58 @@
     </div>
 
     <!-- Demographic survey form -->
-    <div>
-    </div>
+    <form class="demographic-form" action="/getsurveyresults" method="post">
+    Choose YOUR target demographic. (For now, choose only one of each.)
+      <div class="checkbox">
+      <div class="row">
+        <div class="span4">
+          Race:
+          <br>
+          <input type="checkbox" name="race" value="AfricanAmerican">African American
+          <br>
+          <input type="checkbox" name="race" value="White">Caucasian
+          <br>
+          <input type="checkbox" name="race" value="Latino">Hispanic
+          <br>
+          <input type="checkbox" name="race" value="Asian">Asian
+          <br>
+          <input type="checkbox" name="race" value="Hawaiian">Hawaiian/Pacific Islander
+          <br>
+          <input type="checkbox" name="race" value="NativeAmerican">Native American
+          <br>
+          <input type="checkbox" name="race" value="Multiracial">Multiracial
+        </div>
+        <div class="span4">
+          Gender:
+          <br>
+          <input type="checkbox" name="gender" value="Male">Male
+          <br>
+          <input type="checkbox" name="gender" value="Female">Female
+        </div>
+        <div class="span4">
+          Age:
+          <br>
+          <input type="checkbox" name="age" value="0-20">0-20 years old
+          <br>
+          <input type="checkbox" name="age" value="20-30">20-30 years old
+          <br>
+          <input type="checkbox" name="age" value="30-40">30-40 years old
+          <br>
+          <input type="checkbox" name="age" value="40-50">40-50 years old
+          <br>
+          <input type="checkbox" name="age" value="50-60">50-60 years old
+          <br>
+          <input type="checkbox" name="age" value="60-70">60-70 years old
+          <br>
+          <input type="checkbox" name="age" value="70-80">70-80 years old
+          <br>
+          <input type="checkbox" name="age" value="80+">80+ years old
+        </div>
+      </div>
+      </div>
+
+      <input type="submit" id="submitButton" value="Submit">
+    </form>
     
 
 

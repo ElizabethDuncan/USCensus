@@ -5,6 +5,7 @@ import json
 
 app = Flask(__name__)
 app.debug = True
+app.vars = {}
 
 @app.route("/")
 def index():
@@ -20,7 +21,26 @@ def The_Process():
 
 @app.route("/About_Us")
 def About_Us():
+	#f = open('test.txt' ,'w')
+	#f.close()
 	return render_template("About_Us.html")
+
+@app.route('/getsurveyresults', methods=['POST'])
+def processData():
+	app.vars['race'] = request.form.get('race')
+	app.vars['gender'] = request.form.get('gender')
+	app.vars['age'] = request.form.get('age')
+
+	f = open('data.txt' ,'w')
+	f.write('race: %s\n' %(app.vars['race']))
+	f.write('gender: %s\n' %(app.vars['gender']))
+	f.write('age: %s\n' %(app.vars['age']))
+
+	f.close()
+
+	return render_template("getsurveyresults.html")
+
+
 """
 @app.route("/team")
 def team():
