@@ -35,10 +35,16 @@ def processData():
 	f.write('race: %s\n' %(app.vars['race']))
 	f.write('gender: %s\n' %(app.vars['gender']))
 	f.write('age: %s\n' %(app.vars['age']))
-
 	f.close()
 
-	return render_template("getsurveyresults.html")
+	#Find a code matching race, gender, and age
+
+	#With the code, call Marena's python script
+	data = app.vars['race']
+
+	#print the results in getsurveyresults.html
+
+	return render_template("getsurveyresults.html", data=data)
 
 
 """
