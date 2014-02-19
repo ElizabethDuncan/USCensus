@@ -1,0 +1,20 @@
+/*!
+ * Elizabeth Duncan and Marena Richardson
+ *
+ * Css for Census Bureau and USA Business Data Science Project
+ */
+
+ #main-icon{
+ 	margin-left: 1px;
+ }
+
+ #submitButton{
+ 	margin-top:50px;
+ 	width: 80px;
+ 	height:40px;
+ 	
+ }
+
+ .demographic-form{
+ 	padding-top:100px;
+ }

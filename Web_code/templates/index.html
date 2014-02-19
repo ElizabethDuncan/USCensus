@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="static/css/census.css" rel="stylesheet" media="screen">
+  <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.9.1.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/layout.js') }}"></script>
+
+    
+  </head>
+  <!-- Fixed navbar -->
+    <div class="container-fluid">
+      <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+          <a class="brand" id="main-icon" href="{{ url_for('index') }}">CensusMarketing</a>
+          <ul class="nav pull-right">
+            <li><a href="{{ url_for('The_Data') }}">The Data</a></li>
+            <li><a href="{{ url_for('The_Process') }}">The Process</a></li>
+            <li><a href="{{ url_for('About_Us') }}">About Us</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </head>
+
+  <body>
+  	
+    <!-- Website title -->
+    <div style="text-align: center;">
+      <h1> Welcome to Census Marketing! </h1>
+      <h3> Using data from the U.S. Census surveys and information about your target demographic, Census Marketing recommends the best location for your new business. </h3>
+    </div>
+
+    <!-- Demographic survey form -->
+    <form class="demographic-form" action="/getsurveyresults" method="post">
+    Choose YOUR target demographic. (For now, choose only one of each.)
+      <div class="checkbox">
+      <div class="row">
+        <div class="span4">
+          Race:
+          <br>
+          <input type="checkbox" name="race" value="AfricanAmerican">African American
+          <br>
+          <input type="checkbox" name="race" value="White">Caucasian
+          <br>
+          <input type="checkbox" name="race" value="Latino">Hispanic or Latino
+          <br>
+          <input type="checkbox" name="race" value="Asian">Asian
+          <br>
+          <input type="checkbox" name="race" value="Hawaiian">Hawaiian/Pacific Islander
+          <br>
+          <input type="checkbox" name="race" value="NativeAmerican">Native American
+          <br>
+          <input type="checkbox" name="race" value="Multiracial">Multiracial
+        </div>
+        <div class="span4">
+          Gender:
+          <br>
+          <input type="checkbox" name="gender" value="Male">Male
+          <br>
+          <input type="checkbox" name="gender" value="Female">Female
+        </div>
+        <div class="span4">
+          Age:
+          <br>
+          <input type="checkbox" name="age" value="0-20">0-20 years old
+          <br>
+          <input type="checkbox" name="age" value="20-30">20-30 years old
+          <br>
+          <input type="checkbox" name="age" value="30-40">30-40 years old
+          <br>
+          <input type="checkbox" name="age" value="40-50">40-50 years old
+          <br>
+          <input type="checkbox" name="age" value="50-60">50-60 years old
+          <br>
+          <input type="checkbox" name="age" value="60-70">60-70 years old
+          <br>
+          <input type="checkbox" name="age" value="70-80">70-80 years old
+          <br>
+          <input type="checkbox" name="age" value="80+">80+ years old
+        </div>
+      </div>
+      </div>
+
+      <input type="submit" id="submitButton" value="Submit">
+    </form>
+    
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  </body>
+</html>
