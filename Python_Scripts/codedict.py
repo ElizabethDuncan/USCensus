@@ -3,7 +3,6 @@ import requests
 import json
 
 link = "http://api.census.gov/data/2010/sf1/variables.json"
-
 r = requests.get(link)
 myfile = r.json()
 
@@ -12,5 +11,11 @@ my_filename = os.path.join(script_path, "api_var.json")
 g = open(my_filename, "w")
 g.write(json.dumps(myfile))
 g.close()
+	
+#print json.dumps(myfile, indent = 4, separators =(',', ':'))
 
-print json.dumps(myfile, indent = 4, separators =(',', ':'))
+for code in myfile: 
+	print myfile[code]
+	for key in myfile[var]: 
+		for items in myfile[var][key]:
+			#myfile[var][key][items]
