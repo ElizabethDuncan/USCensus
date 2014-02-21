@@ -47,8 +47,8 @@ def getpop(poplist, code, level):
 			if level == 2: 
 				name = str(myfile[j][5])
 			sumgroups(pop_unit, name)
-					
-	return sum(popgroup.values())
+
+	return popgroup
 
 
-getpop(["P0030002", "P0030003", "P0030004","P0030005","P0030006","P0030007","P0030008"], "44009051306", 1)
+#getpop(["P0030002", "P0030003", "P0030004","P0030005","P0030006","P0030007","P0030008"], "44009051306", 0)
