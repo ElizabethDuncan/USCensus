@@ -41,51 +41,54 @@
 
     <!-- Demographic survey form -->
     <form class="demographic-form" action="/getsurveyresults" method="post">
-    Choose YOUR target demographic. (For now, choose only one of each.)
+    Enter city (required): <input type="text" name="city">
+    <br>
+
+    Select YOUR target demographic.
       <div class="checkbox">
       <div class="row">
         <div class="span4">
           Race:
           <br>
-          <input type="checkbox" name="race" value="AfricanAmerican">African American
+          <input type="checkbox" name="race AfricanAmerican" value="True">African American
           <br>
-          <input type="checkbox" name="race" value="White">Caucasian
+          <input type="checkbox" name="race White" value="True">Caucasian
           <br>
-          <input type="checkbox" name="race" value="Latino">Hispanic or Latino
+          <input type="checkbox" name="race Latino" value="True">Hispanic or Latino
           <br>
-          <input type="checkbox" name="race" value="Asian">Asian
+          <input type="checkbox" name="race Asian" value="True">Asian
           <br>
-          <input type="checkbox" name="race" value="Hawaiian">Hawaiian/Pacific Islander
+          <input type="checkbox" name="race Hawaiian" value="True">Hawaiian/Pacific Islander
           <br>
-          <input type="checkbox" name="race" value="NativeAmerican">Native American
+          <input type="checkbox" name="race NativeAmerican" value="True">Native American
           <br>
-          <input type="checkbox" name="race" value="Multiracial">Multiracial
+          <input type="checkbox" name="race Multiracial" value="True">Multiracial
         </div>
         <div class="span4">
           Gender:
           <br>
-          <input type="checkbox" name="gender" value="Male">Male
+          <input type="checkbox" name="gender Male" value="True">Male
           <br>
-          <input type="checkbox" name="gender" value="Female">Female
+          <input type="checkbox" name="gender Female" value="True">Female
         </div>
         <div class="span4">
           Age:
           <br>
-          <input type="checkbox" name="age" value="0-20">0-20 years old
+          <input type="checkbox" name="age 0" value="True">0-19 years old
           <br>
-          <input type="checkbox" name="age" value="20-30">20-30 years old
+          <input type="checkbox" name="age 20" value="True">20-39 years old
           <br>
-          <input type="checkbox" name="age" value="30-40">30-40 years old
+          <input type="checkbox" name="age 30" value="True">30-49 years old
           <br>
-          <input type="checkbox" name="age" value="40-50">40-50 years old
+          <input type="checkbox" name="age 40" value="True">40-59 years old
           <br>
-          <input type="checkbox" name="age" value="50-60">50-60 years old
+          <input type="checkbox" name="age 50" value="True">50-69 years old
           <br>
-          <input type="checkbox" name="age" value="60-70">60-70 years old
+          <input type="checkbox" name="age 60" value="True">60-79 years old
           <br>
-          <input type="checkbox" name="age" value="70-80">70-80 years old
+          <input type="checkbox" name="age 70" value="True">70-89 years old
           <br>
-          <input type="checkbox" name="age" value="80+">80+ years old
+          <input type="checkbox" name="age 80" value="True">80+ years old
         </div>
       </div>
       </div>

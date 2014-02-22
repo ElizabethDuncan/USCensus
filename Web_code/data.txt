@@ -1,3 +1,0 @@
-race: AfricanAmerican
-gender: Female
-age: 0-20

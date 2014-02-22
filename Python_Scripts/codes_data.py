@@ -6,6 +6,7 @@ agerange = 40
 agerange_max = agerange+10
 
 Concept_matches = []
+Key_matches = []
 
 #print codes["PCT012E071"]
 printNextLabel = False
@@ -19,7 +20,6 @@ for key in codes:
 				Concept_matches.append(key)
 
 for age in range(agerange, agerange_max):
-	print age
 	#Iterate through keys in concept dictionary
 	for key in Concept_matches:
 		#iterate through the concepts and labels in the codes
@@ -27,9 +27,12 @@ for age in range(agerange, agerange_max):
 			if item == "label":
 				if gender + ": !! " + str(agerange) + " years" in codes[key][item] and "years" in codes[key][item]:
 					
-					print key
+					Key_matches.append(key)
 
 Concept_matches = []
+
+
+print Key_matches
 				
 				
 
