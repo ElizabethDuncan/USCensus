@@ -1,8 +1,3 @@
-"""
-DEPRECATED!!!!
-USE THE GETPOPDICT.PY IN WEB_CODE
-"""
-
 import os
 import requests
 import json

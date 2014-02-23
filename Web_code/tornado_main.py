@@ -2,11 +2,21 @@
 
 from flask import *
 import json
+#TODO: MOVE CODES_DATA.PY INTO THIS FILE!
+import codes_data
+import getpopdict
 
 app = Flask(__name__)
 app.debug = True
 app.vars = {}
 app.desired_demographics = []
+app.city = []
+app.races = []
+app.genders = []
+app.ages = []
+app.keys = []
+
+codeLookup = {'race AfricanAmerican': 'Sex By Age (Black Or African American Alone)', 'race white': 'Sex By Age (White Alone)', 'race Latino': 'Sex By Age (Hispanic Or Latino)', 'race Asian': 'Sex By Age (Asian Alone)', 'race Hawaiian': '(Native Hawaiian And Other Pacific Islander Alone)', 'race NativeAmerican': 'Sex By Age (American Indian And Alaska Native Alone)', 'race Multiracial': 'Sex By Age (Two Or More Races)', 'gender Male': 'Male', 'gender Female': 'Female', 'age 0': '0', 'age 20': '20', 'age 30': '30', 'age 40': '40', 'age 50': '50', 'age 60': '60', 'age 70': '70', 'age 80': '80'}
 
 @app.route("/")
 def index():
@@ -51,26 +61,38 @@ def processData():
 	app.vars['age 70'] = request.form.get('age 70')
 	app.vars['age 80'] = request.form.get('age 80')
 
+	#add each demographic that is checked to the app.desired_demographic
 	f = open('data.txt' ,'w')
 	app.desired_demographics.append(request.form.get('city'))
+	app.city.append(request.form.get('city'))
+
 	for demographic in app.vars:
 		if app.vars[demographic] == 'True':
+			data = True
+			if "race" in demographic:
+				app.races.append(demographic)
+			if "gender" in demographic:
+				app.genders.append(demographic)
+			if "age" in demographic:
+				app.ages.append(demographic)
 			#f.write(demographic + ': %s\n' %(app.vars[demographic]))
 			app.desired_demographics.append(demographic)
 	f.close()
 
-
-
-	#Find a code matching race, gender, and age
-
-	#With the code, call Marena's python script
-	data = app.vars['gender Female']
-	print app.desired_demographics
+	#Print list of demographics for debugging (City should be listed first
 	app.vars = []
 
-	#print the results in getsurveyresults.html
+	for race in app.races:
+		for gender in app.genders:
+			for age in app.ages:
+				app.keys.append(codes_data.getCodes(codeLookup[race], codeLookup[gender], codeLookup[age]))
+	
+	print app.keys
 
-	return render_template("getsurveyresults.html", data=data)
+	#For all the tracts in the 
+
+	#Load html
+	return render_template("getsurveyresults.html", data = app.keys)
 
 
 """
