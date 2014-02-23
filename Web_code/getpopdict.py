@@ -14,11 +14,11 @@ def getpop(poplist, code, level):
 	for i in range(0,len(poplist)):
 		pop = poplist[i]
 		if level == 0: 
-			link = "http://api.census.gov/data/2010/sf1?key=4be82289939444f20513cd7c3c3eafb42e0d9ccf&get=" + pop + ",NAME&for=county:*&in=state:" + state
+			link = "http://api.census.gov/data/2010/sf1?key=4be82289939444f20513cd7c3c3eafb42e0d9ccf&get=" + str(pop) + ",NAME&for=county:*&in=state:" + state
 		elif level == 1: 
-			link = "http://api.census.gov/data/2010/sf1?key=4be82289939444f20513cd7c3c3eafb42e0d9ccf&get=" + pop + ",NAME&for=tract:*&in=state:" + state + "+county:" + county
+			link = "http://api.census.gov/data/2010/sf1?key=4be82289939444f20513cd7c3c3eafb42e0d9ccf&get=" + str(pop) + ",NAME&for=tract:*&in=state:" + state + "+county:" + county
 		elif level == 2: 
-			link = "http://api.census.gov/data/2010/sf1?key=4be82289939444f20513cd7c3c3eafb42e0d9ccf&get=" + pop + ",NAME&for=block:*&in=state:" + state + "+county:" + county + "+tract:" + tract
+			link = "http://api.census.gov/data/2010/sf1?key=4be82289939444f20513cd7c3c3eafb42e0d9ccf&get=" + str(pop) + ",NAME&for=block:*&in=state:" + state + "+county:" + county + "+tract:" + tract
 		else:
 			raise Exception("Data level not valid")
 
@@ -51,4 +51,6 @@ def getpop(poplist, code, level):
 	return popgroup
 
 
-#getpop(["P0030002", "P0030003", "P0030004","P0030005","P0030006","P0030007","P0030008"], "44009051306", 0)
+#data = getpop(["P0030002", "P0030003", "P0030004","P0030005","P0030006","P0030007","P0030008"], "44009051306", 1)
+#print data
+

@@ -9,8 +9,8 @@ import getpopdict
 app = Flask(__name__)
 app.debug = True
 app.vars = {}
-app.desired_demographics = []
 app.city = []
+app.cityID = ""
 app.races = []
 app.genders = []
 app.ages = []
@@ -32,8 +32,6 @@ def The_Process():
 
 @app.route("/About_Us")
 def About_Us():
-	#f = open('test.txt' ,'w')
-	#f.close()
 	return render_template("About_Us.html")
 
 @app.route('/getsurveyresults', methods=['POST'])
@@ -61,11 +59,14 @@ def processData():
 	app.vars['age 70'] = request.form.get('age 70')
 	app.vars['age 80'] = request.form.get('age 80')
 
-	#add each demographic that is checked to the app.desired_demographic
-	f = open('data.txt' ,'w')
-	app.desired_demographics.append(request.form.get('city'))
+	
+	#Get name of city requested
 	app.city.append(request.form.get('city'))
+	#TODO: Use python script that returns GEOID from city
+	#Note - cast as a string!
+	app.cityID = "44009051306"
 
+	#add each demographic to the corresponding variable list (race, gender and age)
 	for demographic in app.vars:
 		if app.vars[demographic] == 'True':
 			data = True
@@ -75,9 +76,7 @@ def processData():
 				app.genders.append(demographic)
 			if "age" in demographic:
 				app.ages.append(demographic)
-			#f.write(demographic + ': %s\n' %(app.vars[demographic]))
-			app.desired_demographics.append(demographic)
-	f.close()
+
 
 	#Print list of demographics for debugging (City should be listed first
 	app.vars = []
@@ -87,12 +86,14 @@ def processData():
 			for age in app.ages:
 				app.keys.append(codes_data.getCodes(codeLookup[race], codeLookup[gender], codeLookup[age]))
 	
-	print app.keys
+	newKeys = [val for subl in app.keys for val in subl]
 
-	#For all the tracts in the 
+	#For all the tracts in the specified city (county area), sum the number of people in the specified codes
+	#Last paramter is 1, so that we get tract data (in the county)
+	data = getpopdict.getpop(newKeys, app.cityID, 1)
 
 	#Load html
-	return render_template("getsurveyresults.html", data = app.keys)
+	return render_template("getsurveyresults.html", data = data)
 
 
 """
