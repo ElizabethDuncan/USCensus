@@ -25,7 +25,7 @@ def getLatLong(cityName):
 	Returns an array. 
 	results[0] is latitude and results[1] is longitude
 	""" 
-	print results
+	return results
 
 
-getLatLong("17 Amaranth Dr. Littleton, CO")
+#getLatLong("Boston, MA")
