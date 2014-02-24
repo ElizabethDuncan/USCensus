@@ -63,8 +63,11 @@ def processData():
 	#Get name of city requested
 	app.city.append(request.form.get('city'))
 	#TODO: Use python script that returns GEOID from city
+	lat = 42.35
+	lng = -71.05
 	#Note - cast as a string!
-	app.cityID = "44009051306"
+	app.cityID = "250250612001003"
+
 
 	#add each demographic to the corresponding variable list (race, gender and age)
 	for demographic in app.vars:
@@ -93,7 +96,7 @@ def processData():
 	data = getpopdict.getpop(newKeys, app.cityID, 1)
 
 	#Load html
-	return render_template("getsurveyresults.html", data = data)
+	return render_template("getsurveyresults.html", data = data, lat = lat, lng = lng)
 
 
 """

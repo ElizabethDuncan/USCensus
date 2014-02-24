@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-      #map_canvas {
-        width: 500px;
-        height: 400px;
-      }
-    </style>
+    <link href="static/css/map.css" rel="stylesheet" media="screen">
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script>
       function initialize() {
         var map_canvas = document.getElementById('map_canvas');
         var map_options = {
-          center: new google.maps.LatLng(44.5403, -78.5463),
-          zoom: 8,
+          center: new google.maps.LatLng({{ lat }}, {{ lng }}),
+          zoom: 12,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         }
         var map = new google.maps.Map(map_canvas, map_options)
@@ -22,10 +17,12 @@
     </script>
   </head>
   <body>
-  	<div>
-  		<h1>Data processed!</h1>
-		<p>The data is: {{ data }}</p>
-	</div>
+  	
     <div id="map_canvas"></div>
+    <div>
+      <h1>Data processed!</h1>
+    <p>The data is: {{ data }}</p>
+  </div>
+
   </body>
 </html>
