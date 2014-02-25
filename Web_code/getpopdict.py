@@ -1,14 +1,9 @@
-"""
-DEPRECATED!!!!
-USE THE GETPOPDICT.PY IN WEB_CODE
-"""
-
 import os
 import requests
 import json
 
 def getpop(poplist, code, level):
-	""" Returns population dictionary based on a list of population codes, a geographic FIPS code, and a 
+	""" Returns summed population info based on a list of population codes, a geographic FIPS code, and a 
 	data level. 0 for counties in a state, 1 for tracts in a county, 2 for blocks in a tract """
 	state = code[0:2]
 	county = code[2:5]
@@ -19,11 +14,11 @@ def getpop(poplist, code, level):
 	for i in range(0,len(poplist)):
 		pop = poplist[i]
 		if level == 0: 
-			link = "http://api.census.gov/data/2010/sf1?key=4be82289939444f20513cd7c3c3eafb42e0d9ccf&get=" + pop + ",NAME&for=county:*&in=state:" + state
+			link = "http://api.census.gov/data/2010/sf1?key=4be82289939444f20513cd7c3c3eafb42e0d9ccf&get=" + str(pop) + ",NAME&for=county:*&in=state:" + state
 		elif level == 1: 
-			link = "http://api.census.gov/data/2010/sf1?key=4be82289939444f20513cd7c3c3eafb42e0d9ccf&get=" + pop + ",NAME&for=tract:*&in=state:" + state + "+county:" + county
+			link = "http://api.census.gov/data/2010/sf1?key=4be82289939444f20513cd7c3c3eafb42e0d9ccf&get=" + str(pop) + ",NAME&for=tract:*&in=state:" + state + "+county:" + county
 		elif level == 2: 
-			link = "http://api.census.gov/data/2010/sf1?key=4be82289939444f20513cd7c3c3eafb42e0d9ccf&get=" + pop + ",NAME&for=block:*&in=state:" + state + "+county:" + county + "+tract:" + tract
+			link = "http://api.census.gov/data/2010/sf1?key=4be82289939444f20513cd7c3c3eafb42e0d9ccf&get=" + str(pop) + ",NAME&for=block:*&in=state:" + state + "+county:" + county + "+tract:" + tract
 		else:
 			raise Exception("Data level not valid")
 
@@ -53,8 +48,9 @@ def getpop(poplist, code, level):
 				name = str(myfile[j][5])
 			sumgroups(pop_unit, name)
 
-	print popgroup
 	return popgroup
 
 
-getpop(["P0030002", "P0030003", "P0030004","P0030005","P0030006","P0030007","P0030008"], "44009051306", 1)
+#data = getpop(["P0030002", "P0030003", "P0030004","P0030005","P0030006","P0030007","P0030008"], "44009051306", 1)
+#print data
+

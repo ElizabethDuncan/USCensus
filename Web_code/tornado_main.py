@@ -2,11 +2,21 @@
 
 from flask import *
 import json
+#TODO: MOVE CODES_DATA.PY INTO THIS FILE!
+import codes_data
+import getpopdict
 
 app = Flask(__name__)
 app.debug = True
 app.vars = {}
-app.desired_demographics = []
+app.city = []
+app.cityID = ""
+app.races = []
+app.genders = []
+app.ages = []
+app.keys = []
+
+codeLookup = {'race AfricanAmerican': 'Sex By Age (Black Or African American Alone)', 'race white': 'Sex By Age (White Alone)', 'race Latino': 'Sex By Age (Hispanic Or Latino)', 'race Asian': 'Sex By Age (Asian Alone)', 'race Hawaiian': '(Native Hawaiian And Other Pacific Islander Alone)', 'race NativeAmerican': 'Sex By Age (American Indian And Alaska Native Alone)', 'race Multiracial': 'Sex By Age (Two Or More Races)', 'gender Male': 'Male', 'gender Female': 'Female', 'age 0': '0', 'age 20': '20', 'age 30': '30', 'age 40': '40', 'age 50': '50', 'age 60': '60', 'age 70': '70', 'age 80': '80'}
 
 @app.route("/")
 def index():
@@ -22,8 +32,6 @@ def The_Process():
 
 @app.route("/About_Us")
 def About_Us():
-	#f = open('test.txt' ,'w')
-	#f.close()
 	return render_template("About_Us.html")
 
 @app.route('/getsurveyresults', methods=['POST'])
@@ -51,26 +59,44 @@ def processData():
 	app.vars['age 70'] = request.form.get('age 70')
 	app.vars['age 80'] = request.form.get('age 80')
 
-	f = open('data.txt' ,'w')
-	app.desired_demographics.append(request.form.get('city'))
+	
+	#Get name of city requested
+	app.city.append(request.form.get('city'))
+	#TODO: Use python script that returns GEOID from city
+	lat = 42.35
+	lng = -71.05
+	#Note - cast as a string!
+	app.cityID = "250250612001003"
+
+
+	#add each demographic to the corresponding variable list (race, gender and age)
 	for demographic in app.vars:
 		if app.vars[demographic] == 'True':
-			#f.write(demographic + ': %s\n' %(app.vars[demographic]))
-			app.desired_demographics.append(demographic)
-	f.close()
+			data = True
+			if "race" in demographic:
+				app.races.append(demographic)
+			if "gender" in demographic:
+				app.genders.append(demographic)
+			if "age" in demographic:
+				app.ages.append(demographic)
 
 
-
-	#Find a code matching race, gender, and age
-
-	#With the code, call Marena's python script
-	data = app.vars['gender Female']
-	print app.desired_demographics
+	#Print list of demographics for debugging (City should be listed first
 	app.vars = []
 
-	#print the results in getsurveyresults.html
+	for race in app.races:
+		for gender in app.genders:
+			for age in app.ages:
+				app.keys.append(codes_data.getCodes(codeLookup[race], codeLookup[gender], codeLookup[age]))
+	
+	newKeys = [val for subl in app.keys for val in subl]
 
-	return render_template("getsurveyresults.html", data=data)
+	#For all the tracts in the specified city (county area), sum the number of people in the specified codes
+	#Last paramter is 1, so that we get tract data (in the county)
+	data = getpopdict.getpop(newKeys, app.cityID, 1)
+
+	#Load html
+	return render_template("getsurveyresults.html", data = data, lat = lat, lng = lng)
 
 
 """
