@@ -3,7 +3,7 @@ import requests
 import json
 
 def getpop(poplist, code, level):
-	""" Returns summed population info based on a list of population codes, a geographic FIPS code, and a 
+	""" Returns population dictionary based on a list of population codes, a geographic FIPS code, and a 
 	data level. 0 for counties in a state, 1 for tracts in a county, 2 for blocks in a tract """
 	state = code[0:2]
 	county = code[2:5]
@@ -48,7 +48,8 @@ def getpop(poplist, code, level):
 				name = str(myfile[j][5])
 			sumgroups(pop_unit, name)
 
+	print popgroup
 	return popgroup
 
 
-#getpop(["P0030002", "P0030003", "P0030004","P0030005","P0030006","P0030007","P0030008"], "44009051306", 0)
+getpop(["P0030002", "P0030003", "P0030004","P0030005","P0030006","P0030007","P0030008"], "44009051306", 1)
