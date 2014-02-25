@@ -5,6 +5,8 @@ import json
 #TODO: MOVE CODES_DATA.PY INTO THIS FILE!
 import codes_data
 import getpopdict
+import getLatLong
+import getfips
 
 app = Flask(__name__)
 app.debug = True
@@ -61,12 +63,14 @@ def processData():
 
 	
 	#Get name of city requested
-	app.city.append(request.form.get('city'))
+	latAndLong = getLatLong.getLatLong(str(request.form.get('city')))
 	#TODO: Use python script that returns GEOID from city
-	lat = 42.35
-	lng = -71.05
+	lat = latAndLong[0]
+	lng = latAndLong[1]
+
+
 	#Note - cast as a string!
-	app.cityID = "250250612001003"
+	app.cityID = str(getfips.getfips(lat, lng))
 
 
 	#add each demographic to the corresponding variable list (race, gender and age)
