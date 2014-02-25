@@ -99,6 +99,9 @@ def processData():
 	#Last paramter is 1, so that we get tract data (in the county)
 	data = getpopdict.getpop(newKeys, app.cityID, 1)
 
+	#Clear app.vars so subsequent queries can occur
+	app.vars = {}
+
 	#Load html
 	return render_template("getsurveyresults.html", data = data, lat = lat, lng = lng)
 
