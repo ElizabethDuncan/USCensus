@@ -3,9 +3,10 @@ from sst.actions import *
 
 #for number in range(1,3):
 
-go_to('http://127.0.0.1:5000/')
+go_to('http://censusmappingandmarketing.herokuapp.com/')
 #assert_title_contains('Ubuntu')
-textelement = get_element(id = "textbox")
+
+textelement = get_element(name = "city")
 check1element = get_element(name="race AfricanAmerican")
 check2element = get_element(name="gender Male")
 check3element = get_element(name="age 20")
@@ -18,6 +19,8 @@ click_button(submitelement, wait=True)
 
 
 mapelement = get_element(id="map_canvas")
+
+
 
 value = assert_element(text = "Data processed!")
 #print value
