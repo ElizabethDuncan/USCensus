@@ -110,7 +110,7 @@ def processData():
 	geoid = lst[0]
 	coor = lst[1]
 	
-	return render_template("getsurveyresults.html", data = data, lat = lat, lng = lng, z = z, coor = coor, keys = newKeys)
+	return render_template("getsurveyresults.html", data = data, lat = lat, lng = lng, z = z, coor = coor)
 
 
 """
