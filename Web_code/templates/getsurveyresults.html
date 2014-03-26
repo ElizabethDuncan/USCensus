@@ -11,15 +11,16 @@
           zoom: {{ z }},
           mapTypeId: google.maps.MapTypeId.ROADMAP
         }
-        var map = new google.maps.Map(map_canvas, map_options);
+        var flightpath;
 
-        var flightPath;
+        var map = new google.maps.Map(map_canvas, map_options);
 
         var coordinates = {{ coor }}
         var flightPlanCoordinates = [];
-        
+        console.log({{lat}}, {{lng}});
+        console.log(coordinates);
         for ( var i = 0, l = coordinates.length; i < l; i++) {
-          flightPlanCoordinates.push( new google.maps.LatLng(coordinates[i][0], coordinates[i][1]) )
+          flightPlanCoordinates.push( new google.maps.LatLng(coordinates[i][1], coordinates[i][0]))
       } 
 
         flightPath = new google.maps.Polygon({

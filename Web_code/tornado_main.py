@@ -98,7 +98,8 @@ def processData():
 
 	#For all the tracts in the specified city (county area), sum the number of people in the specified codes
 	#Last paramter is 1, so that we get tract data (in the county)
-	data = getpopdict.getpop(newKeys, app.cityID, 1)
+	print newKeys
+	data = getpopdict.getpop(newKeys, app.cityID, 2)
 
 	#Clear app.vars so subsequent queries can occur
 	app.vars = {}
@@ -108,7 +109,6 @@ def processData():
 	lst = coordinates.getblockcoor(lat,lng,z)
 	geoid = lst[0]
 	coor = lst[1]
-	print coor
 	
 	return render_template("getsurveyresults.html", data = data, lat = lat, lng = lng, z = z, coor = coor)
 
