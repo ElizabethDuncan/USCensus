@@ -24,7 +24,7 @@ def getCodes(myrace, mygender, myage):
 	#iterate through the codes
 	for key in codes:
 		#iterate through the concepts and labels in the codes
-		if race in codes[key].get("concept", []):
+		if race in codes[key].get("concept", []) and "PCT" not in codes[key].get("concept", []):
 			Concept_matches.append(key)
 
 	for age in range(agerange, agerange_max):
