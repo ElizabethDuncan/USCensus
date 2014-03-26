@@ -24,4 +24,4 @@ def getblockcoor(lat,lng, zoom):
     return  geoid, coor
 
 #coor1 = (42.9845581343, -84.0069580078)
-#getblockcoor(coor1[0], coor1[1], 16)
+#print getblockcoor(coor1[0], coor1[1], 16)

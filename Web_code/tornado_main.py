@@ -7,6 +7,7 @@ import codes_data
 import getpopdict
 import getLatLong
 import getfips
+import coordinates
 
 app = Flask(__name__)
 app.debug = True
@@ -103,7 +104,13 @@ def processData():
 	app.vars = {}
 
 	#Load html
-	return render_template("getsurveyresults.html", data = data, lat = lat, lng = lng)
+	z = 16
+	lst = coordinates.getblockcoor(lat,lng,z)
+	geoid = lst[0]
+	coor = lst[1]
+	print coor
+	
+	return render_template("getsurveyresults.html", data = data, lat = lat, lng = lng, z = z, coor = coor)
 
 
 """
