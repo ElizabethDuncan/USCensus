@@ -8,6 +8,7 @@ import getpopdict
 import getLatLong
 import getfips
 import coordinates
+import FromFIPStoLatLong
 
 app = Flask(__name__)
 app.debug = True
@@ -18,6 +19,9 @@ app.races = []
 app.genders = []
 app.ages = []
 app.keys = []
+
+#A dictionary keyed to Fips that contains a duple of LatLong and then the value for the requested demographic
+FipsLatLongAndValue = {}
 
 codeLookup = {'race AfricanAmerican': 'Sex By Age (Black Or African American Alone)', 'race white': 'Sex By Age (White Alone)', 'race Latino': 'Sex By Age (Hispanic Or Latino)', 'race Asian': 'Sex By Age (Asian Alone)', 'race Hawaiian': '(Native Hawaiian And Other Pacific Islander Alone)', 'race NativeAmerican': 'Sex By Age (American Indian And Alaska Native Alone)', 'race Multiracial': 'Sex By Age (Two Or More Races)', 'gender Male': 'Male', 'gender Female': 'Female', 'age 0': '0', 'age 20': '20', 'age 30': '30', 'age 40': '40', 'age 50': '50', 'age 60': '60', 'age 70': '70', 'age 80': '80'}
 
@@ -63,12 +67,12 @@ def processData():
 	app.vars['age 80'] = request.form.get('age 80')
 
 	
-	#Get name of city requested
+	#From name of city requested, get Latitude and Longitude
 	latAndLong = getLatLong.getLatLong(str(request.form.get('city')))
-	#TODO: Use python script that returns GEOID from city
 	lat = latAndLong[0]
 	lng = latAndLong[1]
 
+	#Get list of tracts from that latitude, longitude
 
 	#Note - cast as a string!
 	app.cityID = str(getfips.getfips(lat, lng))
@@ -98,8 +102,15 @@ def processData():
 
 	#For all the tracts in the specified city (county area), sum the number of people in the specified codes
 	#Last paramter is 1, so that we get tract data (in the county)
-	print newKeys
 	data = getpopdict.getpop(newKeys, app.cityID, 2)
+
+
+	#For every block in the current tract, get lat and long
+	for item in data:
+		blockFIPS = app.cityID[0:11] +  item
+		latAndLong = FromFIPStoLatLong.getLatLngFromFIPS(blockFIPS)
+		FipsLatLongAndValue[blockFIPS] = (latAndLong, data[item])
+
 
 	#Clear app.vars so subsequent queries can occur
 	app.vars = {}
@@ -109,8 +120,11 @@ def processData():
 	lst = coordinates.getblockcoor(lat,lng,z)
 	geoid = lst[0]
 	coor = lst[1]
+
+
+	#TODO: USE THE FipsLatLongAndValue Dictionary!!!!
 	
-	return render_template("getsurveyresults.html", data = data, lat = lat, lng = lng, z = z, coor = coor)
+	return render_template("getsurveyresults.html", data = FipsLatLongAndValue, lat = lat, lng = lng, z = z, coor = coor)
 
 
 """

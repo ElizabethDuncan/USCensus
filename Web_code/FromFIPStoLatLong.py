@@ -1,5 +1,7 @@
 """
 This script contains getLatLngFromFIPS, which takes in a blockID FIPS code and returns a LatLong
+Uses TigerWeb geo data
+THIS SLOWS THE WEBSITE SIGNIFICANTLY
 """
 
 import requests
@@ -74,7 +76,6 @@ def getLatLngFromFIPS(fips):
 	block = fips[11:15]
 
 	link = "http://tigerweb.geo.census.gov/tigerwebmain/Files/tigerweb_tab10_tabblock_2010_" + states[state] + "_" + county + ".html"
-	print link
 	r = requests.get(link)
 	text =  r.text
 
