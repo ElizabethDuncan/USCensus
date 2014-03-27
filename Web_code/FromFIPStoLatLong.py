@@ -83,9 +83,19 @@ def getLatLngFromFIPS(fips):
 	latLongAndStuff = find_between(text, fips, "<td headers=\"header20\">")
 	
 	latitude = find_between(latLongAndStuff, "<td headers=\"header18\">", "</td>")
+	if "+" in latitude:
+		latitude = latitude.split("+")
+		latLength = len(latitude)
+		latitude = latitude[latLength-1]
 	longitude = find_between(latLongAndStuff, "<td headers=\"header19\">", "</td>")
+	if "+" in longitude:
+		longitude = longitude.split("+")
+		longLength = len(longitude)
+		longitude = longitude[longLength-1]
 
-	return (latitude, longitude)
+
+
+	return (str(latitude), str(longitude))
 
 
 #getLatLngFromFIPS("080370001001001")

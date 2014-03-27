@@ -22,6 +22,9 @@ app.keys = []
 
 #A dictionary keyed to Fips that contains a duple of LatLong and then the value for the requested demographic
 FipsLatLongAndValue = {}
+listofFips = []
+listofCoords = []
+listofValues = []
 
 codeLookup = {'race AfricanAmerican': 'Sex By Age (Black Or African American Alone)', 'race white': 'Sex By Age (White Alone)', 'race Latino': 'Sex By Age (Hispanic Or Latino)', 'race Asian': 'Sex By Age (Asian Alone)', 'race Hawaiian': '(Native Hawaiian And Other Pacific Islander Alone)', 'race NativeAmerican': 'Sex By Age (American Indian And Alaska Native Alone)', 'race Multiracial': 'Sex By Age (Two Or More Races)', 'gender Male': 'Male', 'gender Female': 'Female', 'age 0': '0', 'age 20': '20', 'age 30': '30', 'age 40': '40', 'age 50': '50', 'age 60': '60', 'age 70': '70', 'age 80': '80'}
 
@@ -104,19 +107,26 @@ def processData():
 	#Last paramter is 1, so that we get tract data (in the county)
 	data = getpopdict.getpop(newKeys, app.cityID, 2)
 
-
+	#JUST ADDED
+	z = 16
 	#For every block in the current tract, get lat and long
 	for item in data:
 		blockFIPS = app.cityID[0:11] +  item
+		listofFips.append(blockFIPS)
+
 		latAndLong = FromFIPStoLatLong.getLatLngFromFIPS(blockFIPS)
-		FipsLatLongAndValue[blockFIPS] = (latAndLong, data[item])
+		listofCoords.append(coordinates.getblockcoor(float(latAndLong[0]),float(latAndLong[1]),z))
+
+		listofValues.append(data[item])
+		
+		#FipsLatLongAndValue[blockFIPS] = (latAndLong, data[item])
 
 
 	#Clear app.vars so subsequent queries can occur
 	app.vars = {}
 
 	#Load html
-	z = 16
+	
 	lst = coordinates.getblockcoor(lat,lng,z)
 	geoid = lst[0]
 	coor = lst[1]
@@ -124,7 +134,7 @@ def processData():
 
 	#TODO: USE THE FipsLatLongAndValue Dictionary!!!!
 	
-	return render_template("getsurveyresults.html", data = FipsLatLongAndValue, lat = lat, lng = lng, z = z, coor = coor)
+	return render_template("getsurveyresults.html", listofFIPS = listofFips, listofCOORDS = listofCoords, listofVALUES = listofValues, lat = lat, lng = lng, z = z, coor = coor)
 
 
 """
