@@ -7,6 +7,7 @@
 
     var map;
     var infoWindow;
+    var currentValue = 0;
 
       function initialize() {
 
@@ -29,9 +30,11 @@
         var listofValues = {{data2}}
       
         //TODO: REPLACE 3 WITH THE SIZE OF THE LISTOFVALUES
-        for ( var j = 0, k = 3; j < k; j++) {
+        for ( var j = 0, k = listofValues.length; j < k; j++) {
+          console.log(k)
+          console.log(listofValues[j])
           coordinates = listofCoords[j]
-
+          currentValue = listofValues[j]
 
           for ( var i = 0, l = coordinates.length; i < l; i++) {
             flightPlanCoordinates.push( new google.maps.LatLng(coordinates[i][1], coordinates[i][0]))
@@ -39,7 +42,7 @@
 
           flightPath = new google.maps.Polygon({
             paths: flightPlanCoordinates,
-            strokeColor: '#FF0000',
+            strokeColor: '#000000',
             strokeOpacity: 1.0,
             strokeWeight: 2,
             fillColor: '#FF0000',
@@ -66,7 +69,7 @@
 
         var contentString = '<b>Block Details</b><br>' ;
 
-        contentString += '<br>' + "stuff" + ':<br>';
+        contentString += '<br>' + "Number of people of the requested demographic: "  + String(currentValue) + '<br>';
 
         // Replace the info window's content and position.
         infoWindow.setContent(contentString);
