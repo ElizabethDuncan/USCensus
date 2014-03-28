@@ -4,46 +4,12 @@
     <link href="static/css/map.css" rel="stylesheet" media="screen">
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script>
-    var gpolys = [];
-    var infowindow = new google.maps.InfoWindow(
-  { 
-    size: new google.maps.Size(150,50)
-  });
 
-
-
-    function createClickablePoly(poly, html, label, point) {
-        gpolys.push(poly);
-        if (!point && poly.getPath 
-                   && poly.getPath().getLength 
-                   && (poly.getPath().getLength > 0) 
-                   && poly.getPath().getAt(0)) { point = poly.getPath().getAt(0); } 
-        var poly_num = gpolys.length - 1;
-        if (!html) {html = "";}
-        else { html += "<br>";}
-        
-          html += "demographic value="+ label;
-  
-        var contentString = html;
-        google.maps.event.addListener(poly,'click', function(event) {
-          infowindow.setContent(contentString);
-          if (event) {
-             point = event.latLng;
-          }
-          infowindow.setPosition(point);
-          infowindow.open(map);
-          // map.openInfoWindowHtml(point,html); 
-        }); 
-        if (!label) {
-          label = "polyline #"+poly_num;
-        }
-        label = "<a href='javascript:google.maps.event.trigger(gpolys["+poly_num+"],\"click\");'>"+label+"</a>";
-        // add a line to the sidebar html
-        //  side_bar_html += '<input type="checkbox" id="poly'+poly_num+'" checked="checked" onclick="togglePoly('+poly_num+');">' + label + '<br />';
-      }
+    var map;
+    var infoWindow;
 
       function initialize() {
-        var map_canvas = document.getElementById('map_canvas');
+
         var map_options = {
           center: new google.maps.LatLng({{ lat }}, {{ lng }}),
           zoom: {{ z }},
@@ -51,7 +17,7 @@
         }
         var flightpath;
 
-        var map = new google.maps.Map(map_canvas, map_options);
+        map = new google.maps.Map(document.getElementById('map_canvas'), map_options);
 
         var coordinates = {{ coor }}
         var flightPlanCoordinates = [];
@@ -82,12 +48,33 @@
 
           flightPath.setMap(map);
           flightPlanCoordinates = [];
-          createClickablePoly(flightPath, "<b>Details:</b>", listofValues[j]);
+          google.maps.event.addListener(flightPath, 'click', showArrays);
+
+          infoWindow = new google.maps.InfoWindow();
 
         }
 
 
       }
+
+      /** @this {google.maps.Polygon} */
+      function showArrays(event) {
+
+        // Since this polygon has only one path, we can call getPath()
+        // to return the MVCArray of LatLngs.
+        var vertices = this.getPath();
+
+        var contentString = '<b>Block Details</b><br>' ;
+
+        contentString += '<br>' + "stuff" + ':<br>';
+
+        // Replace the info window's content and position.
+        infoWindow.setContent(contentString);
+        infoWindow.setPosition(event.latLng);
+
+        infoWindow.open(map);
+      }
+
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
   </head>
