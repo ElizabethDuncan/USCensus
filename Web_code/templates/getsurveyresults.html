@@ -4,6 +4,44 @@
     <link href="static/css/map.css" rel="stylesheet" media="screen">
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script>
+    var gpolys = [];
+    var infowindow = new google.maps.InfoWindow(
+  { 
+    size: new google.maps.Size(150,50)
+  });
+
+
+
+    function createClickablePoly(poly, html, label, point) {
+        gpolys.push(poly);
+        if (!point && poly.getPath 
+                   && poly.getPath().getLength 
+                   && (poly.getPath().getLength > 0) 
+                   && poly.getPath().getAt(0)) { point = poly.getPath().getAt(0); } 
+        var poly_num = gpolys.length - 1;
+        if (!html) {html = "";}
+        else { html += "<br>";}
+        
+          html += "demographic value="+ label;
+  
+        var contentString = html;
+        google.maps.event.addListener(poly,'click', function(event) {
+          infowindow.setContent(contentString);
+          if (event) {
+             point = event.latLng;
+          }
+          infowindow.setPosition(point);
+          infowindow.open(map);
+          // map.openInfoWindowHtml(point,html); 
+        }); 
+        if (!label) {
+          label = "polyline #"+poly_num;
+        }
+        label = "<a href='javascript:google.maps.event.trigger(gpolys["+poly_num+"],\"click\");'>"+label+"</a>";
+        // add a line to the sidebar html
+        //  side_bar_html += '<input type="checkbox" id="poly'+poly_num+'" checked="checked" onclick="togglePoly('+poly_num+');">' + label + '<br />';
+      }
+
       function initialize() {
         var map_canvas = document.getElementById('map_canvas');
         var map_options = {
@@ -19,20 +57,36 @@
         var flightPlanCoordinates = [];
         console.log({{lat}}, {{lng}});
         console.log(coordinates);
-        for ( var i = 0, l = coordinates.length; i < l; i++) {
-          flightPlanCoordinates.push( new google.maps.LatLng(coordinates[i][1], coordinates[i][0]))
-      } 
 
-        flightPath = new google.maps.Polygon({
-          paths: flightPlanCoordinates,
-          strokeColor: '#FF0000',
-          strokeOpacity: 1.0,
-          strokeWeight: 2,
-          fillColor: '#FF0000',
-          fillOpacity: 0.35
-        });
+       
+        var listofCoords = {{ data }}
+        var listofValues = {{data2}}
+      
+        //TODO: REPLACE 3 WITH THE SIZE OF THE LISTOFVALUES
+        for ( var j = 0, k = 3; j < k; j++) {
+          coordinates = listofCoords[j]
 
-      flightPath.setMap(map);
+
+          for ( var i = 0, l = coordinates.length; i < l; i++) {
+            flightPlanCoordinates.push( new google.maps.LatLng(coordinates[i][1], coordinates[i][0]))
+          } 
+
+          flightPath = new google.maps.Polygon({
+            paths: flightPlanCoordinates,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35
+          });
+
+          flightPath.setMap(map);
+          flightPlanCoordinates = [];
+          createClickablePoly(flightPath, "<b>Details:</b>", listofValues[j]);
+
+        }
+
+
       }
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
@@ -42,7 +96,7 @@
     <div id="map_canvas"></div>
     <div>
       <h1>Data processed!</h1>
-    <p>The data is: {{ data }}</p>
+    <p>The data is: {{ data }} </p>
   </div>
 
   </body>

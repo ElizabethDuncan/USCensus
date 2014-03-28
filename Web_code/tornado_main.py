@@ -115,7 +115,8 @@ def processData():
 		listofFips.append(blockFIPS)
 
 		latAndLong = FromFIPStoLatLong.getLatLngFromFIPS(blockFIPS)
-		listofCoords.append(coordinates.getblockcoor(float(latAndLong[0]),float(latAndLong[1]),z))
+		intermediate =  coordinates.getblockcoor(float(latAndLong[0]),float(latAndLong[1]),z)
+		listofCoords.append(intermediate[1])
 
 		listofValues.append(data[item])
 		
@@ -131,10 +132,11 @@ def processData():
 	geoid = lst[0]
 	coor = lst[1]
 
+	#print listofCoords
 
 	#TODO: USE THE FipsLatLongAndValue Dictionary!!!!
 	
-	return render_template("getsurveyresults.html", listofFIPS = listofFips, listofCOORDS = listofCoords, listofVALUES = listofValues, lat = lat, lng = lng, z = z, coor = coor)
+	return render_template("getsurveyresults.html", data1 = listofFips, data = listofCoords, data2 = listofValues, lat = lat, lng = lng, z = z, coor = coor)
 
 
 """
