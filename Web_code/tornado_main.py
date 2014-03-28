@@ -9,6 +9,7 @@ import getLatLong
 import getfips
 import coordinates
 import fromFIPSlisttoLatLong
+import heatMap
 
 app = Flask(__name__)
 app.debug = True
@@ -138,12 +139,14 @@ def processData():
 	lst = coordinates.getblockcoor(lat,lng,z)
 	geoid = lst[0]
 	coor = lst[1]
+	listofShades = heatMap.makeShades(listofValues)
+	print listofShades
 
 	#print listofCoords
 
 	#TODO: USE THE FipsLatLongAndValue Dictionary!!!!
 	
-	return render_template("getsurveyresults.html", data1 = listofFips, data = listofCoords, data2 = listofValues, lat = lat, lng = lng, z = z, coor = coor)
+	return render_template("getsurveyresults.html", data1 = listofFips, data = listofCoords, data2 = listofValues, listofShades = listofShades, lat = lat, lng = lng, z = z, coor = coor)
 
 
 """

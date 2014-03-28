@@ -7,6 +7,7 @@
 
     var map;
     var infoWindow;
+    var listofShades = ["#ff6666", "#ff1919", "#ff0000", "#b20000", "#7f0000", "#4c0000"];
     //var currentValue = 0;
 
       function initialize() {
@@ -28,11 +29,13 @@
        
         var listofCoords = {{ data }}
         var listofValues = {{data2}}
+        var listofShadesIndices = {{listofShades}}
       
         //TODO: REPLACE 3 WITH THE SIZE OF THE LISTOFVALUES
         for ( var j = 0, k = listofValues.length; j < k; j++) {
           console.log(j)
           console.log(listofValues[j])
+          console.log(listofShades[listofShadesIndices[j]])
           coordinates = listofCoords[j]
           //map.currentValue = listofValues[j]
 
@@ -47,15 +50,15 @@
             strokeColor: '#ffffff',
             strokeOpacity: 1.0,
             strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35,
+            fillColor: '#ff0000',
+            fillOpacity: listofShadesIndices[j],
           });
 
           flightPath.setMap(map);
           flightPlanCoordinates = [];
 
           var obj = {
-            'value': listofValues[j]
+            currentValue: listofValues[j]
           };
           flightPath.objInfo = obj;
 
@@ -77,7 +80,7 @@
 
         var contentString = '<b>Block Details</b><br>' ;
 
-        contentString += '<br>' + "Number of people in the requested demographic: "  + String(flightPath.objInfo) + '<br>';
+        contentString += '<br>' + "Number of people in the requested demographic: "  + String(flightPath.objInfo.currentValue) + '<br>';
 
         // Replace the info window's content and position.
         infoWindow.setContent(contentString);
@@ -94,7 +97,7 @@
     <div id="map_canvas"></div>
     <div>
       <h1>Data processed!</h1>
-    <p>The data is: {{ data1 }} </p>
+    <p>The data is: {{ listofShades }} </p>
   </div>
 
   </body>
