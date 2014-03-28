@@ -90,17 +90,14 @@ def getLatLngFromFIPS(fipsList):
 		tract = fips[5:11]
 		block = fips[11:15]
 
+		latLongAndStuff = find_between(text, fips, "</tr>")
 		
-
-
-		latLongAndStuff = find_between(text, fips, "<td headers=\"header20\">")
-		
-		latitude = find_between(latLongAndStuff, "<td headers=\"header18\">", "</td>")
+		latitude = find_between(latLongAndStuff, "<td headers=\"header20\">", "</td>")
 		if "+" in latitude:
 			latitude = latitude.split("+")
 			latLength = len(latitude)
 			latitude = latitude[latLength-1]
-		longitude = find_between(latLongAndStuff, "<td headers=\"header19\">", "</td>")
+		longitude = find_between(latLongAndStuff, "<td headers=\"header21\">", "</td>")
 		if "+" in longitude:
 			longitude = longitude.split("+")
 			longLength = len(longitude)

@@ -7,7 +7,7 @@
 
     var map;
     var infoWindow;
-    var currentValue = 0;
+    //var currentValue = 0;
 
       function initialize() {
 
@@ -34,7 +34,8 @@
           console.log(j)
           console.log(listofValues[j])
           coordinates = listofCoords[j]
-          currentValue = listofValues[j]
+          //map.currentValue = listofValues[j]
+
 
 
           for ( var i = 0, l = coordinates.length; i < l; i++) {
@@ -47,11 +48,17 @@
             strokeOpacity: 1.0,
             strokeWeight: 2,
             fillColor: '#FF0000',
-            fillOpacity: 0.35
+            fillOpacity: 0.35,
           });
 
           flightPath.setMap(map);
           flightPlanCoordinates = [];
+
+          var obj = {
+            'value': listofValues[j]
+          };
+          flightPath.objInfo = obj;
+
           google.maps.event.addListener(flightPath, 'click', showArrays);
 
           infoWindow = new google.maps.InfoWindow();
@@ -70,7 +77,7 @@
 
         var contentString = '<b>Block Details</b><br>' ;
 
-        contentString += '<br>' + "Number of people of the requested demographic: "  + String(currentValue) + '<br>';
+        contentString += '<br>' + "Number of people in the requested demographic: "  + String(flightPath.objInfo) + '<br>';
 
         // Replace the info window's content and position.
         infoWindow.setContent(contentString);

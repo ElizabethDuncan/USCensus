@@ -114,7 +114,6 @@ def processData():
 		blockFIPS = app.cityID[0:11] +  item
 		if blockFIPS not in listofFips:
 			listofFips.append(blockFIPS)
-			print blockFIPS
 
 			#latAndLong = FromFIPStoLatLong.getLatLngFromFIPS(blockFIPS)
 			#intermediate =  coordinates.getblockcoor(float(latAndLong[0]),float(latAndLong[1]),z)
@@ -122,18 +121,13 @@ def processData():
 			#print intermediate[1]
 
 			listofValues.append(data[item])
-			print data[item]
 		
 	
 	#Get coordinates from FIPS codes
-	print "starting fromFIPSlisttoLatLong"
 	listOfLatLng = fromFIPSlisttoLatLong.getLatLngFromFIPS(listofFips)
-	print "ended fromFIPSlisttoLatLong"
-
 	for latAndLong in listOfLatLng:
 		intermediate =  coordinates.getblockcoor(float(latAndLong[0]),float(latAndLong[1]),z)
 		listofCoords.append(intermediate[1])
-		print intermediate[1]
 
 
 	#Clear app.vars so subsequent queries can occur
@@ -144,7 +138,6 @@ def processData():
 	lst = coordinates.getblockcoor(lat,lng,z)
 	geoid = lst[0]
 	coor = lst[1]
-	print listofFips
 
 	#print listofCoords
 
