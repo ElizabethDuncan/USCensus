@@ -7,7 +7,7 @@
 
     var map;
     var infoWindow;
-    var listofShades = ["#ff6666", "#ff1919", "#ff0000", "#b20000", "#7f0000", "#4c0000"];
+    var shadeValue;
     //var currentValue = 0;
 
       function initialize() {
@@ -23,20 +23,28 @@
 
         var coordinates = {{ coor }}
         var flightPlanCoordinates = [];
-        console.log({{lat}}, {{lng}});
-        console.log(coordinates);
-
        
         var listofCoords = {{ data }}
         var listofValues = {{data2}}
-        var listofShadesIndices = {{listofShades}}
+        var listofFips = {{data1}}
       
         //TODO: REPLACE 3 WITH THE SIZE OF THE LISTOFVALUES
         for ( var j = 0, k = listofValues.length; j < k; j++) {
-          console.log(j)
+          console.log(listofFips[j])
           console.log(listofValues[j])
-          console.log(listofShades[listofShadesIndices[j]])
+          console.log(listofCoords[j])
           coordinates = listofCoords[j]
+
+          var largest = Math.max.apply(Math, listofValues);
+          shadeValue = listofValues[j]
+          if (shadeValue == 0){
+            shadeValue = 0.1;
+          }else{
+            shadeValue = shadeValue / largest;
+            if (shadeValue < 0.1){
+              shadeValue = 0.1;
+            }
+          }
           //map.currentValue = listofValues[j]
 
 
@@ -51,7 +59,7 @@
             strokeOpacity: 1.0,
             strokeWeight: 2,
             fillColor: '#ff0000',
-            fillOpacity: listofShadesIndices[j],
+            fillOpacity: shadeValue,
           });
 
           flightPath.setMap(map);
@@ -97,7 +105,7 @@
     <div id="map_canvas"></div>
     <div>
       <h1>Data processed!</h1>
-    <p>The data is: {{ listofShades }} </p>
+    <p>The data is: {{ data1 }} </p>
   </div>
 
   </body>

@@ -9,7 +9,6 @@ import getLatLong
 import getfips
 import coordinates
 import fromFIPSlisttoLatLong
-import heatMap
 
 app = Flask(__name__)
 app.debug = True
@@ -24,6 +23,7 @@ app.keys = []
 #A dictionary keyed to Fips that contains a duple of LatLong and then the value for the requested demographic
 FipsLatLongAndValue = {}
 listofFips = []
+listofFipsINTS = []
 listofCoords = []
 listofValues = []
 
@@ -115,6 +115,7 @@ def processData():
 		blockFIPS = app.cityID[0:11] +  item
 		if blockFIPS not in listofFips:
 			listofFips.append(blockFIPS)
+			listofFipsINTS.append(int(blockFIPS))
 
 			#latAndLong = FromFIPStoLatLong.getLatLngFromFIPS(blockFIPS)
 			#intermediate =  coordinates.getblockcoor(float(latAndLong[0]),float(latAndLong[1]),z)
@@ -139,14 +140,12 @@ def processData():
 	lst = coordinates.getblockcoor(lat,lng,z)
 	geoid = lst[0]
 	coor = lst[1]
-	listofShades = heatMap.makeShades(listofValues)
-	print listofShades
 
 	#print listofCoords
 
 	#TODO: USE THE FipsLatLongAndValue Dictionary!!!!
 	
-	return render_template("getsurveyresults.html", data1 = listofFips, data = listofCoords, data2 = listofValues, listofShades = listofShades, lat = lat, lng = lng, z = z, coor = coor)
+	return render_template("getsurveyresults.html", data1 = listofFipsINTS, data = listofCoords, data2 = listofValues, lat = lat, lng = lng, z = z, coor = coor)
 
 
 """
