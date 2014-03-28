@@ -36,13 +36,14 @@
           coordinates = listofCoords[j]
           currentValue = listofValues[j]
 
+
           for ( var i = 0, l = coordinates.length; i < l; i++) {
             flightPlanCoordinates.push( new google.maps.LatLng(coordinates[i][1], coordinates[i][0]))
           } 
 
           flightPath = new google.maps.Polygon({
             paths: flightPlanCoordinates,
-            strokeColor: '#000000',
+            strokeColor: '#ffffff',
             strokeOpacity: 1.0,
             strokeWeight: 2,
             fillColor: '#FF0000',
@@ -86,7 +87,7 @@
     <div id="map_canvas"></div>
     <div>
       <h1>Data processed!</h1>
-    <p>The data is: {{ data }} </p>
+    <p>The data is: {{ data1 }} </p>
   </div>
 
   </body>
