@@ -20,19 +20,13 @@
 
         map = new google.maps.Map(document.getElementById('map_canvas'), map_options);
 
-        var coordinates = {{ coor }}
         var flightPlanCoordinates = [];
-
-        var listofCoords = {{ data }}
-        var listofValues = {{data2}}
-      
+        var dict = {{data}}
+        var keys = [];
+        for(var k in obj) keys.push(k);
         //TODO: REPLACE 3 WITH THE SIZE OF THE LISTOFVALUES
-        for ( var j = 0, k = listofValues.length; j < k; j++) {
-          coordinates = listofCoords[j]
-          //map.currentValue = listofValues[j]
-
-          for ( var i = 0, l = coordinates.length; i < l; i++) {
-            flightPlanCoordinates.push( new google.maps.LatLng(coordinates[i][1], coordinates[i][0]))
+          for ( var i = 0, l = keys.length; i < l; i++) {
+            flightPlanCoordinates.push( new google.maps.LatLng(keys[i][1], keys[i][0]))
           } 
 
           flightPath = new google.maps.Polygon({
@@ -52,6 +46,7 @@
           infoWindow = new google.maps.InfoWindow();
 
         }
+      
 
       /** @this {google.maps.Polygon} */
       function showArrays(event) {
@@ -59,15 +54,16 @@
         // Since this polygon has only one path, we can call getPath()
         // to return the MVCArray of LatLngs.
         var vertices = this.getPath();
+
         var coords = [];
          for (var i =0; i < vertices.getLength(); i++) {
           var xy = vertices.getAt(i);
-          coords.push([xy.lng(), xy.lat()])
+          coords.push([xy.lng(), xy.lat])
         }
-        console.log(listofCoords)
+        var val = mydict[coords][1]
+
+        console.log(keys)
         console.log(coords)
-        var c = listofCoords.indexOf(coords)
-        var val = listofValues[c]
 
         var contentString = '<b>Block Details</b><br>' ;
 
@@ -80,6 +76,7 @@
         infoWindow.open(map);
       }
       }
+
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
   </head>
