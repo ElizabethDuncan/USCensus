@@ -30,8 +30,9 @@ def getAlbertStuff():
 			y = y1 / 256
 
 			#write to 
-			
-			current = str(x) + " " + str(y) + "\n"
+			current = "lat and lng: " + str(lat) + " " + str(lng) + "\n"
+			f.write(current)
+			current = "x and y: " + str(x) + " " + str(y) + "\n"
 			f.write(current) # python will convert \n to os.linesep
 			lng = lng + increment
 	

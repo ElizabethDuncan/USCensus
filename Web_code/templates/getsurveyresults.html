@@ -23,23 +23,16 @@
 
         var coordinates = {{ coor }}
         var flightPlanCoordinates = [];
-<<<<<<< HEAD
-
-=======
-       
->>>>>>> 7c3e57368330a82907da259de54dfb9977331d42
         var listofCoords = {{ data }}
         var listofValues = {{data2}}
         var listofFips = {{data1}}
       
         //TODO: REPLACE 3 WITH THE SIZE OF THE LISTOFVALUES
         for ( var j = 0, k = listofValues.length; j < k; j++) {
-<<<<<<< HEAD
-=======
+
           console.log(listofFips[j])
           console.log(listofValues[j])
           console.log(listofCoords[j])
->>>>>>> 7c3e57368330a82907da259de54dfb9977331d42
           coordinates = listofCoords[j]
 
           var largest = Math.max.apply(Math, listofValues);
@@ -70,14 +63,12 @@
           flightPath.setMap(map);
           flightPlanCoordinates = [];
 
-<<<<<<< HEAD
-=======
           var obj = {
             currentValue: listofValues[j]
           };
           flightPath.objInfo = obj;
 
->>>>>>> 7c3e57368330a82907da259de54dfb9977331d42
+
           google.maps.event.addListener(flightPath, 'click', showArrays);
 
           infoWindow = new google.maps.InfoWindow();
@@ -102,11 +93,11 @@
 
         var contentString = '<b>Block Details</b><br>' ;
 
-<<<<<<< HEAD
+
         contentString += '<br>' + "Number of people in the requested demographic: "  + String(val) + '<br>';
-=======
+
         contentString += '<br>' + "Number of people in the requested demographic: "  + String(flightPath.objInfo.currentValue) + '<br>';
->>>>>>> 7c3e57368330a82907da259de54dfb9977331d42
+
 
         // Replace the info window's content and position.
         infoWindow.setContent(contentString);

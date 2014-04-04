@@ -21,13 +21,16 @@ def getAlbertStuff():
 	latMax = 49
 	lngInitial = -124.73
 	lngMax = -66.962
+	lngNew = -67
+	latNew = 30
 
 
-	increment = 0.1
+	smallincrement = 0.3
+	bigIncrement = 0.001
 
 	while lat < latMax:
 		lng = lngInitial
-		lat = lat + increment
+		lat = lat + bigIncrement
 
 		while lng < lngMax:
 
@@ -42,6 +45,7 @@ def getAlbertStuff():
 
 			if value:
 				print "file exists " + str(x) + " " + str(y)
+				lng = lng + bigIncrement
 				continue
 
 			link = "http://censusmapmaker.com/geom/CensusBlockTile/" + str(zoom) + "/" + str(x) + "/" + str(y) + ".json"
@@ -52,20 +56,24 @@ def getAlbertStuff():
 
 				if data == empty:
 					print "empty" + str(x) + " " + str(y)
+					lng = lng + smallincrement
 					pass
 				else:
 					print link
 					file = open(fileName,'w')   # Trying to create a new file or open one
 					file.write(str(data))
 					file.close()
+					lng = lng - 0.5
+					lng = lng + bigIncrement
 
 			except:
 				print "Null page"
 				data = []
+				lng = lng + smallincrement
 			
 
 			
-			lng = lng + increment
+			
 
 	
 			
