@@ -72,6 +72,7 @@ def find_between( s, first, last ):
 
 
 def getLatLngFromFIPS(fipsList):
+	latLngList = []
 
 	#Make only one web connection
 	initialfips = fipsList[0]

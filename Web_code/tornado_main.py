@@ -9,6 +9,7 @@ import getLatLong
 import getfips
 import coordinates
 import fromFIPSlisttoLatLong
+import censusTracts
 
 app = Flask(__name__)
 app.debug = True
@@ -95,8 +96,6 @@ def processData():
 
 
 	#Print list of demographics for debugging (City should be listed first
-	app.vars = []
-
 	for race in app.races:
 		for gender in app.genders:
 			for age in app.ages:
@@ -104,46 +103,62 @@ def processData():
 	
 	newKeys = [val for subl in app.keys for val in subl]
 
+
+	allTracts = censusTracts.listTracts(app.cityID)
+	#tract = app.cityID
 	#For all the tracts in the specified city (county area), sum the number of people in the specified codes
 	#Last paramter is 1, so that we get tract data (in the county)
-	data = getpopdict.getpop(newKeys, app.cityID, 2)
+	listofCoords = []
 
-	#JUST ADDED
-	z = 16
-	#For every block in the current tract, get lat and long
-	for item in data:
-		blockFIPS = app.cityID[0:11] +  item
-		if blockFIPS not in listofFips:
-			listofFips.append(blockFIPS)
-			listofFipsINTS.append(int(blockFIPS))
+	for tract in allTracts[0:1]:
+		listofCoords = []
+		data = getpopdict.getpop(newKeys, tract, 2)
 
-			#latAndLong = FromFIPStoLatLong.getLatLngFromFIPS(blockFIPS)
-			#intermediate =  coordinates.getblockcoor(float(latAndLong[0]),float(latAndLong[1]),z)
-			#listofCoords.append(intermediate[1])
-			#print intermediate[1]
+		#JUST ADDED
+		z = 16
+		#For every block in the current tract, get lat and long
+		for item in data:
+			blockFIPS = tract[0:11] +  item
+			if blockFIPS not in listofFips:
+				listofFips.append(blockFIPS)
+				listofFipsINTS.append(int(blockFIPS))
 
-			listofValues.append(data[item])
+				#latAndLong = FromFIPStoLatLong.getLatLngFromFIPS(blockFIPS)
+				#intermediate =  coordinates.getblockcoor(float(latAndLong[0]),float(latAndLong[1]),z)
+				#listofCoords.append(intermediate[1])
+				#print intermediate[1]
+
+				listofValues.append(data[item])
+			
 		
-	
-	#Get coordinates from FIPS codes
-	listOfLatLng = fromFIPSlisttoLatLong.getLatLngFromFIPS(listofFips)
-	for latAndLong in listOfLatLng:
-		intermediate =  coordinates.getblockcoor(float(latAndLong[0]),float(latAndLong[1]),z)
-		listofCoords.append(intermediate[1])
+		#Get coordinates from FIPS codes
+		listOfLatLng = fromFIPSlisttoLatLong.getLatLngFromFIPS(listofFips)
+		for latAndLong in listOfLatLng:
+			intermediate =  coordinates.getblockcoor(float(latAndLong[0]),float(latAndLong[1]),z)
+			listofCoords.append(intermediate[1])
 
 
-	#Clear app.vars so subsequent queries can occur
-	app.vars = {}
+		#Clear app.vars so subsequent queries can occur
+		app.vars = {}
 
-	#Load html
-	
-	lst = coordinates.getblockcoor(lat,lng,z)
-	geoid = lst[0]
-	coor = lst[1]
+		#Load html
+		
+		lst = coordinates.getblockcoor(lat,lng,z)
+		geoid = lst[0]
+		coor = lst[1]
 
 	#print listofCoords
 
 	#TODO: USE THE FipsLatLongAndValue Dictionary!!!!
+	print "FIPS:"
+	print listofFips
+	print len(listofFips)
+	print "LATLONG:"
+	print listOfLatLng
+	print len(listOfLatLng)
+	print "COORDS:"
+	print listofCoords
+	print len(listofCoords)
 	
 	return render_template("getsurveyresults.html", data1 = listofFipsINTS, data = listofCoords, data2 = listofValues, lat = lat, lng = lng, z = z, coor = coor)
 
