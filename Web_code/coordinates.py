@@ -2,19 +2,31 @@ import gmerc2
 import getfips
 import requests
 import json
+import os
 
 def getblockcoor(lat,lng, zoom):
     """ Input lat, lng, zoom level, return block FIPS code, map coordinates """
-
+    print str(lat) + " " + str(lng)
     x1, y1 = gmerc2.ll2px(lat, lng, zoom)
     x = x1 / 256 
     y = y1 / 256
 
     geoid = getfips.getfips(lat,lng)
 
-    link = "http://censusmapmaker.com/geom/CensusBlockTile/" + str(zoom) + "/" + str(x) + "/" + str(y) + ".json"
-    r = requests.get(link)
-    myfile = r.json()
+    name = str('./CensusBlockTile/' + str(zoom) + '-'+ str(x) + '-' + str(y))
+    fileName = name +".json"
+
+    value = os.path.isfile(fileName)
+
+    if value:
+        json_data=open(fileName)
+        myfile = json.load(json_data)
+        json_data.close()
+    else:
+        link = "http://censusmapmaker.com/geom/CensusBlockTile/" + str(zoom) + "/" + str(x) + "/" + str(y) + ".json"
+        print link
+        r = requests.get(link)
+        myfile = r.json()
 
     for i in range(0, len(myfile['features'])):
         mydict = myfile['features'][i] 
