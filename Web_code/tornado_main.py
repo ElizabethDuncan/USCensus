@@ -9,6 +9,9 @@ import getLatLong
 import getfips
 import coordinates
 import fromFIPSlisttoLatLong
+import censusTracts
+import getACS
+
 
 app = Flask(__name__)
 app.debug = True
@@ -19,6 +22,7 @@ app.races = []
 app.genders = []
 app.ages = []
 app.keys = []
+app.acsCodes = []
 
 #A dictionary keyed to Fips that contains a duple of LatLong and then the value for the requested demographic
 FipsLatLongAndValue = {}
@@ -26,6 +30,7 @@ listofFips = []
 listofFipsINTS = []
 listofCoords = []
 listofValues = []
+listOfLatLng = []
 
 codeLookup = {'race AfricanAmerican': 'Sex By Age (Black Or African American Alone)', 'race white': 'Sex By Age (White Alone)', 'race Latino': 'Sex By Age (Hispanic Or Latino)', 'race Asian': 'Sex By Age (Asian Alone)', 'race Hawaiian': '(Native Hawaiian And Other Pacific Islander Alone)', 'race NativeAmerican': 'Sex By Age (American Indian And Alaska Native Alone)', 'race Multiracial': 'Sex By Age (Two Or More Races)', 'gender Male': 'Male', 'gender Female': 'Female', 'age 0': '0', 'age 20': '20', 'age 30': '30', 'age 40': '40', 'age 50': '50', 'age 60': '60', 'age 70': '70', 'age 80': '80'}
 
@@ -70,6 +75,14 @@ def processData():
 	app.vars['age 70'] = request.form.get('age 70')
 	app.vars['age 80'] = request.form.get('age 80')
 
+	app.vars['acs-widowed'] = request.form.get('widowed')
+	app.vars['acs-divorced'] = request.form.get('divorced')
+	app.vars['acs-spanish-notAtAll'] = request.form.get('spanish-notAtAll')
+	app.vars['acs-spanish-notWell'] = request.form.get('spanish-notWell')
+	app.vars['acs-spanish-veryWell'] = request.form.get('spanish-veryWell')
+	app.vars['acs-asian-notAtAll'] = request.form.get('asian-notAtAll')
+	app.vars['acs-asian-notWell'] = request.form.get('asian-notWell')
+	app.vars['acs-asian-veryWell'] = request.form.get('asian-veryWell')
 	
 	#From name of city requested, get Latitude and Longitude
 	latAndLong = getLatLong.getLatLong(str(request.form.get('city')))
@@ -92,11 +105,12 @@ def processData():
 				app.genders.append(demographic)
 			if "age" in demographic:
 				app.ages.append(demographic)
+			if "acs" in demographic or "gender" in demographic:
+				#Gets acs checked data as well as requested gender
+				app.acsCodes.append(demographic)
 
 
 	#Print list of demographics for debugging (City should be listed first
-	app.vars = []
-
 	for race in app.races:
 		for gender in app.genders:
 			for age in app.ages:
@@ -104,46 +118,99 @@ def processData():
 	
 	newKeys = [val for subl in app.keys for val in subl]
 
+	allTracts = censusTracts.listTracts(app.cityID)
+	#tract = app.cityID
 	#For all the tracts in the specified city (county area), sum the number of people in the specified codes
 	#Last paramter is 1, so that we get tract data (in the county)
-	data = getpopdict.getpop(newKeys, app.cityID, 2)
+	listofCoords = []
+	print allTracts
+	print len(allTracts)
 
-	#JUST ADDED
-	z = 16
-	#For every block in the current tract, get lat and long
-	for item in data:
-		blockFIPS = app.cityID[0:11] +  item
-		if blockFIPS not in listofFips:
-			listofFips.append(blockFIPS)
-			listofFipsINTS.append(int(blockFIPS))
+	allTractsLatLng = fromFIPSlisttoLatLong.getLatLngFromFIPS(allTracts)
+	iterator = 0
+	length = len(allTracts)
+	mapDistance = 1.5 / length
 
-			#latAndLong = FromFIPStoLatLong.getLatLngFromFIPS(blockFIPS)
-			#intermediate =  coordinates.getblockcoor(float(latAndLong[0]),float(latAndLong[1]),z)
-			#listofCoords.append(intermediate[1])
-			#print intermediate[1]
-
-			listofValues.append(data[item])
+	for tract in allTracts:
+		print tract
+		#Get lat long of tract
+		z = 16
 		
-	
-	#Get coordinates from FIPS codes
-	listOfLatLng = fromFIPSlisttoLatLong.getLatLngFromFIPS(listofFips)
-	for latAndLong in listOfLatLng:
-		intermediate =  coordinates.getblockcoor(float(latAndLong[0]),float(latAndLong[1]),z)
-		listofCoords.append(intermediate[1])
+		print allTractsLatLng[iterator][0]
+		print lat
+		print allTractsLatLng[iterator][1]
+		print lng
+		print " "
+
+		print "WILL BE TRUE"
+		if tract is app.cityID:
+			print "TRUE"
+
+		if tract is app.cityID or (lat - mapDistance < float(allTractsLatLng[iterator][0]) < lat + mapDistance and lng - mapDistance < float(allTractsLatLng[iterator][1]) < lng + mapDistance):
+			print "DISPLAYING TRACT"
+
+			#Get ACS data
+			ACSdata = getACS.getACSdata(tract, app.acsCodes)
+			print ACSdata
+
+			listofCoords = []
+			data = getpopdict.getpop(newKeys, tract, 2)
+
+			#JUST ADDED
+			
+			#For every block in the current tract, get lat and long
+			for item in data:
+				blockFIPS = tract[0:11] +  item
 
 
-	#Clear app.vars so subsequent queries can occur
-	app.vars = {}
 
-	#Load html
-	
+				if blockFIPS not in listofFips:
+					listofFips.append(blockFIPS)
+					listofFipsINTS.append(int(blockFIPS))
+
+					#latAndLong = FromFIPStoLatLong.getLatLngFromFIPS(blockFIPS)
+					#intermediate =  coordinates.getblockcoor(float(latAndLong[0]),float(latAndLong[1]),z)
+					#listofCoords.append(intermediate[1])
+					#print intermediate[1]
+
+					listofValues.append(data[item])
+				
+			
+			#Get coordinates from FIPS codes
+			listOfLatLng = fromFIPSlisttoLatLong.getLatLngFromFIPS(listofFips)
+			for latAndLong in listOfLatLng:
+				intermediate =  coordinates.getblockcoor(float(latAndLong[0]),float(latAndLong[1]),z)
+				listofCoords.append(intermediate[1])
+
+
+			#Clear app.vars so subsequent queries can occur
+			app.vars = {}
+
+			#Load html
+			
+		
+		iterator = iterator + 1
+
+	#print listofCoords
 	lst = coordinates.getblockcoor(lat,lng,z)
 	geoid = lst[0]
 	coor = lst[1]
 
-	#print listofCoords
-
 	#TODO: USE THE FipsLatLongAndValue Dictionary!!!!
+	print "FIPS:"
+	print listofFips
+	print len(listofFips)
+	print "LATLONG:"
+	# print listOfLatLng
+	# print len(listOfLatLng)
+	print "COORDS:"
+	print listofCoords
+	print len(listofCoords)
+
+	print "lat: " + str(lat)
+	print "lng: " + str(lng)
+
+	print "requested city: " + str(app.cityID)
 	
 	return render_template("getsurveyresults.html", data1 = listofFipsINTS, data = listofCoords, data2 = listofValues, lat = lat, lng = lng, z = z, coor = coor)
 

@@ -8,7 +8,7 @@ def getpop(poplist, code, level):
 	state = code[0:2]
 	county = code[2:5]
 	tract = code[5:11]
-	
+	block = code[11:15]
 
 	popgroup = {}
 	for i in range(0,len(poplist)):

@@ -37,14 +37,18 @@
     <div style="text-align: center;">
       <h1> Welcome to Census Marketing! </h1>
       <h3> Using data from the U.S. Census surveys and information about your target demographic, Census Marketing recommends the best location for your new business. </h3>
+      <h5>Select YOUR target demographic.<h5>
     </div>
+
+
 
     <!-- Demographic survey form -->
     <form class="demographic-form" action="/getsurveyresults" method="post">
     Enter city (required): <input type="text" name="city">
+    
     <br>
-
-    Select YOUR target demographic.
+    <br>
+    From 2010 Decennial Survey
       <div class="checkbox">
       <div class="row">
         <div class="span4">
@@ -93,7 +97,34 @@
       </div>
       </div>
 
-      <input type="submit" id="submitButton" value="Submit">
+      From 2010 American Community Survey
+      <br>
+      <div class="span4">
+        <input type="checkbox" name="widowed" value="True">Widowed
+        <br>
+        <input type="checkbox" name="divorced" value="True">Divorced
+        <br>
+      </div>
+      <div class="span7">
+        <input type="checkbox" name="spanish-notAtAll" value="True">Native Spanish speaker, English spoken 'not at all'
+        <br>
+        <input type="checkbox" name="asian-notAtAll" value="True">Native Asian and Pacific Island languages, English spoken 'not at all'
+        <br>
+        <input type="checkbox" name="spanish-notWell" value="True">Native Spanish speaker, English spoken 'not well'
+        <br>
+        <input type="checkbox" name="asian-notWell" value="True">Native Asian and Pacific Island languages, English spoken 'not well'
+        <br>
+        <input type="checkbox" name="spanish-veryWell" value="True">Native Spanish speaker, English spoken 'very well'
+        <br>
+        <input type="checkbox" name="asian-veryWell" value="True">Native Asian and Pacific Island languages, English spoken 'very well'
+        <br>
+      </div>
+      <br>
+      <div style="text-align: center" class="span10">
+        <input type="submit" id="submitButton" value="Submit">
+        <br>
+      </div>
+
     </form>
     
 
