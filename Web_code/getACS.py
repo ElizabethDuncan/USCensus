@@ -21,6 +21,9 @@ def getACSdata(code, pop):
 	male = False
 	acsCodes = []
 	popstring = []
+	blockGroupList = []
+	blockGroupValues = []
+	interest = 0
 
 	
 
@@ -39,11 +42,14 @@ def getACSdata(code, pop):
 		if "widowed" in p or "divorced" in p:
 			if female:
 				acsCodes.append(acsVariablesFemale[p])
+				interest = interest + 1
 			if male:
 				acsCodes.append(acsVariablesMale[p])
+				interest = interest + 1
 
 		else:
 			acsCodes.append(acsVariablesLanguage[p])
+			interest = interest + 1
 
 	if len(acsCodes) == 1:
 		popstring = str(acsCodes[0])
@@ -63,10 +69,13 @@ def getACSdata(code, pop):
 	for blockGroup in range(1,len(myfile)):
 		blockGroupList.append(myfile[blockGroup][-1])
 		intblockGroupValues = []
-		for demographic in range(0,len(pop)+1):
+		print len(pop)
+		for demographic in range(0,interest):
 			intblockGroupValues.append(myfile[blockGroup][demographic])
 		blockGroupValues.append(intblockGroupValues)
 
+	print "getACS"
+	print (blockGroupList, blockGroupValues)
 
 	return (blockGroupList, blockGroupValues)
 

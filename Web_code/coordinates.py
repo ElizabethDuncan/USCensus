@@ -1,7 +1,7 @@
 import gmerc2
 import getfips
 import requests
-import json
+import simplejson as json
 import os
 
 def getblockcoor(lat,lng, zoom):
@@ -16,17 +16,36 @@ def getblockcoor(lat,lng, zoom):
     name = str('./CensusBlockTile/' + str(zoom) + '-'+ str(x) + '-' + str(y))
     fileName = name +".json"
 
-    value = os.path.isfile(fileName)
+    #value = os.path.isfile(fileName)
+    value = False
 
     if value:
+
+        #TODO: FIX SO THIS WORKS!!!
+        print "file exists!"
         json_data=open(fileName)
-        myfile = json.load(json_data)
+        json_data_text = json_data.read()
+        print "BEFORE"
+        print json_data_text
+        json_data_text.decode("utf-8").replace(u"\u2022", "\"")
+        json_data_text.replace(u"'", "\"")
+        print "AFTER"
+        print json_data_text
+        read = json.loads(json_data_text)
+        for elem in read:
+            print elem["type"]
+        n = json.dumps(json_data_text)  
+        myfile = json.loads(n)
+        
+        print myfile['type']
+        print type(myfile)
         json_data.close()
     else:
         link = "http://censusmapmaker.com/geom/CensusBlockTile/" + str(zoom) + "/" + str(x) + "/" + str(y) + ".json"
         print link
         r = requests.get(link)
         myfile = r.json()
+
 
     for i in range(0, len(myfile['features'])):
         mydict = myfile['features'][i] 
