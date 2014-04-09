@@ -33,6 +33,7 @@
         var listofCoords = {{ data }}
         var listofValues = {{data2}}
         var listofFips = {{data1}}
+        var listofShades = {{dataShades}}
 
         
 
@@ -45,15 +46,13 @@
           console.log(listofCoords[j])
           coordinates = listofCoords[j]
 
-          var largest = Math.max.apply(Math, listofValues);
-          shadeValue = listofValues[j]
+          
+          shadeValue = listofShades[j]
           if (shadeValue == 0){
             shadeValue = 0.1;
           }else{
-            shadeValue = shadeValue / largest;
-            if (shadeValue < 0.1){
-              shadeValue = 0.1;
-            }
+            shadeValue = shadeValue;
+            
           }
           //map.currentValue = listofValues[j]
 

@@ -31,6 +31,10 @@ listofFipsINTS = []
 listofCoords = []
 listofValues = []
 listOfLatLng = []
+listofAcsValues = []
+listofShades = []
+listofAcsValueShades = []
+listofValueShades = []
 
 codeLookup = {'race AfricanAmerican': 'Sex By Age (Black Or African American Alone)', 'race white': 'Sex By Age (White Alone)', 'race Latino': 'Sex By Age (Hispanic Or Latino)', 'race Asian': 'Sex By Age (Asian Alone)', 'race Hawaiian': '(Native Hawaiian And Other Pacific Islander Alone)', 'race NativeAmerican': 'Sex By Age (American Indian And Alaska Native Alone)', 'race Multiracial': 'Sex By Age (Two Or More Races)', 'gender Male': 'Male', 'gender Female': 'Female', 'age 0': '0', 'age 20': '20', 'age 30': '30', 'age 40': '40', 'age 50': '50', 'age 60': '60', 'age 70': '70', 'age 80': '80'}
 
@@ -165,13 +169,21 @@ def processData():
 
 
 				if blockFIPS not in listofFips:
+					print blockFIPS
+					blockGroupIndex = blockFIPS[11:12]
+					print "blockGroupIndex"
+					print blockGroupIndex
 					listofFips.append(blockFIPS)
 					listofFipsINTS.append(int(blockFIPS))
 
-					#latAndLong = FromFIPStoLatLong.getLatLngFromFIPS(blockFIPS)
-					#intermediate =  coordinates.getblockcoor(float(latAndLong[0]),float(latAndLong[1]),z)
-					#listofCoords.append(intermediate[1])
-					#print intermediate[1]
+					acsSum = 0
+					print ACSdata
+					print ACSdata[1][int(blockGroupIndex)-1]
+					for element in ACSdata[1][int(blockGroupIndex)-1]:
+						print element
+						acsSum = acsSum + int(element)
+
+					listofAcsValues.append(acsSum)
 
 					listofValues.append(data[item])
 				
@@ -196,23 +208,47 @@ def processData():
 	geoid = lst[0]
 	coor = lst[1]
 
-	#TODO: USE THE FipsLatLongAndValue Dictionary!!!!
-	print "FIPS:"
-	print listofFips
-	print len(listofFips)
-	print "LATLONG:"
-	# print listOfLatLng
-	# print len(listOfLatLng)
-	print "COORDS:"
-	print listofCoords
-	print len(listofCoords)
+	#Iterate through listofValues and listofAcsValues to convert them to a shadeValue
+	acsMax = max(listofAcsValues)
+	acsMax = float(acsMax)
+	print acsMax
+	valueMax = max(listofValues)
+	valueMax = float(valueMax)
+	print valueMax
 
-	print "lat: " + str(lat)
-	print "lng: " + str(lng)
+	for acsValue in listofAcsValues:
+		if float(acsValue/float(acsMax)) < 0.1:
+			print "acsValue under: " + str(acsValue)
+			print "acsValue under: " + str(acsMax)
+			print "division is: " + str(acsValue/float(acsMax))
+			current = 0.1
+		else: 
+			current = acsValue/acsMax
+		listofAcsValueShades.append(current)
+	print listofAcsValueShades
+	for value in listofValues:
+		if value/float(valueMax) < 0.1:
+			print "acsValue under: " + str(value)
+			current = 0.1
+		else: 
+			current = value/valueMax
+		listofValueShades.append(current)
 
-	print "requested city: " + str(app.cityID)
+	print listofValueShades
+	for item in range(0, len(listofValueShades)):
+		shade = listofValueShades[item] + listofAcsValueShades[item]
+		shade = shade /2
+
+		listofShades.append(shade)
+
+	print listofAcsValues
+	print len(listofAcsValues)
+	print listofValues
+	print len(listofValues)
+	print listofShades
+
 	
-	return render_template("getsurveyresults.html", data1 = listofFipsINTS, data = listofCoords, data2 = listofValues, lat = lat, lng = lng, z = z, coor = coor)
+	return render_template("getsurveyresults.html", data1 = listofFipsINTS, data = listofCoords, data2 = listofValues, dataShades = listofShades, lat = lat, lng = lng, z = z, coor = coor)
 
 
 """
