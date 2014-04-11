@@ -40,10 +40,10 @@
       
         //TODO: REPLACE 3 WITH THE SIZE OF THE LISTOFVALUES
         for ( var j = 0, k = listofValues.length; j < k; j++) {
-
+          /*
           console.log(listofFips[j])
           console.log(listofValues[j])
-          console.log(listofCoords[j])
+          console.log(listofCoords[j]) */
           coordinates = listofCoords[j]
 
           
@@ -58,7 +58,7 @@
 
           for ( var i = 0, l = coordinates.length; i < l; i++) {
             flightPlanCoordinates.push( new google.maps.LatLng(coordinates[i][1], coordinates[i][0]))
-          } 
+          } }
 
           flightPath = new google.maps.Polygon({
             paths: flightPlanCoordinates,
@@ -82,17 +82,12 @@
 
           infoWindow = new google.maps.InfoWindow();
 
-
-
-        }
-
       /** @this {google.maps.Polygon} */
       function showArrays(event) {
 
         // Since this polygon has only one path, we can call getPath()
         // to return the MVCArray of LatLngs.
         var vertices = this.getPath();
-        /*
         var coords = [];
          for (var i =0; i < vertices.getLength(); i++) {
           var xy = vertices.getAt(i);
@@ -101,15 +96,12 @@
         console.log(listofCoords)
         console.log(coords)
         var c = listofCoords.indexOf(coords)
-        var val = listofValues[c] */
+        var val = listofValues[c] 
 
         var contentString = '<b>Block Details</b><br>' ;
 
 
         contentString += '<br>' + "Number of people in the requested demographic: "  + String(val) + '<br>';
-
-        contentString += '<br>' + "Number of people in the requested demographic: "  + String(flightPath.objInfo.currentValue) + '<br>';
-
 
         // Replace the info window's content and position.
         infoWindow.setContent(contentString);
@@ -117,7 +109,7 @@
 
         infoWindow.open(map);
       }
-      }
+    }
       google.maps.event.addDomListener(window, 'load', initialize);
 
     // var bounds = map.getBounds();
