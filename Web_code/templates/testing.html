@@ -33,26 +33,18 @@
 
         var listofCoords = [];
         var FipsCoordsDict = {{data}}
-        for(var key in FipsCoordsDict) {
-            var value = FipsCoordsDict[key];
-            listofCoords.push(value)
-        }
-
         var listofValues = {{data2}}
         var listofShades = {{dataShades}}
 
         console.log(listofCoords.length)
         console.log(listofValues.length)
-        
 
-      
         //TODO: REPLACE 3 WITH THE SIZE OF THE LISTOFVALUES
         for ( var j = 0, k = listofValues.length; j < k; j++) {
           /*
           console.log(listofFips[j])
           console.log(listofValues[j])
           console.log(listofCoords[j]) */
-          coordinates = listofCoords[j]
 
           shadeValue = listofShades[j]
           if (shadeValue == 0){
@@ -60,12 +52,14 @@
           }else{
             shadeValue = shadeValue;
             
-          }
+          }}
           //map.currentValue = listofValues[j]
+          for(var key in FipsCoordsDict) {
+            var coordinates = FipsCoordsDict[key];
 
           for ( var i = 0, l = coordinates.length; i < l; i++) {
             flightPlanCoordinates.push( new google.maps.LatLng(coordinates[i][1], coordinates[i][0]))
-          } }
+            }
 
           flightPath = new google.maps.Polygon({
             paths: flightPlanCoordinates,
@@ -74,7 +68,7 @@
             strokeWeight: 2,
             fillColor: '#ff0000',
             fillOpacity: shadeValue,
-          });
+          }); }
 
           flightPath.setMap(map);
           flightPlanCoordinates = [];

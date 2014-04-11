@@ -21,16 +21,17 @@
 
         map = new google.maps.Map(document.getElementById('map_canvas'), map_options);
 
-        var coordinates = {{ coor }}
         var flightPlanCoordinates = [];
-       
-        var listofCoords = {{ data }}
+        var listofCoords = [];
+        var FipsCoordsDict = {{data}}
+        for(var key in FipsCoordsDict) {
+            var value = FipsCoordsDict[key];
+            listofCoords.push(value)
+        }
         var listofValues = {{data2}}
-        var listofFips = {{data1}}
       
         //TODO: REPLACE 3 WITH THE SIZE OF THE LISTOFVALUES
         for ( var j = 0, k = listofValues.length; j < k; j++) {
-          console.log(listofFips[j])
           console.log(listofValues[j])
           console.log(listofCoords[j])
           coordinates = listofCoords[j]

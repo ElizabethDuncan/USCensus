@@ -162,7 +162,6 @@ def processData():
 			#print FipsPixelDict
 	for k,v in FipsPixelDict.iteritems():
 		intermediate =  pixelcoordinates.getblockcoor(v, k[0], k[1], z)
-		#print intermediate
 		if len(intermediate.keys()) > 1:
 			for k2, v2 in intermediate.iteritems():
 				FipsCoordsDict[k2] = v2
@@ -196,7 +195,7 @@ def processData():
 
 		listofShades.append(shade)
 	
-	return render_template("testing.html", data = FipsCoordsDict, data2 = listofValues, dataShades = listofShades, lat = lat, lng = lng, z = z)
+	return render_template("fixing.html", data = FipsCoordsDict, data2 = listofValues, dataShades = listofShades, lat = lat, lng = lng, z = z)
 
 
 """
