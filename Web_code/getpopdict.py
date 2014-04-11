@@ -21,7 +21,6 @@ def getpop(poplist, code, level):
 			link = "http://api.census.gov/data/2010/sf1?key=4be82289939444f20513cd7c3c3eafb42e0d9ccf&get=" + str(pop) + ",NAME&for=block:*&in=state:" + state + "+county:" + county + "+tract:" + tract
 		else:
 			raise Exception("Data level not valid")
-
 		r = requests.get(link)
 		myfile = r.json()
 

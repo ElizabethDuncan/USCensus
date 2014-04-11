@@ -6,7 +6,7 @@ import os
 
 def getblockcoor(fipslist, x, y, zoom):
     """ Input pixel x , pixel y, zoom level, return block FIPS code, map coordinates """
-    print str(x) + " " + str(y)
+    #print str(x) + " " + str(y)
 
     name = str('./CensusBlockTile/' + str(zoom) + '-'+ str(x) + '-' + str(y))
     fileName = name +".json"
@@ -37,7 +37,7 @@ def getblockcoor(fipslist, x, y, zoom):
         json_data.close()
     else:
         link = "http://censusmapmaker.com/geom/CensusBlockTile/" + str(zoom) + "/" + str(x) + "/" + str(y) + ".json"
-        print link
+        #print link
         r = requests.get(link)
         myfile = r.json()
 

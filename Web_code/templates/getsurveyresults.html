@@ -3,6 +3,13 @@
   <head>
     <link href="static/css/map.css" rel="stylesheet" media="screen">
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <style>
+      html, body, #map-canvas {
+        width: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+    </style>
     <script>
 
     var map;
@@ -23,31 +30,31 @@
 
         var coordinates = {{ coor }}
         var flightPlanCoordinates = [];
-       
         var listofCoords = {{ data }}
         var listofValues = {{data2}}
         var listofFips = {{data1}}
+        var listofShades = {{dataShades}}
+
+        
+
       
         //TODO: REPLACE 3 WITH THE SIZE OF THE LISTOFVALUES
         for ( var j = 0, k = listofValues.length; j < k; j++) {
+
           console.log(listofFips[j])
           console.log(listofValues[j])
           console.log(listofCoords[j])
           coordinates = listofCoords[j]
 
-          var largest = Math.max.apply(Math, listofValues);
-          shadeValue = listofValues[j]
+          
+          shadeValue = listofShades[j]
           if (shadeValue == 0){
             shadeValue = 0.1;
           }else{
-            shadeValue = shadeValue / largest;
-            if (shadeValue < 0.1){
-              shadeValue = 0.1;
-            }
+            shadeValue = shadeValue;
+            
           }
           //map.currentValue = listofValues[j]
-
-
 
           for ( var i = 0, l = coordinates.length; i < l; i++) {
             flightPlanCoordinates.push( new google.maps.LatLng(coordinates[i][1], coordinates[i][0]))
@@ -70,14 +77,14 @@
           };
           flightPath.objInfo = obj;
 
+
           google.maps.event.addListener(flightPath, 'click', showArrays);
 
           infoWindow = new google.maps.InfoWindow();
 
+
+
         }
-
-
-      }
 
       /** @this {google.maps.Polygon} */
       function showArrays(event) {
@@ -85,10 +92,23 @@
         // Since this polygon has only one path, we can call getPath()
         // to return the MVCArray of LatLngs.
         var vertices = this.getPath();
+        var coords = [];
+         for (var i =0; i < vertices.getLength(); i++) {
+          var xy = vertices.getAt(i);
+          coords.push([xy.lng(), xy.lat()])
+        }
+        console.log(listofCoords)
+        console.log(coords)
+        var c = listofCoords.indexOf(coords)
+        var val = listofValues[c]
 
         var contentString = '<b>Block Details</b><br>' ;
 
+
+        contentString += '<br>' + "Number of people in the requested demographic: "  + String(val) + '<br>';
+
         contentString += '<br>' + "Number of people in the requested demographic: "  + String(flightPath.objInfo.currentValue) + '<br>';
+
 
         // Replace the info window's content and position.
         infoWindow.setContent(contentString);
@@ -96,17 +116,24 @@
 
         infoWindow.open(map);
       }
-
+      }
       google.maps.event.addDomListener(window, 'load', initialize);
+
+    // var bounds = map.getBounds();
+    // var ne = bounds.getNorthEast(); // LatLng of the north-east corner
+    // var sw = bounds.getSouthWest(); // LatLng of the south-west corder
+    // var nw = new google.maps.LatLng(ne.lat(), sw.lng());
+    // var se = new google.maps.LatLng(sw.lat(), ne.lng())
+
+    // console.log("EDGES")
+    // console.log(ne)
+    // console.log(sw)
     </script>
   </head>
-  <body>
+
     
     <div id="map_canvas"></div>
-    <div>
-      <h1>Data processed!</h1>
-    <p>The data is: {{ data1 }} </p>
-  </div>
+    
 
-  </body>
+
 </html>

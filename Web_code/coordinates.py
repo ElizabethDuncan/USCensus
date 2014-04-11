@@ -6,7 +6,7 @@ import os
 
 def getblockcoor(lat,lng, zoom):
     """ Input lat, lng, zoom level, return block FIPS code, map coordinates """
-    print str(lat) + " " + str(lng)
+    #print str(lat) + " " + str(lng)
     x1, y1 = gmerc2.ll2px(lat, lng, zoom)
     x = x1 / 256 
     y = y1 / 256
@@ -42,7 +42,7 @@ def getblockcoor(lat,lng, zoom):
         json_data.close()
     else:
         link = "http://censusmapmaker.com/geom/CensusBlockTile/" + str(zoom) + "/" + str(x) + "/" + str(y) + ".json"
-        print link
+        #print link
         r = requests.get(link)
         myfile = r.json()
 
