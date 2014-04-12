@@ -12,6 +12,7 @@ import censusTracts
 import getACS
 import fromFIPStoPixels
 import pixelcoordinates
+import newGetPopDict
 
 app = Flask(__name__)
 app.debug = True
@@ -122,7 +123,7 @@ def processData():
 			elif len(app.acsCodes) > 0: 
 				ACSdata = getACS.getACSdata(tract, app.acsCodes)
 
-			data = getpopdict.getpop(newKeys, tract, 2)
+			data = newGetPopDict.getpop(newKeys, tract, 2)
 
 			#JUST ADDED
 			

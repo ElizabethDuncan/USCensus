@@ -127,7 +127,7 @@ def getpixels(lat, lng, zoom):
 		
 
 
-getLatLngFromFIPS("080370001001001", 16)
+#getLatLngFromFIPS("080370001001001", 16)
 
 
 
