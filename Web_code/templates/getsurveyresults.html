@@ -28,32 +28,17 @@
 
         map = new google.maps.Map(document.getElementById('map_canvas'), map_options);
 
-        var coordinates = {{ coor }}
         var flightPlanCoordinates = [];
-        var listofCoords = {{ data }}
-        var listofValues = {{data2}}
-        var listofFips = {{data1}}
-        var listofShades = {{dataShades}}
+        var MegaDict = {{data}}
 
-        
-
-      
         //TODO: REPLACE 3 WITH THE SIZE OF THE LISTOFVALUES
-        for ( var j = 0, k = listofValues.length; j < k; j++) {
+        for ( var key in MegaDict) {
 
-          console.log(listofFips[j])
-          console.log(listofValues[j])
-          console.log(listofCoords[j])
-          coordinates = listofCoords[j]
+          var value = MegaDict[key]
+          var length = value.length
+          coordinates = value[0]
+          shadeValue = value[length-1]
 
-          
-          shadeValue = listofShades[j]
-          if (shadeValue == 0){
-            shadeValue = 0.1;
-          }else{
-            shadeValue = shadeValue;
-            
-          }
           //map.currentValue = listofValues[j]
 
           for ( var i = 0, l = coordinates.length; i < l; i++) {
@@ -73,7 +58,7 @@
           flightPlanCoordinates = [];
 
           var obj = {
-            currentValue: listofValues[j]
+            currentValue: 3
           };
           flightPath.objInfo = obj;
 
@@ -91,23 +76,14 @@
 
         // Since this polygon has only one path, we can call getPath()
         // to return the MVCArray of LatLngs.
-        var vertices = this.getPath();
-        var coords = [];
-         for (var i =0; i < vertices.getLength(); i++) {
-          var xy = vertices.getAt(i);
-          coords.push([xy.lng(), xy.lat()])
-        }
-        console.log(listofCoords)
-        console.log(coords)
-        var c = listofCoords.indexOf(coords)
-        var val = listofValues[c]
-
-        var contentString = '<b>Block Details</b><br>' ;
+        /*
+        var vertices = this.getPath(); */
+        var contentString = '<b>Block Details</b><br>' ; 
 
 
-        contentString += '<br>' + "Number of people in the requested demographic: "  + String(val) + '<br>';
+        contentString += '<br>' + "Number of people in the requested demographic: "  + String("hi") + '<br>';
 
-        contentString += '<br>' + "Number of people in the requested demographic: "  + String(flightPath.objInfo.currentValue) + '<br>';
+        contentString += '<br>' + "Number of people in the requested demographic: "  + String("hi") + '<br>';
 
 
         // Replace the info window's content and position.

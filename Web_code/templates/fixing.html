@@ -35,16 +35,9 @@
         for ( var key in MegaDict) {
 
           var value = MegaDict[key]
-          console.log(value)
+          var length = value.length
           coordinates = value[0]
-          shadeValue = value[3]
-          console.log(coordinates)
-          console.log(shadeValue)
-          if (shadeValue == 0){
-            shadeValue = 0.1;
-          }else{
-            shadeValue = shadeValue; 
-          }
+          shadeValue = value[length-1]
 
           //map.currentValue = listofValues[j]
 
