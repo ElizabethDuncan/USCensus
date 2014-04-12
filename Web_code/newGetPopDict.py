@@ -13,7 +13,7 @@ def getpop(poplist, code, level):
 	popString = poplist[0]
 
 	if len(poplist) > 1:
-		for pop in poplist:
+		for pop in poplist[1::]:
 			popString = str(popString) + "," + str(pop)
 	
 
@@ -27,7 +27,7 @@ def getpop(poplist, code, level):
 		link = "http://api.census.gov/data/2010/sf1?key=4be82289939444f20513cd7c3c3eafb42e0d9ccf&get=" + str(popString) + ",NAME&for=block:*&in=state:" + state + "+county:" + county + "+tract:" + tract
 	else:
 		raise Exception("Data level not valid")
-
+	print link
 	r = requests.get(link)
 	myfile = r.json()
 
@@ -45,18 +45,20 @@ def getpop(poplist, code, level):
 			popgroup[name] = pop_unit
 
 	for j in range(1, len(myfile)):
-		pop_unit = int(myfile[j][0])
-		if level == 0: 
-			name = str(myfile[j][3])
-		if level == 1: 
-			name = str(myfile[j][4])
-		if level == 2: 
-			name = str(myfile[j][5])
-		sumgroups(pop_unit, name)
+		num = len(poplist)
+		for k in range(0, num):
+			pop_unit = int(myfile[j][k])
+			if level == 0: 
+				name = str(myfile[j][2 + num])
+			if level == 1: 
+				name = str(myfile[j][3 + num])
+			if level == 2: 
+				name = str(myfile[j][num + 4])
+			sumgroups(pop_unit, name)
 
 	return popgroup
 
 
-#data = getpop(["P0030002", "P0030003", "P0030004","P0030005","P0030006","P0030007","P0030008"], "44009051306", 1)
-
+data = getpop(["P0030002", "P0030003", "P0030004","P0030005","P0030006","P0030007","P0030008"], "44009051306", 1)
+print data
 
