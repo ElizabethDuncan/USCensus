@@ -15,8 +15,6 @@ def getpop(poplist, code, level):
 	if len(poplist) > 1:
 		for pop in poplist:
 			popString = str(popString) + "," + str(pop)
-
-	print popString
 	
 
 	popgroup = {}
@@ -30,7 +28,6 @@ def getpop(poplist, code, level):
 	else:
 		raise Exception("Data level not valid")
 
-	print link
 	r = requests.get(link)
 	myfile = r.json()
 
@@ -60,6 +57,6 @@ def getpop(poplist, code, level):
 	return popgroup
 
 
-data = getpop(["P0030002", "P0030003", "P0030004","P0030005","P0030006","P0030007","P0030008"], "44009051306", 1)
-print data
+#data = getpop(["P0030002", "P0030003", "P0030004","P0030005","P0030006","P0030007","P0030008"], "44009051306", 1)
+
 
