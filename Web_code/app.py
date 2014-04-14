@@ -15,27 +15,6 @@ import pixelcoordinates
 import newGetPopDict
 
 app = Flask(__name__)
-app.debug = True
-app.vars = {}
-app.city = []
-app.cityID = ""
-app.races = []
-app.genders = []
-app.ages = []
-app.keys = []
-app.acsCodes = []
-
-#A dictionary keyed to Fips that contains a duple of LatLong and then the value for the requested demographic
-listofFips = []
-listofValues = []
-listofAcsValues = []
-listofShades = []
-listofAcsValueShades = []
-listofValueShades = []
-FipsPixelDict = {}
-MegaDict = {}
-ValueDict = {}
-AcsDict = {}
 
 codeLookup = {'race AfricanAmerican': 'Sex By Age (Black Or African American Alone)', 'race White': 'Sex By Age (White Alone)', 'race Latino': 'Sex By Age (Hispanic Or Latino)', 'race Asian': 'Sex By Age (Asian Alone)', 'race Hawaiian': '(Native Hawaiian And Other Pacific Islander Alone)', 'race NativeAmerican': 'Sex By Age (American Indian And Alaska Native Alone)', 'race Multiracial': 'Sex By Age (Two Or More Races)', 'gender Male': 'Male', 'gender Female': 'Female', 'age 0': '0', 'age 20': '20', 'age 30': '30', 'age 40': '40', 'age 50': '50', 'age 60': '60', 'age 70': '70', 'age 80': '80'}
 
@@ -58,6 +37,38 @@ def About_Us():
 
 @app.route('/getsurveyresults', methods=['POST'])
 def processData():
+	app.races = []
+	app.genders = []
+	app.ages = []
+	app.acsCodes = []
+	allTractsLatLng = []
+
+	app.debug = True
+	app.vars = {}
+	app.city = []
+	app.cityID = ""
+	app.races = []
+	app.genders = []
+	app.ages = []
+	app.keys = []
+	app.acsCodes = []
+
+	#A dictionary keyed to Fips that contains a duple of LatLong and then the value for the requested demographic
+	listofFips = []
+	listofValues = []
+	listofAcsValues = []
+	listofShades = []
+	listofAcsValueShades = []
+	listofValueShades = []
+	FipsPixelDict = {}
+	MegaDict = {}
+	ValueDict = {}
+	AcsDict = {}
+
+	displayingSomething = False
+
+
+	
 	#Get race data
 	data = ['race AfricanAmerican','race White', 'race Latino', 'race Asian', 'race Hawaiian', 'race NativeAmerican','race Multiracial', 'gender Male', 'gender Female', 'age 0', 'age 20', 'age 30', 'age 40', 'age 50','age 60','age 70','age 80']
 	data_acs = ['widowed','divorced', 'spanish-notAtAll', 'spanish-notWell','spanish-veryWell', 'asian-notAtAll','asian-notWell', 'asian-veryWell']
@@ -93,6 +104,7 @@ def processData():
 
 
 	#Print list of demographics for debugging (City should be listed first
+	
 	for race in app.races:
 		for gender in app.genders:
 			for age in app.ages:
@@ -106,57 +118,68 @@ def processData():
 	#Last paramter is 1, so that we get tract data (in the county)
 
 	allTractsLatLng = fromFIPSlisttoLatLong.getLatLngFromFIPS(allTracts)
+
 	iterator = 0
 	length = len(allTracts)
 	mapDistance = 1.5 / length
 
-	for tract in allTracts:
-		#Get lat long of tract
-		z = 16
-		
-		if tract is app.cityID or (lat - mapDistance < float(allTractsLatLng[iterator][0]) < lat + mapDistance and lng - mapDistance < float(allTractsLatLng[iterator][1]) < lng + mapDistance):
 
-			#Get ACS data
-			if len(app.genders) > 0: 
-				if len(app.acsCodes) - len(app.genders) > 0: 
+	while not displayingSomething:
+
+		for tract in allTracts:
+			print tract
+			#Get lat long of tract
+			z = 16
+			
+
+			if tract is app.cityID or (lat - mapDistance < float(allTractsLatLng[iterator][0]) < lat + mapDistance and lng - mapDistance < float(allTractsLatLng[iterator][1]) < lng + mapDistance):
+				print "tract near requested city"
+				displayingSomething = True
+				#Get ACS data
+				if len(app.genders) > 0: 
+					if len(app.acsCodes) - len(app.genders) > 0: 
+						ACSdata = getACS.getACSdata(tract, app.acsCodes)
+				elif len(app.acsCodes) > 0: 
 					ACSdata = getACS.getACSdata(tract, app.acsCodes)
-			elif len(app.acsCodes) > 0: 
-				ACSdata = getACS.getACSdata(tract, app.acsCodes)
 
-			data = newGetPopDict.getpop(newKeys, tract, 2)
+				data = newGetPopDict.getpop(newKeys, tract, 2)
 
-			#JUST ADDED
-			
-			#For every block in the current tract, get lat and long
-			for item in data:
-				blockFIPS = tract[0:11] +  item
-
-				if blockFIPS not in listofFips:
-					blockGroupIndex = blockFIPS[11:12]
-					listofFips.append(blockFIPS)
-					try: 
-						acsSum = 0
-						for element in ACSdata[1][int(blockGroupIndex)-1]:
-							acsSum = acsSum + int(element)
-						AcsDict[int(blockFIPS)] = acsSum
-					except NameError: 
-						pass	
-					ValueDict[int(blockFIPS)] = data[item]
-
-			#Clear app.vars so subsequent queries can occur
-			app.vars = {}
-			
-			#Get coordinates from FIPS codes
-
-			d2 = fromFIPStoPixels.getLatLngFromFIPS(listofFips, z)
-			for k, v in d2.iteritems():
-				if FipsPixelDict.has_key(k) == False: 
-					FipsPixelDict[k] = v
-				elif FipsPixelDict.has_key(k) == True:
-					FipsPixelDict[k] += v
-			#Load html
+				#JUST ADDED
 				
-		iterator = iterator + 1
+				#For every block in the current tract, get lat and long
+				for item in data:
+					blockFIPS = tract[0:11] +  item
+
+					if blockFIPS not in listofFips:
+						blockGroupIndex = blockFIPS[11:12]
+						listofFips.append(blockFIPS)
+						try: 
+							acsSum = 0
+							for element in ACSdata[1][int(blockGroupIndex)-1]:
+								acsSum = acsSum + int(element)
+							AcsDict[int(blockFIPS)] = acsSum
+						except NameError: 
+							pass	
+						ValueDict[int(blockFIPS)] = data[item]
+
+				#Clear app.vars so subsequent queries can occur
+				app.vars = {}
+				
+				#Get coordinates from FIPS codes
+
+				d2 = fromFIPStoPixels.getLatLngFromFIPS(listofFips, z)
+				for k, v in d2.iteritems():
+					if FipsPixelDict.has_key(k) == False: 
+						FipsPixelDict[k] = v
+					elif FipsPixelDict.has_key(k) == True:
+						FipsPixelDict[k] += v
+				#Load html
+					
+			iterator = iterator + 1
+
+		print "incrememnting mapDistance"
+		mapDistance = mapDistance + 0.01
+		iterator = 0
 
 			#print FipsPixelDict
 	for k,v in FipsPixelDict.iteritems():
@@ -170,8 +193,9 @@ def processData():
 			MegaDict[k2] = v2
 
 	#Iterate through listofValues and listofAcsValues to convert them to a shadeValue
-	print AcsDict.values()
+
 	if len(AcsDict.values()) > 0: 
+		print ValueDict.values()
 		acsMax = float(max(AcsDict.values()))
 		valueMax = float(max(ValueDict.values()))
 
@@ -193,6 +217,7 @@ def processData():
 			shade = ( ValueDict[key][1] + AcsDict[key][1] ) / 2
 			MegaDict[key] = [MegaDict[key], ValueDict[key][0], AcsDict[key][0], shade]
 	else:
+		print ValueDict.values()
 		valueMax = float(max(ValueDict.values()))
 		for key, value in ValueDict.iteritems():
 			if value / valueMax < 0.1: 

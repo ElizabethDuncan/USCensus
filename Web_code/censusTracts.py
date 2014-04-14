@@ -2,9 +2,11 @@ import os
 import requests
 import json
 
-listofTracts = []
+
 
 def listTracts(code):
+	listofTracts = []
+	
 	state = code[0:2]
 	county = code[2:5]
 	tract = code[5:11]

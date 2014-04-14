@@ -81,10 +81,7 @@ def getLatLngFromFIPS(fipsList, zoom):
 	county = initialfips[2:5]
 	tract = initialfips[5:11]
 	block = initialfips[11:15]
-
-	print states[state]
-	print county
-
+	
 	link = "http://tigerweb.geo.census.gov/tigerwebmain/Files/tigerweb_tab10_tabblock_2010_" + states[state] + "_" + county + ".html"
 	r = requests.get(link)
 	text =  r.text

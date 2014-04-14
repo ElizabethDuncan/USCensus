@@ -52,6 +52,8 @@
             strokeWeight: 2,
             fillColor: '#ff0000',
             fillOpacity: shadeValue,
+            blockID: key,
+            blockValue: value[1]
           });
 
           flightPath.setMap(map);
@@ -73,17 +75,19 @@
 
       /** @this {google.maps.Polygon} */
       function showArrays(event) {
+        console.log(event)
 
         // Since this polygon has only one path, we can call getPath()
         // to return the MVCArray of LatLngs.
         /*
         var vertices = this.getPath(); */
-        var contentString = '<b>Block Details</b><br>' ; 
+        var contentString = "<b>Block Details</b><br>" ; 
 
+        contentString += '<br>' + "FIPS ID: "  + this.blockID + '<br>';
 
-        contentString += '<br>' + "Number of people in the requested demographic: "  + String("hi") + '<br>';
+        contentString += "Number of people in the requested demographic: "  + this.blockValue + '<br>';
 
-        contentString += '<br>' + "Number of people in the requested demographic: "  + String("hi") + '<br>';
+        
 
 
         // Replace the info window's content and position.
