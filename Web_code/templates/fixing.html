@@ -45,6 +45,20 @@
             flightPlanCoordinates.push( new google.maps.LatLng(coordinates[i][1], coordinates[i][0]))
           } 
 
+          if (length == 4) {
+          flightPath = new google.maps.Polygon({
+            paths: flightPlanCoordinates,
+            strokeColor: '#ffffff',
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+            fillColor: '#ff0000',
+            fillOpacity: shadeValue,
+            blockID: key,
+            blockValue: value[1],
+            blockAcs: value[2]
+          }); }
+
+          else { 
           flightPath = new google.maps.Polygon({
             paths: flightPlanCoordinates,
             strokeColor: '#ffffff',
@@ -54,17 +68,12 @@
             fillOpacity: shadeValue,
             blockID: key,
             blockValue: value[1]
-          });
+          }); }
 
           flightPath.setMap(map);
           flightPlanCoordinates = [];
 
-          var obj = {
-            currentValue: 3
-          };
-          flightPath.objInfo = obj;
-
-
+  
           google.maps.event.addListener(flightPath, 'click', showArrays);
 
           infoWindow = new google.maps.InfoWindow();
@@ -87,8 +96,9 @@
 
         contentString += "Number of people in the requested demographic: "  + this.blockValue + '<br>';
 
-        
-
+        if (length == 4) { 
+        contentString += "Number of people with requested ACS traits: " + this.blockAcs + '<br>';
+        }
 
         // Replace the info window's content and position.
         infoWindow.setContent(contentString);
