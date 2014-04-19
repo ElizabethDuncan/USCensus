@@ -20,7 +20,7 @@
     //var currentValue = 0;
 
       function initialize() {
-
+        var iterator = 0
         var map_options = {
           center: new google.maps.LatLng({{ lat }}, {{ lng }}),
           zoom: {{ z }},
@@ -32,6 +32,19 @@
 
         var flightPlanCoordinates = [];
         var MegaDict = {{data}}
+
+        var yelp = {{yelpData}}
+        var yelpLength = yelp.length
+        console.log(yelp)
+
+        for (var location in yelp){
+          var currentLatLong = new google.maps.LatLng(yelp[location][0],yelp[location][1]);
+          var marker = new google.maps.Marker({
+            position: currentLatLong,
+            map: map,
+            title: 'competitor'
+          });
+        }
 
         //TODO: REPLACE 3 WITH THE SIZE OF THE LISTOFVALUES
         for ( var key in MegaDict) {
@@ -57,7 +70,8 @@
             fillOpacity: shadeValue,
             blockID: key,
             blockValue: value[1],
-            blockAcs: value[2]
+            blockAcs: value[2],
+            competitorNum: yelpLength
           }); }
 
           else { 
@@ -69,7 +83,8 @@
             fillColor: '#ff0000',
             fillOpacity: shadeValue,
             blockID: key,
-            blockValue: value[1]
+            blockValue: value[1],
+            competitorNum: yelpLength
           }); }
 
           flightPath.setMap(map);
@@ -106,8 +121,14 @@
         $("#blockID").text(this.blockID)
         $("#demoPop").text(this.blockValue)
         if (length == 4) { 
-          $("#ACSvalue").text(this.blockAcs)
+          $("#ACSvalue").text("Population with requested ACS traits: " + this.blockAcs + "")
+        }else{
+          $("#ACSvalue").text("")
         }
+        if (yelpLength != 0){
+          $("#competitorNum").text("Number of nearby competitiors: " + this.competitorNum + "")
+        }
+
         // Replace the info window's content and position.
         //infoWindow.setContent(contentString);
         //infoWindow.setPosition(event.latLng);
@@ -135,15 +156,17 @@
     <div id="sidebars">
     
       <div id="uppersidebar">
-        <p>Submit a Request!</p>
+        <h3 id="bartitle">Submit a Request:</h3>
       </div>
       <div id="lowersidebar">
-        <h3>Census Block</h3>
+        <h3 id="bartitle">Census Block</h3>
 
 
         <p>Block ID: <span id="blockID"> select a block </span></p>
         <p>Demographic population: <span id="demoPop"> select a block </span> </p>
-        <p>Population with requested ACS traits: <span id="ACSvalue"> select a block </span> </p>
+        <span id="ACSvalue"> </span>
+        <br> <br>
+        <span id="competitorNum"> </span>
         
       </div>
     </div>

@@ -11,8 +11,11 @@ body { height: 100%; margin: 0px; padding: 0px }
     right: 0px;
     top: 0px;
     height: 100%;
-    
-    
+}
+
+#bartitle {
+    padding-top: 0px;
+    margin-top: 0px;  
 }
 
 #uppersidebar {
@@ -38,7 +41,7 @@ body { height: 100%; margin: 0px; padding: 0px }
     /*top: 400px;*/
     top: 15px;
     width: 234px;
-    height: 25%;
+    height: 27%;
     padding: 8px 16px 8px 4px;
     background-color: #FEFEFE;
     border: 1px solid #AAAAAA;

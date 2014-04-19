@@ -13,6 +13,7 @@ import getACS
 import fromFIPStoPixels
 import pixelcoordinates
 import newGetPopDict
+import scrapeYelp
 
 app = Flask(__name__)
 
@@ -228,7 +229,15 @@ def processData():
 				shade = value / valueMax
 			MegaDict[key] = [MegaDict[key], ValueDict[key], shade]
 
-	return render_template("fixing.html", data = MegaDict, lat = lat, lng = lng, z = z)
+
+	print [lat, lng]
+	print request.form.get('city')
+	print request.form.get('business')
+	print mapDistance
+	businesses = scrapeYelp.getAddresses([lat, lng], request.form.get('city'), request.form.get('business'), mapDistance)
+	print businesses
+
+	return render_template("fixing.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses)
 
 
 """

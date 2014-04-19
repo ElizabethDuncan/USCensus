@@ -11,7 +11,6 @@ def getLatLong(cityName):
 
 	link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + cityName + "&sensor=false&key=" + API_key
 
-
 	r = requests.get(link)
 	myfile = r.json()
 
