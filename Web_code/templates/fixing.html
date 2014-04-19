@@ -86,24 +86,28 @@
 
       /** @this {google.maps.Polygon} */
       function showArrays(event) {
-        console.log(event)
+        //console.log(event)
 
         // Since this polygon has only one path, we can call getPath()
         // to return the MVCArray of LatLngs.
         /*
         var vertices = this.getPath(); */
-        var contentString = "<b>Block Details</b><br>" ; 
+        // var contentString = "<b>Block Details</b><br>" ; 
 
-        contentString += '<br>' + "FIPS ID: "  + this.blockID + '<br>';
+        // contentString += '<br>' + "FIPS ID: "  + this.blockID + '<br>';
 
-        contentString += "Number of people in the requested demographic: "  + this.blockValue + '<br>';
+        // contentString += "Number of people in the requested demographic: "  + this.blockValue + '<br>';
 
-        if (length == 4) { 
-        contentString += "Number of people with requested ACS traits: " + this.blockAcs + '<br>';
-        }
+        // if (length == 4) { 
+        // contentString += "Number of people with requested ACS traits: " + this.blockAcs + '<br>';
+        // }
+
+
         $("#blockID").text(this.blockID)
         $("#demoPop").text(this.blockValue)
-        
+        if (length == 4) { 
+          $("#ACSvalue").text(this.blockAcs)
+        }
         // Replace the info window's content and position.
         //infoWindow.setContent(contentString);
         //infoWindow.setPosition(event.latLng);
@@ -138,7 +142,8 @@
 
 
         <p>Block ID: <span id="blockID"> select a block </span></p>
-        <p>Demographic pop: <span id="demoPop"> select a block </span> </p>
+        <p>Demographic population: <span id="demoPop"> select a block </span> </p>
+        <p>Population with requested ACS traits: <span id="ACSvalue"> select a block </span> </p>
         
       </div>
     </div>
