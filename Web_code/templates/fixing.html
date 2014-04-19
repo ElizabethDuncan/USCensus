@@ -3,6 +3,8 @@
   <head>
     <link href="static/css/map.css" rel="stylesheet" media="screen">
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <style>
       html, body, #map-canvas {
         width: 100%;
@@ -74,7 +76,7 @@
           flightPlanCoordinates = [];
 
   
-          google.maps.event.addListener(flightPath, 'click', showArrays);
+          google.maps.event.addListener(flightPath, 'mouseover', showArrays);
 
           infoWindow = new google.maps.InfoWindow();
 
@@ -99,12 +101,14 @@
         if (length == 4) { 
         contentString += "Number of people with requested ACS traits: " + this.blockAcs + '<br>';
         }
-
+        $("#blockID").text(this.blockID)
+        $("#demoPop").text(this.blockValue)
+        
         // Replace the info window's content and position.
-        infoWindow.setContent(contentString);
-        infoWindow.setPosition(event.latLng);
+        //infoWindow.setContent(contentString);
+        //infoWindow.setPosition(event.latLng);
 
-        infoWindow.open(map);
+        //infoWindow.open(map);
       }
       }
       google.maps.event.addDomListener(window, 'load', initialize);
@@ -123,9 +127,20 @@
 
     
     <div id="map_canvas"></div>
+
+    <div id="sidebars">
     
-    <div id="sidebar">
-      <p>Save the maps you've drawn? Sign-in!</p>
+      <div id="uppersidebar">
+        <p>Submit a Request!</p>
+      </div>
+      <div id="lowersidebar">
+        <h3>Census Block</h3>
+
+
+        <p>Block ID: <span id="blockID"> select a block </span></p>
+        <p>Demographic pop: <span id="demoPop"> select a block </span> </p>
+        
+      </div>
     </div>
 
 
