@@ -35,13 +35,18 @@
 
         var yelp = {{yelpData}}
         var yelpLength = yelp.length
-        console.log(yelp)
+        var iconSize = new google.maps.Size(10, 10)
+        console.log(iconSize)
 
         for (var location in yelp){
           var currentLatLong = new google.maps.LatLng(yelp[location][0],yelp[location][1]);
           var marker = new google.maps.Marker({
             position: currentLatLong,
             map: map,
+            icon: new google.maps.MarkerImage( "{{ url_for('static', filename='images/warning-icon.png')}}" , undefined, undefined, undefined, new google.maps.Size(30, 30)),
+            
+
+
             title: 'competitor'
           });
         }
