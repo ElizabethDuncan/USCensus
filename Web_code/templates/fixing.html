@@ -173,6 +173,91 @@
     
       <div id="uppersidebar">
         <h3 id="bartitle">Submit a Request:</h3>
+
+
+        <!-- Demographic survey form -->
+        <form class="demographic-form" action="/getsurveyresults" method="post">
+        Enter city (required): <input type="text" name="city">
+        <br>
+        Enter SPECIFIC type of business (ex: Italian restaurant or yoga studio): <input type="text" name="business">
+        
+        <h4 >From 2010 Decennial Survey:</h4>
+          <div class="checkbox">
+          <div class="row">
+            <div class="span4">
+              <h5 >Race:</h5>
+              <input type="checkbox" name="race AfricanAmerican" value="True">African American
+              <br>
+              <input type="checkbox" name="race White" value="True">Caucasian
+              <br>
+              <input type="checkbox" name="race Latino" value="True">Hispanic or Latino
+              <br>
+              <input type="checkbox" name="race Asian" value="True">Asian
+              <br>
+              <input type="checkbox" name="race Hawaiian" value="True">Hawaiian/Pacific Islander
+              <br>
+              <input type="checkbox" name="race NativeAmerican" value="True">Native American
+              <br>
+              <input type="checkbox" name="race Multiracial" value="True">Multiracial
+            </div>
+            <div class="span4">
+              <h5 >Gender:</h5>
+              <input type="checkbox" name="gender Male" value="True">Male
+              <br>
+              <input type="checkbox" name="gender Female" value="True">Female
+            </div>
+            <div class="span4">
+              <h5>Age:</h5>
+              <input type="checkbox" name="age 0" value="True">0-19 years old
+              <br>
+              <input type="checkbox" name="age 20" value="True">20-29 years old
+              <br>
+              <input type="checkbox" name="age 30" value="True">30-39 years old
+              <br>
+              <input type="checkbox" name="age 40" value="True">40-49 years old
+              <br>
+              <input type="checkbox" name="age 50" value="True">50-59 years old
+              <br>
+              <input type="checkbox" name="age 60" value="True">60-69 years old
+              <br>
+              <input type="checkbox" name="age 70" value="True">70-79 years old
+              <br>
+              <input type="checkbox" name="age 80" value="True">80+ years old
+            </div>
+          </div>
+          </div>
+
+          <h4>From 2010 American Community Survey (ACS):</h4>
+          <div class="span4">
+            <h5 >Marital Status:</h5>
+            <input type="checkbox" name="widowed" value="True">Widowed
+            <br>
+            <input type="checkbox" name="divorced" value="True">Divorced
+            
+          </div>
+          <div class="span7">
+            <h5 >Native Language:</h5>
+            <input type="checkbox" name="spanish-notAtAll" value="True">Native Spanish speaker, English spoken 'not at all'
+            <br>
+            <input type="checkbox" name="asian-notAtAll" value="True">Native Asian and Pacific Island languages, English spoken 'not at all'
+            <br>
+            <input type="checkbox" name="spanish-notWell" value="True">Native Spanish speaker, English spoken 'not well'
+            <br>
+            <input type="checkbox" name="asian-notWell" value="True">Native Asian and Pacific Island languages, English spoken 'not well'
+            <br>
+            <input type="checkbox" name="spanish-veryWell" value="True">Native Spanish speaker, English spoken 'very well'
+            <br>
+            <input type="checkbox" name="asian-veryWell" value="True">Native Asian and Pacific Island languages, English spoken 'very well'
+            <br>
+          </div>
+          <br>
+          <div style="text-align: center" class="span10">
+            <input type="submit" id="submitButton" value="Submit">
+            <br>
+          </div>
+
+        </form>
+
       </div>
       <div id="lowersidebar">
         <h3 id="bartitle">Census Block</h3>

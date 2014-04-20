@@ -18,15 +18,24 @@ def find_between( s, first, last ):
         return False
 
 def getAddresses(coor, location, descrip, mapDistance):
+	HaveAddress = False
+	stopAfter = 5
+	iterator = 0
 	addressList = []
 	businnesCoorList = []
+	text = ""
 	link = "http://www.yelp.com/search?find_desc=" + str(descrip) + "&find_loc=" + str(location) + "&ns=1&ls=ba0120fc3b21754c"
 	print link
 
-	r = requests.get(link)
-	text =  r.text
-	print 'requests.status_code:', r.status_code
-	print '<address> in text:', '<address>' in text
+	while not HaveAddress:
+		r = requests.get(link)
+		text =  r.text
+		print 'requests.status_code:', r.status_code
+		print '<address> in text:', '<address>' in text
+		HaveAddress = '<address>' in text
+		iterator = iterator + 1
+		if iterator == stopAfter:
+			break
 
 	places = [m.start() for m in re.finditer('<address>', text)]
 	print places

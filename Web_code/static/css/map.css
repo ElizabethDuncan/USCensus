@@ -18,6 +18,15 @@ body { height: 100%; margin: 0px; padding: 0px }
     margin-top: 0px;  
 }
 
+h4{
+    padding-bottom: 0px;
+    margin-bottom: 0px; 
+}
+
+h5{
+    padding: 0px;
+    margin: 0px;
+}
 #uppersidebar {
     position: relative;
     right: 5px;
