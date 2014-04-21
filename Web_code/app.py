@@ -14,6 +14,7 @@ import fromFIPStoPixels
 import pixelcoordinates
 import newGetPopDict
 import scrapeYelp
+import pickle
 
 app = Flask(__name__)
 
@@ -237,7 +238,28 @@ def processData():
 	businesses = scrapeYelp.getAddresses([lat, lng], request.form.get('city'), request.form.get('business'), mapDistance)
 	print businesses
 
+	with open('megaDict.txt', 'wb') as handle:
+  		pickle.dump(MegaDict, handle)
+  	with open('latLngZ.txt', 'wb') as handle:
+  		pickle.dump([lat, lng, z], handle)
+  	with open('businesses.txt', 'wb') as handle:
+  		pickle.dump(businesses, handle)
+
+
 	return render_template("fixing.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses)
+
+@app.route('/fromMainPage')
+def loadExample():
+
+	with open('megaDict.txt', 'rb') as handle:
+		exampleMegaDict = pickle.loads(handle.read())
+	with open('latLngZ.txt', 'rb') as handle:
+		exampleLat, exampleLng, exampleZ = pickle.loads(handle.read())
+	with open('businesses.txt', 'rb') as handle:
+		exampleBusinesses = pickle.loads(handle.read())
+
+
+	return render_template("fixing.html", data = exampleMegaDict, lat = exampleLat, lng = exampleLng, z = exampleZ, yelpData = exampleBusinesses)
 
 
 """

@@ -34,6 +34,8 @@ def getAddresses(coor, location, descrip, mapDistance):
 		print '<address> in text:', '<address>' in text
 		HaveAddress = '<address>' in text
 		iterator = iterator + 1
+		if "We've found multiple locations matching your search" in text:
+			print "BE MORE SPECIFIC IN YOUR LOCATION"
 		if iterator == stopAfter:
 			break
 
