@@ -230,20 +230,19 @@ def processData():
 				shade = value / valueMax
 			MegaDict[key] = [MegaDict[key], ValueDict[key], shade]
 
+	businesses = []
+	if len(request.form.get('business')) is not 0:
+		businesses = scrapeYelp.getAddresses([lat, lng], request.form.get('city'), request.form.get('business'), mapDistance)
+		print businesses
 
-	print [lat, lng]
-	print request.form.get('city')
-	print request.form.get('business')
-	print mapDistance
-	businesses = scrapeYelp.getAddresses([lat, lng], request.form.get('city'), request.form.get('business'), mapDistance)
-	print businesses
 
-	with open('megaDict.txt', 'wb') as handle:
-  		pickle.dump(MegaDict, handle)
-  	with open('latLngZ.txt', 'wb') as handle:
-  		pickle.dump([lat, lng, z], handle)
-  	with open('businesses.txt', 'wb') as handle:
-  		pickle.dump(businesses, handle)
+
+	# with open('megaDict.txt', 'wb') as handle:
+ #  		pickle.dump(MegaDict, handle)
+ #  	with open('latLngZ.txt', 'wb') as handle:
+ #  		pickle.dump([lat, lng, z], handle)
+ #  	with open('businesses.txt', 'wb') as handle:
+ #  		pickle.dump(businesses, handle)
 
 
 	return render_template("fixing.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses)

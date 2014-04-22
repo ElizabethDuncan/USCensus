@@ -5,6 +5,9 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="{{ url_for('static', filename='js/removeText.js') }}"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
     <style>
       html, body, #map-canvas {
         width: 100%;
@@ -13,6 +16,8 @@
       }
     </style>
     <script>
+
+    
 
     var map;
     var infoWindow;
@@ -169,17 +174,23 @@
     
     <div id="map_canvas"></div>
 
+    
+
     <div id="sidebars">
     
       <div id="uppersidebar">
-        <h3 id="bartitle">Submit a Request:</h3>
+        <h3 id="bartitle">Enter YOUR Information:</h3>
 
+
+      
 
         <!-- Demographic survey form -->
+        <div id="myForm">
+
         <form class="demographic-form" action="/getsurveyresults" method="post">
-        Enter city (required): <input type="text" name="city">
+        Location (required): <input type="text" name="city">
         <br>
-        Enter SPECIFIC type of business (ex: Italian restaurant or yoga studio): <input type="text" name="business">
+        Specific type of business (ex: Italian restaurant or yoga studio): <input type="text" name="business">
         
         <h4 >From 2010 Decennial Survey:</h4>
           <div class="checkbox">
@@ -252,11 +263,13 @@
           </div>
           <br>
           <div style="text-align: center" class="span10">
-            <input type="submit" id="submitButton" value="Submit">
+            <input type="submit" class="deleter ui-link" id="submitButton" value="Submit" onclick="$('#loading').show();">
             <br>
           </div>
 
         </form>
+      </div>
+        <div id="loading" style="display:none;"><img style="width:234px;" src="{{ url_for('static', filename='images/loading_icon.gif')}}" alt="" /></div>
 
       </div>
       <div id="lowersidebar">
