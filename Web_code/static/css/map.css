@@ -13,6 +13,9 @@ body { height: 100%; margin: 0px; padding: 0px }
     height: 100%;
 }
 
+#myForm{
+    visibility: hidden;
+}
 #bartitle {
     padding-top: 0px;
     margin-top: 0px;  
