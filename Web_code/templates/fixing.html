@@ -104,7 +104,7 @@
           google.maps.event.addListener(flightPath, 'mouseout', function (event) {
                     this.setOptions({
                         strokeColor: '#ffffff',
-                        strokeOpacity: 0
+                        strokeOpacity: 0.0
                     });
                 });
 
@@ -191,9 +191,11 @@
         <form class="demographic-form" action="/getsurveyresults" method="post">
         Location (required): <input type="text" name="city">
         <br>
+        <h4> For information about business competitors: </h4>
         Specific type of business (ex: Italian restaurant or yoga studio): <input type="text" name="business">
         
-        <h4 >From 2010 Decennial Survey:</h4>
+        <h4 > For information about the location of demographic groups: </h4>
+        From 2010 Decennial Survey:
           <div class="checkbox">
           <div class="row">
             <div class="span4">
@@ -239,7 +241,7 @@
           </div>
           </div>
 
-          <h4>From 2010 American Community Survey (ACS):</h4>
+          From 2010 American Community Survey (ACS):
           <div class="span4">
             <h5 >Marital Status:</h5>
             <input type="checkbox" name="widowed" value="True">Widowed

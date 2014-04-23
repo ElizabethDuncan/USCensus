@@ -198,37 +198,23 @@ def processData():
 
 	#Iterate through listofValues and listofAcsValues to convert them to a shadeValue
 
-	if len(AcsDict.values()) > 0: 
-		print ValueDict.values()
-		acsMax = float(max(AcsDict.values()))
-		valueMax = float(max(ValueDict.values()))
-
-		for key,value in AcsDict.iteritems():
-			acsValue = AcsDict[key]
-			value = ValueDict[key]
-			if float(acsValue/float(acsMax)) < 0.1:
-				current = 0.1
-			else: 
-				current = acsValue/acsMax
-			AcsDict[key] = [acsValue, current]
-
-			if value/float(valueMax) < 0.1:
-				current = 0.1
-			else: 
-				current = value/valueMax
-			ValueDict[key] = [value, current]
-
-			shade = ( ValueDict[key][1] + AcsDict[key][1] ) / 2
-			MegaDict[key] = [MegaDict[key], ValueDict[key][0], AcsDict[key][0], shade]
-	else:
-		print ValueDict.values()
-		valueMax = float(max(ValueDict.values()))
-		for key, value in ValueDict.iteritems():
-			if value / valueMax < 0.1: 
-				shade = 0.1
-			else: 
-				shade = value / valueMax
+	valueMax = float(max(ValueDict.values()))
+	for key, value in ValueDict.iteritems():
+		#value2 = TotalDict[key]
+		if value / valueMax < 0.1: 
+			shade = 0.1
+		else: 
+			shade = value / valueMax
+		"""
+		if value / value2 < 0.1:
+			percentshade = 0.1
+		else: 
+			percentshade = value / value2 """
+		if len(AcsDict.values()) > 0:
+			MegaDict[key] = [MegaDict[key], ValueDict[key], AcsDict[key], shade]
+		else:
 			MegaDict[key] = [MegaDict[key], ValueDict[key], shade]
+
 
 	businesses = []
 	if len(request.form.get('business')) is not 0:
