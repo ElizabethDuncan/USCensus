@@ -54,6 +54,8 @@ def processData():
 	app.ages = []
 	app.keys = []
 	app.acsCodes = []
+	tractAndPop = {}
+	blockAndPop = {}
 
 	#A dictionary keyed to Fips that contains a duple of LatLong and then the value for the requested demographic
 	listofFips = []
@@ -113,10 +115,8 @@ def processData():
 				app.keys.append(codes_data.getCodes(codeLookup[race], codeLookup[gender], codeLookup[age]))
 	
 	newKeys = [val for subl in app.keys for val in subl]
-	print "newKeys"
-	print newKeys
 
-	allTracts = censusTracts.listTracts(app.cityID)
+	allTracts, tractAndPop = censusTracts.listTracts(app.cityID)
 	#tract = app.cityID
 	#For all the tracts in the specified city (county area), sum the number of people in the specified codes
 	#Last paramter is 1, so that we get tract data (in the county)
@@ -142,14 +142,13 @@ def processData():
 				#Get ACS data
 				if len(app.genders) > 0: 
 					if len(app.acsCodes) - len(app.genders) > 0: 
-						print "PASSING to getACS"
-						print tract
-						print app.acsCodes
 						ACSdata = getACS.getACSdata(tract, app.acsCodes)
 				elif len(app.acsCodes) > 0: 
 					ACSdata = getACS.getACSdata(tract, app.acsCodes)
 
-				data = newGetPopDict.getpop(newKeys, tract, 2)
+				data, tempBlockAndPop = newGetPopDict.getpop(newKeys, tract, 2)
+				#Add dictionary of blocks with total population to dictionary block adn Pop
+				blockAndPop.update(tempBlockAndPop)
 
 				#JUST ADDED
 				
@@ -202,7 +201,7 @@ def processData():
 	#Iterate through listofValues and listofAcsValues to convert them to a shadeValue
 
 	if len(AcsDict.values()) > 0: 
-		print ValueDict.values()
+		#print ValueDict.values()
 		acsMax = float(max(AcsDict.values()))
 		valueMax = float(max(ValueDict.values()))
 
@@ -224,7 +223,7 @@ def processData():
 			shade = ( ValueDict[key][1] + AcsDict[key][1] ) / 2
 			MegaDict[key] = [MegaDict[key], ValueDict[key][0], AcsDict[key][0], shade]
 	else:
-		print ValueDict.values()
+		#print ValueDict.values()
 		valueMax = float(max(ValueDict.values()))
 		for key, value in ValueDict.iteritems():
 			if value / valueMax < 0.1: 
@@ -236,7 +235,7 @@ def processData():
 	businesses = []
 	if len(request.form.get('business')) is not 0:
 		businesses = scrapeYelp.getAddresses([lat, lng], request.form.get('city'), request.form.get('business'), mapDistance)
-		print businesses
+		#print businesses
 
 
 
@@ -246,6 +245,10 @@ def processData():
  #  		pickle.dump([lat, lng, z], handle)
  #  	with open('businesses.txt', 'wb') as handle:
  #  		pickle.dump(businesses, handle)
+
+
+ 	print tractAndPop
+ 	print blockAndPop
 
 
 	return render_template("fixing.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses)
