@@ -114,7 +114,9 @@ def processData():
 			for age in app.ages:
 				app.keys.append(codes_data.getCodes(codeLookup[race], codeLookup[gender], codeLookup[age]))
 	
+
 	newKeys = [val for subl in app.keys for val in subl]
+	newKeys.insert(0,"P0010001")
 
 	allTracts, tractAndPop = censusTracts.listTracts(app.cityID)
 	#tract = app.cityID

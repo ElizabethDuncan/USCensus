@@ -6,7 +6,7 @@ def getpop(wholepoplist, code, level):
 
 	blockAndPop = {}
 	#Add total population to beginning of list
-	wholepoplist.insert(0,"P0010001")
+	
 
 	repeatNum = (len(wholepoplist) / 50)+1
 
@@ -43,6 +43,7 @@ def getpop(wholepoplist, code, level):
 			raise Exception("Data level not valid")
 
 		r = requests.get(link)
+		print link
 		myfile = r.json()
 
 		"""
@@ -76,10 +77,12 @@ def getpop(wholepoplist, code, level):
 					if k == 0:
 						blockAndPop[str(code)+str(name)] = pop_unit
 						continue
+				print k
+				print "sumgroups called when k=" + str(k)
 				sumgroups(pop_unit, name)
 
 
-
+	print popgroup
 	return popgroup, blockAndPop
 
 
