@@ -44,6 +44,9 @@ ul.dropdown-menu-form {
     overflow-y: scroll;
 }
 
+#competitorNum{
+    padding-bottom: 5px;
+}
 .dropdown{
     padding-bottom: 5px;
 }

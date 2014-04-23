@@ -73,7 +73,7 @@ def processData():
 	
 	#Get race data
 	data = ['race AfricanAmerican','race White', 'race Latino', 'race Asian', 'race Hawaiian', 'race NativeAmerican','race Multiracial', 'gender Male', 'gender Female', 'age 0', 'age 20', 'age 30', 'age 40', 'age 50','age 60','age 70','age 80']
-	data_acs = ['widowed','divorced', 'spanish-notAtAll', 'spanish-notWell','spanish-veryWell', 'asian-notAtAll','asian-notWell', 'asian-veryWell']
+	data_acs = ['widowed','divorced', 'spanish-notAtAll', 'spanish-notWell','spanish-veryWell', 'asian-notAtAll','asian-notWell', 'asian-veryWell', 'less-10', '10to15', '15to20', '20to25', '25to30', '30to35', '35to40', '40to45', '45to50', '50to60', '60to75', '75to100', '100to125', '125to150', '150to200', '200more']
 
 	for i in range(0, len(data)): 
 		app.vars[data[i]] = request.form.get(data[i])
@@ -142,6 +142,9 @@ def processData():
 				#Get ACS data
 				if len(app.genders) > 0: 
 					if len(app.acsCodes) - len(app.genders) > 0: 
+						print "PASSING to getACS"
+						print tract
+						print app.acsCodes
 						ACSdata = getACS.getACSdata(tract, app.acsCodes)
 				elif len(app.acsCodes) > 0: 
 					ACSdata = getACS.getACSdata(tract, app.acsCodes)

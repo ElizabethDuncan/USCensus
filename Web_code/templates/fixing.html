@@ -152,7 +152,7 @@
           $("#ACSvalue").text("")
         }
         if (yelpLength != 0){
-          $("#competitorNum").text("Number of nearby competitiors: " + this.competitorNum + "")
+          $("#competitorNum").text("Number of nearby competitors: " + this.competitorNum + "" + "\n" + "  "+ "\n")
         }
 
         // Replace the info window's content and position.
@@ -221,11 +221,7 @@
                 Race:
                 <b class="caret"></b>
               </a>
-              <ul class="dropdown-menu dropdown-menu-form" role="menu" onclick="$('.dropdown-menu').on('click', function(e) {
-if($(this).hasClass('dropdown-menu-form')) {
-    e.stopPropagation();
-}
-});" >
+              <ul class="dropdown-menu dropdown-menu-form" role="menu" onclick="$('.dropdown-menu').on('click', function(e) {if($(this).hasClass('dropdown-menu-form')) {e.stopPropagation();}});" >
 
                 <li>
                   <label class="checkbox">
@@ -377,28 +373,207 @@ if($(this).hasClass('dropdown-menu-form')) {
 
           <h4>From 2010 American Community Survey (ACS):</h4>
           <div class="span4">
-            <h5 >Marital Status:</h5>
-            <input type="checkbox" name="widowed" value="True">Widowed
-            <br>
-            <input type="checkbox" name="divorced" value="True">Divorced
+            <div class="dropdown">
+              <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                Household Income:
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-form" role="menu">
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="less-10" value="True">
+                     Less than $10,000
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="10to15" value="True">
+                     $10,000 to $14,999
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="15to20" value="True">
+                     $15,000 to $19,999
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="20to25" value="True">
+                     $20,000 to $24,999
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="25to30" value="True">
+                     $25,000 to $29,999
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="30to35" value="True">
+                     $30,000 to $34,999
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="35to40" value="True">
+                     $35,000 to $39,999
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="40to45" value="True">
+                     $40,000 to $44,999
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="45to50" value="True">
+                     $45,000 to $49,999
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="50to60" value="True">
+                     $50,000 to $59,999
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="60to75" value="True">
+                     $60,000 to $74,999
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="75to100" value="True">
+                     $75,000 to $99,999
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="100to125" value="True">
+                     $100,000 to $124,999
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="125to150" value="True">
+                     $125,000 to $149,999
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="150to200" value="True">
+                     $150,000 to $199,999
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="200more" value="True">
+                     $200,000 or more
+                    </label>
+                </li>
             
           </div>
-          <div class="span7">
-            <h5 >Native Language:</h5>
-            <input type="checkbox" name="spanish-notAtAll" value="True">Native Spanish speaker, English spoken 'not at all'
-            <br>
-            <input type="checkbox" name="asian-notAtAll" value="True">Native Asian and Pacific Island languages, English spoken 'not at all'
-            <br>
-            <input type="checkbox" name="spanish-notWell" value="True">Native Spanish speaker, English spoken 'not well'
-            <br>
-            <input type="checkbox" name="asian-notWell" value="True">Native Asian and Pacific Island languages, English spoken 'not well'
-            <br>
-            <input type="checkbox" name="spanish-veryWell" value="True">Native Spanish speaker, English spoken 'very well'
-            <br>
-            <input type="checkbox" name="asian-veryWell" value="True">Native Asian and Pacific Island languages, English spoken 'very well'
-            <br>
           </div>
-          <br>
+
+
+          <div class="span4">
+            <div class="dropdown">
+              <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                Marital Status:
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-form" role="menu">
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="widowed" value="True">
+                     Widowed
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="divorced" value="True">
+                     Divorced
+                    </label>
+                </li>
+            
+          </div>
+          </div>
+          <div class="span3">
+             <div class="dropdown">
+              <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                Native Language:
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-form" role="menu">
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="spanish-notAtAll" value="True">
+                     Native Spanish speaker, English spoken 'not at all'
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="spanish-notWell" value="True">
+                     Native Spanish speaker, English spoken 'not well'
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="spanish-veryWell" value="True">
+                     Native Spanish speaker, English spoken 'very well'
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="asian-veryWell" value="True">
+                     Native Asian and Pacific Island languages, English spoken 'very well'
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="asian-notAtAll" value="True">
+                     Native Asian and Pacific Island languages, English spoken 'not at all'
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="asian-notWell" value="True">
+                     Native Asian and Pacific Island languages, English spoken 'not well'
+                    </label>
+                </li>
+
+                
+
+          </div>
+          </div>
           <div style="text-align: center; width:234px;">
             <input type="submit" id="submitButton" value="Submit" onclick="$('#myForm').toggle();
     $('#loading').show();">
@@ -416,8 +591,8 @@ if($(this).hasClass('dropdown-menu-form')) {
 
         <p>Block ID: <span id="blockID"> select a block </span></p>
         <p>Demographic population: <span id="demoPop"> select a block </span> </p>
-        <span id="competitorNum"> </span>
-        <br> <br>
+        <span id="competitorNum" style="margin-bottom: 20px;"> </span>
+        
         <span id="ACSvalue"> </span>
         
         
