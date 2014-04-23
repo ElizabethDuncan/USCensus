@@ -4,13 +4,16 @@ import json
 
 def getpop(wholepoplist, code, level):
 
-
 	repeatNum = (len(wholepoplist) / 50)+1
 
+	begin = 0
+	end = 49
+	popgroup = {}
+
 	for x in range(0, repeatNum):
-		begin = 0
-		end = 49
 		poplist = wholepoplist[begin:end]
+		begin = begin + 50
+		end = end + 50
 
 		""" Returns summed population info based on a list of population codes, a geographic FIPS code, and a 
 		data level. 0 for counties in a state, 1 for tracts in a county, 2 for blocks in a tract """
@@ -25,8 +28,6 @@ def getpop(wholepoplist, code, level):
 			for pop in poplist[1::]:
 				popString = str(popString) + "," + str(pop)
 		
-
-		popgroup = {}
 		
 		if level == 0: 
 			link = "http://api.census.gov/data/2010/sf1?key=4be82289939444f20513cd7c3c3eafb42e0d9ccf&get=" + str(popString) + ",NAME&for=county:*&in=state:" + state
@@ -53,6 +54,7 @@ def getpop(wholepoplist, code, level):
 			else:
 				popgroup[name] = pop_unit
 
+
 		for j in range(1, len(myfile)):
 			num = len(poplist)
 			for k in range(0, num):
@@ -64,8 +66,6 @@ def getpop(wholepoplist, code, level):
 				if level == 2: 
 					name = str(myfile[j][num + 4])
 				sumgroups(pop_unit, name)
-		begin = begin + 50
-		end = end + 50
 
 	return popgroup
 

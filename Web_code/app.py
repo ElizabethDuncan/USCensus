@@ -113,8 +113,6 @@ def processData():
 				app.keys.append(codes_data.getCodes(codeLookup[race], codeLookup[gender], codeLookup[age]))
 	
 	newKeys = [val for subl in app.keys for val in subl]
-	print "newKeys"
-	print newKeys
 
 	allTracts = censusTracts.listTracts(app.cityID)
 	#tract = app.cityID
@@ -131,13 +129,11 @@ def processData():
 	while not displayingSomething:
 
 		for tract in allTracts:
-			print tract
 			#Get lat long of tract
 			z = 16
 			
 
 			if tract is app.cityID or (lat - mapDistance < float(allTractsLatLng[iterator][0]) < lat + mapDistance and lng - mapDistance < float(allTractsLatLng[iterator][1]) < lng + mapDistance):
-				print "tract near requested city"
 				displayingSomething = True
 				#Get ACS data
 				if len(app.genders) > 0: 
@@ -181,7 +177,6 @@ def processData():
 					
 			iterator = iterator + 1
 
-		print "incrememnting mapDistance"
 		mapDistance = mapDistance + 0.01
 		iterator = 0
 
@@ -219,8 +214,6 @@ def processData():
 	businesses = []
 	if len(request.form.get('business')) is not 0:
 		businesses = scrapeYelp.getAddresses([lat, lng], request.form.get('city'), request.form.get('business'), mapDistance)
-		print businesses
-
 
 
 	# with open('megaDict.txt', 'wb') as handle:

@@ -31,7 +31,8 @@ def getCodes(myrace, mygender, myage):
 		#Iterate through keys in concept dictionary
 		for key in Concept_matches:
 			if gender + ": !! " + ages[age] in codes[key]["label"]:
-				Key_matches.append(key)
+				if key not in Key_matches:
+					Key_matches.append(key)
 				#there are occasional instances where more than one key matches the race, gender and age
 				#we break so as only to count each age group once.
 				break

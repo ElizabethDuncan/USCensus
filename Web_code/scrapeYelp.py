@@ -25,26 +25,25 @@ def getAddresses(coor, location, descrip, mapDistance):
 	businnesCoorList = []
 	text = ""
 	link = "http://www.yelp.com/search?find_desc=" + str(descrip) + "&find_loc=" + str(location) + "&ns=1&ls=ba0120fc3b21754c"
-	print link
 
 	while not HaveAddress:
 		r = requests.get(link)
 		text =  r.text
-		print 'requests.status_code:', r.status_code
-		print '<address> in text:', '<address>' in text
+		#print 'requests.status_code:', r.status_code
+		#print '<address> in text:', '<address>' in text
 		HaveAddress = '<address>' in text
 		iterator = iterator + 1
 		if "We've found multiple locations matching your search" in text:
-			print "BE MORE SPECIFIC IN YOUR LOCATION"
-		if iterator == stopAfter:
-			break
+			#print "BE MORE SPECIFIC IN YOUR LOCATION"
+			if iterator == stopAfter:
+				break
 
 	places = [m.start() for m in re.finditer('<address>', text)]
-	print places
+	#print places
 
 
 	for place in places:
-		print place
+		#print place
 		address = find_between(text[int(place)::], "address", "</address>" )
 		address = address.replace("<br>", " ");
 		addressList.append(address)
@@ -53,13 +52,13 @@ def getAddresses(coor, location, descrip, mapDistance):
 
 
 	for address in addressList:
-		print address
+		#print address
 		lat = coor[0]
 		lng = coor[1]
 		currentLatLong = getLatLong.getLatLong(address)
-		print currentLatLong
+		#print currentLatLong
 		if lat - mapDistance < float(currentLatLong[0]) < lat + mapDistance and lng - mapDistance < float(currentLatLong[1]) < lng + mapDistance:
-			print "BUSINESS HERE!"
+			#print "BUSINESS HERE!"
 			businnesCoorList.append(currentLatLong)
 
 	return businnesCoorList
