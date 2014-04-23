@@ -13,10 +13,17 @@ body { height: 100%; margin: 0px; padding: 0px }
     height: 100%;
 }
 
+#sidebars {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 100%;
+}
+
 #myForm{
     visibility: visible;
 }
-#bartitle {
+.bartitle {
     padding-top: 0px;
     margin-top: 0px;  
 }
