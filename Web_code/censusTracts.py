@@ -6,6 +6,7 @@ import json
 
 def listTracts(code):
 	listofTracts = []
+	tractAndPop = {}
 	
 	state = code[0:2]
 	county = code[2:5]
@@ -25,8 +26,9 @@ def listTracts(code):
 			pass
 		else:
 			listofTracts.append(str(state+county+tractID))
+			tractAndPop[str(state+county+tractID)] = item[0]
 
-	return listofTracts
+	return listofTracts, tractAndPop
 
 
 #listTracts("080050056221001")
