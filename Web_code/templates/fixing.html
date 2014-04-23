@@ -13,6 +13,7 @@
   <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.9.1.min.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='js/layout.js') }}"></script>
+   <script type="text/javascript" src="{{ url_for('static', filename='js/dropdown.js') }}"></script>
 
     <style>
       html, body, #map-canvas {
@@ -22,12 +23,6 @@
       }
     </style>
     <script>
-
-     $(function() { 
-        $("#example").popover('show');
-      });
-
-    
 
     var map;
     var infoWindow;
@@ -180,6 +175,17 @@
     // console.log(ne)
     // console.log(sw)
     </script>
+
+    <script type="text/jquery">
+
+    //Javascript for drop down checkbox menu
+      $('.dropdown-menu').on('click', function(e) {
+        console.log("clicked!")
+      if($(this).hasClass('dropdown-menu-form')) {
+          e.stopPropagation();
+      }
+      });
+    </script>
   </head>
 
     
@@ -210,44 +216,161 @@
           <div class="checkbox">
           <div class="row">
             <div class="span4">
-              <h5 >Race:</h5>
-              <input type="checkbox" name="race AfricanAmerican" value="True">African American
-              <br>
-              <input type="checkbox" name="race White" value="True">Caucasian
-              <br>
-              <input type="checkbox" name="race Latino" value="True">Hispanic or Latino
-              <br>
-              <input type="checkbox" name="race Asian" value="True">Asian
-              <br>
-              <input type="checkbox" name="race Hawaiian" value="True">Hawaiian/Pacific Islander
-              <br>
-              <input type="checkbox" name="race NativeAmerican" value="True">Native American
-              <br>
-              <input type="checkbox" name="race Multiracial" value="True">Multiracial
+            <div class="dropdown"> 
+              <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
+                Race:
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-form" role="menu" onclick="$('.dropdown-menu').on('click', function(e) {
+if($(this).hasClass('dropdown-menu-form')) {
+    e.stopPropagation();
+}
+});" >
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="race AfricanAmerican" value="True">
+                     African American
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="race White" value="True">
+                     Caucasian
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="race Latino" value="True">
+                     Hispanic or Latino
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="race Asian" value="True">
+                     Asian
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="race Hawaiian" value="True">
+                     Hawaiian/Pacific Islander
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="race NativeAmerican" value="True">
+                     Native American
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="race Multiracial" value="True">
+                     Multiracial
+                    </label>
+                </li>
+
+              
             </div>
-            <div class="span4">
-              <h5 >Gender:</h5>
-              <input type="checkbox" name="gender Male" value="True">Male
-              <br>
-              <input type="checkbox" name="gender Female" value="True">Female
             </div>
+            <br>
             <div class="span4">
-              <h5>Age:</h5>
-              <input type="checkbox" name="age 0" value="True">0-19 years old
-              <br>
-              <input type="checkbox" name="age 20" value="True">20-29 years old
-              <br>
-              <input type="checkbox" name="age 30" value="True">30-39 years old
-              <br>
-              <input type="checkbox" name="age 40" value="True">40-49 years old
-              <br>
-              <input type="checkbox" name="age 50" value="True">50-59 years old
-              <br>
-              <input type="checkbox" name="age 60" value="True">60-69 years old
-              <br>
-              <input type="checkbox" name="age 70" value="True">70-79 years old
-              <br>
-              <input type="checkbox" name="age 80" value="True">80+ years old
+              <div class="dropdown">
+              <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                Gender:
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-form" role="menu">
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="gender Male" value="True">
+                     Male
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="gender Female" value="True">
+                     Female
+                    </label>
+                </li>
+
+            </div>
+            </div>
+            <br>
+
+            <div class="span4">
+              <div class="dropdown">
+              <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                Age:
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-form" role="menu">
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="age 0" value="True">
+                     0-19 years old
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="age 20" value="True">
+                     20-29 years old
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="age 30" value="True">
+                     30-39 years old
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="age 40" value="True">
+                     40-49 years old
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="age 50" value="True">
+                     50-59 years old
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="age 60" value="True">
+                     60-69 years old
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="age 70" value="True">
+                     70-79 years old
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="age 80" value="True">
+                     80+ years old
+                    </label>
+                </li>
+
+            </div>
             </div>
           </div>
           </div>

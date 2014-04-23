@@ -37,6 +37,16 @@ h5{
     padding: 0px;
     margin: 0px;
 }
+
+ul.dropdown-menu-form {
+    padding: 5px 10px 0;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.dropdown{
+    padding-bottom: 5px;
+}
 #uppersidebar {
     position: relative;
     right: 5px;
