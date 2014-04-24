@@ -98,6 +98,8 @@ def processData():
 	else:
 		density = False 
 
+	print density
+
 	#add each demographic to the corresponding variable list (race, gender and age)
 	for demographic in app.vars:
 		if app.vars[demographic] == 'True':
@@ -229,11 +231,6 @@ def processData():
  #  		pickle.dump([lat, lng, z], handle)
  #  	with open('businesses.txt', 'wb') as handle:
  #  		pickle.dump(businesses, handle)
-
-
- 	print tractAndPop
- 	print blockAndPop
-
 
 	return render_template("fixing.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses, density = density)
 
