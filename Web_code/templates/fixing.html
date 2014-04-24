@@ -8,8 +8,9 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     <!-- Bootstrap -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="static/css/bootstrap.min.css" rel="stylesheet" media="screen">
-  <link href="static/css/census.css" rel="stylesheet" media="screen">
+  <link href=" {{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+  <link href="{{ url_for('static', filename='css/census.css') }}" rel="stylesheet" media="screen">
+
   <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.9.1.min.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='js/layout.js') }}"></script>
@@ -581,12 +582,13 @@
           <div class="span3">
 
 
+
           <label class="checkbox">
                     <input type="radio" name="density" value="True">
                      Heat map based on demographic population density 
                     </label>
                     <label class="checkbox">
-                    <input type="radio" name="total" value="True">
+                    <input type="radio" name="density" value="False">
                      Heat map based on total demographic population
                     </label>
           </div >
