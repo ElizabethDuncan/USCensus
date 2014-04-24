@@ -76,7 +76,7 @@ def processData():
 	#Get race data
 	data = ['race AfricanAmerican','race White', 'race Latino', 'race Asian', 'race Hawaiian', 'race NativeAmerican','race Multiracial', 'gender Male', 'gender Female', 'age 0', 'age 20', 'age 30', 'age 40', 'age 50','age 60','age 70','age 80']
 	data_acs = ['widowed','divorced', 'spanish-notAtAll', 'spanish-notWell','spanish-veryWell', 'asian-notAtAll','asian-notWell', 'asian-veryWell', 'less-10', '10to15', '15to20', '20to25', '25to30', '30to35', '35to40', '40to45', '45to50', '50to60', '60to75', '75to100', '100to125', '125to150', '150to200', '200more']
-
+	data_display = ['density', 'total']
 	for i in range(0, len(data)): 
 		app.vars[data[i]] = request.form.get(data[i])
 	for i in range(0, len(data_acs)): 
@@ -91,6 +91,11 @@ def processData():
 
 	#Note - cast as a string!
 	app.cityID = str(getfips.getfips(lat, lng))
+
+	if request.form.get('density') == True: 
+		density = True
+	else:
+		density = False 
 
 	#add each demographic to the corresponding variable list (race, gender and age)
 	for demographic in app.vars:
@@ -206,11 +211,6 @@ def processData():
 			shade = 0.1
 		else: 
 			shade = value / valueMax
-		"""
-		if value / value2 < 0.1:
-			percentshade = 0.1
-		else: 
-			percentshade = value / value2 """
 		if len(AcsDict.values()) > 0:
 			MegaDict[key] = [MegaDict[key], ValueDict[key], AcsDict[key], shade]
 		else:
@@ -234,7 +234,7 @@ def processData():
  	print blockAndPop
 
 
-	return render_template("fixing.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses)
+	return render_template("fixing.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses, density = density)
 
 @app.route('/fromMainPage')
 def loadExample():
