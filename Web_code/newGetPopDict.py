@@ -5,6 +5,7 @@ import json
 def getpop(wholepoplist, code, level):
 
 	blockAndPop = {}
+	firstRun = True
 	#Add total population to beginning of list
 	
 
@@ -15,6 +16,8 @@ def getpop(wholepoplist, code, level):
 	popgroup = {}
 
 	for x in range(0, repeatNum):
+		if x != 0:
+			False
 		poplist = wholepoplist[begin:end]
 		begin = begin + 50
 		end = end + 50
@@ -43,7 +46,6 @@ def getpop(wholepoplist, code, level):
 			raise Exception("Data level not valid")
 
 		r = requests.get(link)
-		print link
 		myfile = r.json()
 
 		"""
@@ -74,7 +76,7 @@ def getpop(wholepoplist, code, level):
 				if level == 2: 
 					name = str(myfile[j][num + 4])
 					#Remove total population from save numbers 
-					if k == 0:
+					if k == 0 and firstRun:
 						blockAndPop[str(code)+str(name)] = pop_unit
 						continue
 				sumgroups(pop_unit, name)
