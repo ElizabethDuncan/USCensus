@@ -56,17 +56,13 @@
             position: currentLatLong,
             map: map,
             icon: new google.maps.MarkerImage( "{{ url_for('static', filename='images/warning-icon.png')}}" , undefined, undefined, undefined, new google.maps.Size(30, 30)),
-            
-
 
             title: 'competitor'
           });
         }
 
         var density = Boolean({{density}});
-        console.log(density)
         var densityvalues = [];
-        var densityshades = [];
         var DensityCoordinates = [];
 
         if (density == true) {
@@ -86,27 +82,35 @@
             paths: DensityCoordinates });
 
           var area = google.maps.geometry.spherical.computeArea(DensityPath.getPath());
-          var density2 = pop / area
-          densityvalues.push(density2)
-        } }
-
-        for (var j = 0, l = densityvalues.length; j < l; j++) {
-          var largest = Math.max.apply(Math, densityvalues);
-          d = densityvalues[j]
-          if (d / largest < 0.1){
-            shade = 0.1;
-          }else{
-            shade = d / largest;
-          MegaDict[key][length-1] = shade
-          }
-
+          var popdens = (pop / area) * 1000000
+          console.log(key)
+          console.log(pop)
+          console.log(area)
+          console.log(popdens)
+          densityvalues.push(popdens)
+          MegaDict[key][length-1] = popdens
         }
+      }
         for ( var key in MegaDict) {
 
           var value = MegaDict[key]
           var length = value.length
-          coordinates = value[0]
-          shadeValue = value[length-1]
+          var largest = Math.max.apply(Math, densityvalues);
+          var coordinates = value[0];
+          console.log("pop")
+          console.log(value[1])
+          if (density == true) {
+          var d = value[length-1];
+          console.log(key)
+          console.log(d)
+            if (d / largest < 0.1){
+              var shade = 0.1;
+            }else{
+              var shade = d / largest; }
+          var shadeValue = shade;
+          }
+          else {
+            var shadeValue = value[length-1]; }
 
           //map.currentValue = listofValues[j]
 
@@ -124,6 +128,7 @@
             blockID: key,
             blockValue: value[1],
             blockAcs: null,
+            popDensity: null,
             competitorNum: yelpLength
           }); 
 
@@ -131,7 +136,8 @@
           flightPath.blockAcs = value[2] }
 
           if (density == true) { 
-            flightPath.fillColor = '#820BBB'
+            flightPath.fillColor = '#0000CD'
+            popDensity: value[length-1]
           }
 
           flightPath.setMap(map);
@@ -179,6 +185,9 @@
           $("#ACSvalue").text("Population with requested ACS traits: " + this.blockAcs + "")
         }else{
           $("#ACSvalue").text("")
+        }
+        if (density == true) { 
+          $("#Density").text("Population per square kilometer: " + this.popDensity + "")
         }
         if (yelpLength != 0){
           $("#competitorNum").text("Number of nearby competitors: " + this.competitorNum + "" + "\n" + "  "+ "\n")

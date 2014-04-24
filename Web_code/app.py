@@ -94,19 +94,8 @@ def processData():
 
 	#Note - cast as a string!
 	app.cityID = str(getfips.getfips(lat, lng))
-
-	def getdensity(d):
-		print 'hi'
-		print d
-		if d == True:
-			density = "true"
-			return density
-		elif d == False:
-			return "false"
-
-	print app.vars['density']
-	density = "true" if app.vars['density'] else "false"
-	print density
+	
+	Bool = "true" if app.vars['density'] == 'True' else "false"
 
 	#add each demographic to the corresponding variable list (race, gender and age)
 	for demographic in app.vars:
@@ -240,7 +229,7 @@ def processData():
  #  	with open('businesses.txt', 'wb') as handle:
  #  		pickle.dump(businesses, handle)
 
-	return render_template("new.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses, density = density)
+	return render_template("new.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses, density = Bool)
 
 @app.route('/fromMainPage')
 def loadExample():
