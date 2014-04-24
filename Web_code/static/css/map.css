@@ -20,6 +20,10 @@ body { height: 100%; margin: 0px; padding: 0px }
     height: 100%;
 }
 
+#weirdTitle{
+    margin-top: 10px;
+}
+
 #myForm{
     visibility: visible;
 }
