@@ -82,6 +82,7 @@ def processData():
 	for i in range(0, len(data_acs)): 
 		app.vars['acs-' + data_acs[i]] = request.form.get(data_acs[i])
 
+
 	#From name of city requested, get Latitude and Longitude
 	latAndLong = getLatLong.getLatLong(str(request.form.get('city')))
 	lat = latAndLong[0]
