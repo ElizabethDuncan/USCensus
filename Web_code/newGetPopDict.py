@@ -77,12 +77,8 @@ def getpop(wholepoplist, code, level):
 					if k == 0:
 						blockAndPop[str(code)+str(name)] = pop_unit
 						continue
-				print k
-				print "sumgroups called when k=" + str(k)
 				sumgroups(pop_unit, name)
 
-
-	print popgroup
 	return popgroup, blockAndPop
 
 
