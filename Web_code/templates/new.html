@@ -31,6 +31,9 @@
     var shadeValue;
     //var currentValue = 0;
 
+    function lerp(start, end, percent) {
+      return (start + percent*(end - start)); }
+
       function initialize() {
         var iterator = 0
         var map_options = {
@@ -48,7 +51,7 @@
         var yelp = {{yelpData}}
         var yelpLength = yelp.length
         var iconSize = new google.maps.Size(10, 10)
-        //console.log(iconSize)
+        console.log(iconSize)
 
         for (var location in yelp){
           var currentLatLong = new google.maps.LatLng(yelp[location][0],yelp[location][1]);
@@ -62,21 +65,17 @@
         }
 
         var density = Boolean({{density}});
-        var densityvalues = [];
-        var areavalues = [];
+        var values = [];
         var DensityCoordinates = [];
-        var popsum = 0;
-        var areasum = 0;
-        var totdens = 0;
-
-        if (density == true) {
 
         //TODO: REPLACE 3 WITH THE SIZE OF THE LISTOFVALUES
-        for (var key in MegaDict) { 
+       for (var key in MegaDict) { 
           var value = MegaDict[key]
           var coordinates = value[0] 
           var pop = value[1]
           var length = value.length
+
+          if (density == true) {
 
           for ( var i = 0, l = coordinates.length; i < l; i++) {
             DensityCoordinates.push( new google.maps.LatLng(coordinates[i][1], coordinates[i][0]))
@@ -86,43 +85,32 @@
             paths: DensityCoordinates });
 
           var area = google.maps.geometry.spherical.computeArea(DensityPath.getPath()) * Math.pow(10, -6);
-          var popdens = (pop / area)
-          if (pop != 0) {
-          areasum += area
-          popsum += pop }
-          console.log(key)
-          console.log("population:")
-          console.log(pop)
-          console.log("area:")
-          console.log(area)
-          console.log("density:")
-          console.log(popdens)
-          densityvalues.push(popdens)
-          areavalues.push(area)
+          var popdens = (pop / area) 
           MegaDict[key][length-1] = popdens
-        }
-      }
-        totdens = popsum / areasum
-        console.log("total pop, total area, combined denisty")
-        console.log(popsum)
-        console.log(areasum)
-        console.log(totdens)
+          values.push(popdens)
+          console.log("population, area, density")
+          console.log(pop)
+          console.log(area)
+          console.log(popdens)
+        } 
+          else {
+          MegaDict[key][length-1] = pop
+          values.push(pop) }
+      }      
         for ( var key in MegaDict) {
 
           var value = MegaDict[key]
           var length = value.length
-          var largest = Math.max.apply(Math, densityvalues);
+          var largest = Math.max.apply(Math, values);
           var coordinates = value[0];
           if (density == true) {
           var d = value[length-1];
-            if (d / largest < 0.1){
-              var shade = 0.1;
-            }else{
-              var shade = d / largest; }
-          var shadeValue = shade;
-          }
+          var f = d / largest
+          var shadeValue = lerp(0.1, 1, f); } 
           else {
-            var shadeValue = value[length-1]; }
+          var d = value[length-1]
+          var f = d / largest
+          var shadeValue = lerp(0.1, 1, f); }
 
           //map.currentValue = listofValues[j]
 
@@ -141,19 +129,15 @@
             blockValue: value[1],
             blockAcs: null,
             popDensity: null,
-            area: null,
             competitorNum: yelpLength
           }); 
 
           if (length == 4) {
           flightPath.blockAcs = value[2] }
 
-          console.log(value[length-1])
-
           if (density == true) { 
-            flightPath.fillColor = '#0000CD';
-            flightPath.popDensity = value[length-1];
-            flightPath.area = areavalues[i];
+            flightPath.fillColor = '#0000CD'
+            popDensity: value[length-1]
           }
 
           flightPath.setMap(map);
@@ -200,12 +184,13 @@
         if (density == true) { 
           $("#Density").text("Population per square kilometer: " + this.popDensity + " in km² \n")
         }
+
         if (length == 4) { 
           $("#ACSvalue").text("Population with requested ACS traits: " + this.blockAcs + "")
         }else{
           $("#ACSvalue").text("")
         }
-        
+
         if (yelpLength != 0){
           $("#competitorNum").text("Number of nearby competitors: " + this.competitorNum + "" + "\n" + "  "+ "\n")
         }
@@ -235,7 +220,7 @@
 
     //Javascript for drop down checkbox menu
       $('.dropdown-menu').on('click', function(e) {
-        //console.log("clicked!")
+        console.log("clicked!")
       if($(this).hasClass('dropdown-menu-form')) {
           e.stopPropagation();
       }
@@ -665,7 +650,6 @@
 
         <p>Block ID: <span id="blockID"> select a block </span></p>
         <p>Demographic population: <span id="demoPop"> select a block </span> </p>
-        <span id="Density" style="margin-bottom: 20px;"> </span>
         <span id="competitorNum" style="margin-bottom: 20px;"> </span>
         
         <p><span id="ACSvalue"> </span></p>
