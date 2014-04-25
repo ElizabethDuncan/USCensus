@@ -63,6 +63,7 @@
 
         var density = Boolean({{density}});
         var densityvalues = [];
+        var areavalues = [];
         var DensityCoordinates = [];
 
         if (density == true) {
@@ -85,10 +86,14 @@
           var popdens = (pop / area) * 1000000
           console.log("block:")
           console.log(key)
+          console.log("population:")
           console.log(pop)
+          console.log("area:")
           console.log(area)
+          console.log("density:")
           console.log(popdens)
           densityvalues.push(popdens)
+          areavalues.push(area)
           MegaDict[key][length-1] = popdens
         }
       }
@@ -130,6 +135,7 @@
             blockValue: value[1],
             blockAcs: null,
             popDensity: null,
+            area: null,
             competitorNum: yelpLength
           }); 
 
@@ -141,6 +147,7 @@
           if (density == true) { 
             flightPath.fillColor = '#0000CD';
             flightPath.popDensity = value[length-1];
+            flightPath.area = areavalues[i];
           }
 
           flightPath.setMap(map);
@@ -185,7 +192,7 @@
         $("#blockID").text(this.blockID)
         $("#demoPop").text(this.blockValue)
         if (density == true) { 
-          $("#Density").text("Population per square kilometer: " + this.popDensity + "\n")
+          $("#Density").text("Population per square kilometer: " + this.popDensity + " in area " + this.area + "\n")
         }
         if (length == 4) { 
           $("#ACSvalue").text("Population with requested ACS traits: " + this.blockAcs + "")
