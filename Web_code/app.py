@@ -204,17 +204,12 @@ def processData():
 
 	#Iterate through listofValues and listofAcsValues to convert them to a shadeValue
 
-	valueMax = float(max(ValueDict.values()))
 	for key, value in ValueDict.iteritems():
 		#value2 = TotalDict[key]
-		if value / valueMax < 0.1: 
-			shade = 0.1
-		else: 
-			shade = value / valueMax
 		if len(AcsDict.values()) > 0:
-			MegaDict[key] = [MegaDict[key], ValueDict[key], AcsDict[key], shade]
+			MegaDict[key] = [MegaDict[key], ValueDict[key], AcsDict[key], 0]
 		else:
-			MegaDict[key] = [MegaDict[key], ValueDict[key], shade]
+			MegaDict[key] = [MegaDict[key], ValueDict[key], 0]
 
 
 	businesses = []
@@ -229,7 +224,7 @@ def processData():
  #  	with open('businesses.txt', 'wb') as handle:
  #  		pickle.dump(businesses, handle)
 
-	return render_template("new.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses, density = Bool)
+	return render_template("shading.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses, density = Bool)
 
 @app.route('/fromMainPage')
 def loadExample():
