@@ -48,7 +48,7 @@
         var yelp = {{yelpData}}
         var yelpLength = yelp.length
         var iconSize = new google.maps.Size(10, 10)
-        console.log(iconSize)
+        //console.log(iconSize)
 
         for (var location in yelp){
           var currentLatLong = new google.maps.LatLng(yelp[location][0],yelp[location][1]);
@@ -142,9 +142,11 @@
           if (length == 4) {
           flightPath.blockAcs = value[2] }
 
+          console.log(value[length-1])
+
           if (density == true) { 
-            flightPath.fillColor = '#0000CD'
-            popDensity: value[length-1]
+            flightPath.fillColor = '#0000CD';
+            flightPath.popDensity = value[length-1];
           }
 
           flightPath.setMap(map);
@@ -188,14 +190,15 @@
 
         $("#blockID").text(this.blockID)
         $("#demoPop").text(this.blockValue)
+        if (density == true) { 
+          $("#Density").text("Population per square kilometer: " + this.popDensity + "\n")
+        }
         if (length == 4) { 
           $("#ACSvalue").text("Population with requested ACS traits: " + this.blockAcs + "")
         }else{
           $("#ACSvalue").text("")
         }
-        if (density == true) { 
-          $("#Density").text("Population per square kilometer: " + this.popDensity + "")
-        }
+        
         if (yelpLength != 0){
           $("#competitorNum").text("Number of nearby competitors: " + this.competitorNum + "" + "\n" + "  "+ "\n")
         }
@@ -225,7 +228,7 @@
 
     //Javascript for drop down checkbox menu
       $('.dropdown-menu').on('click', function(e) {
-        console.log("clicked!")
+        //console.log("clicked!")
       if($(this).hasClass('dropdown-menu-form')) {
           e.stopPropagation();
       }
@@ -655,6 +658,7 @@
 
         <p>Block ID: <span id="blockID"> select a block </span></p>
         <p>Demographic population: <span id="demoPop"> select a block </span> </p>
+        <span id="Density" style="margin-bottom: 20px;"> </span>
         <span id="competitorNum" style="margin-bottom: 20px;"> </span>
         
         <span id="ACSvalue"> </span>
