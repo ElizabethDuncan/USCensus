@@ -31,6 +31,9 @@
     var shadeValue;
     //var currentValue = 0;
 
+    function lerp(start, end, percent) {
+      return (start + percent*(end - start)); }
+
       function initialize() {
         var iterator = 0
         var map_options = {
@@ -62,20 +65,17 @@
         }
 
         var density = Boolean({{density}});
-        var densityvalues = [];
+        var values = [];
         var DensityCoordinates = [];
-        var popsum = 0;
-        var areasum = 0;
-        var totdens = 0;
-
-        if (density == true) {
 
         //TODO: REPLACE 3 WITH THE SIZE OF THE LISTOFVALUES
-        for (var key in MegaDict) { 
+       for (var key in MegaDict) { 
           var value = MegaDict[key]
           var coordinates = value[0] 
           var pop = value[1]
           var length = value.length
+
+          if (density == true) {
 
           for ( var i = 0, l = coordinates.length; i < l; i++) {
             DensityCoordinates.push( new google.maps.LatLng(coordinates[i][1], coordinates[i][0]))
@@ -85,39 +85,41 @@
             paths: DensityCoordinates });
 
           var area = google.maps.geometry.spherical.computeArea(DensityPath.getPath()) * Math.pow(10, -6);
-          var popdens = (pop / area)
-          if (pop != 0) {
-          areasum += area
-          popsum += pop }
-          console.log(key)
+          var popdens = (pop / area) 
+          if (popdens != 0) {
+          MegaDict[key][length-1] = [popdens, Math.log(popdens)] 
+          values.push(Math.log(popdens))} 
+          else {
+          MegaDict[key][length-1] = [popdens, 0]
+          values.push(0)}
+          console.log("population, area, density")
           console.log(pop)
           console.log(area)
           console.log(popdens)
-          densityvalues.push(popdens)
-          MegaDict[key][length-1] = popdens
         }
-      }
-        totdens = popsum / areasum
-        console.log("total pop, total area, combined denisty")
-        console.log(popsum)
-        console.log(areasum)
-        console.log(totdens)
+          else {
+          if (pop != 0) {
+          MegaDict[key][length-1] = Math.log(pop)
+          values.push(Math.log(pop))} 
+          else {
+          MegaDict[key][length-1] = 0  
+          values.push(0)}
+          }
+      }      
         for ( var key in MegaDict) {
 
           var value = MegaDict[key]
           var length = value.length
-          var largest = Math.max.apply(Math, densityvalues);
+          var largest = Math.max.apply(Math, values);
           var coordinates = value[0];
           if (density == true) {
-          var d = value[length-1];
-            if (d / largest < 0.1){
-              var shade = 0.1;
-            }else{
-              var shade = d / largest; }
-          var shadeValue = shade;
-          }
+          var d = value[length-1][1];
+          var f = d / largest
+          var shadeValue = lerp(0.1, 1, f); } 
           else {
-            var shadeValue = value[length-1]; }
+          var d = value[length-1]
+          var f = d / largest
+          var shadeValue = lerp(0.1, 1, f); }
 
           //map.currentValue = listofValues[j]
 
@@ -144,7 +146,7 @@
 
           if (density == true) { 
             flightPath.fillColor = '#0000CD'
-            popDensity: value[length-1]
+            popDensity: value[length-1][0]
           }
 
           flightPath.setMap(map);
