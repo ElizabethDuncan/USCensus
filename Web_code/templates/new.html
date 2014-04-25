@@ -198,7 +198,7 @@
         $("#blockID").text(this.blockID)
         $("#demoPop").text(this.blockValue)
         if (density == true) { 
-          $("#Density").text("Population per square kilometer: " + this.popDensity + " in area " + this.area + "\n")
+          $("#Density").text("Population per square kilometer: " + this.popDensity + " in km² \n")
         }
         if (length == 4) { 
           $("#ACSvalue").text("Population with requested ACS traits: " + this.blockAcs + "")
@@ -668,7 +668,7 @@
         <span id="Density" style="margin-bottom: 20px;"> </span>
         <span id="competitorNum" style="margin-bottom: 20px;"> </span>
         
-        <span id="ACSvalue"> </span>
+        <p><span id="ACSvalue"> </span></p>
         
         
       </div>
