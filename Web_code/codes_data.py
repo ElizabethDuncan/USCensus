@@ -2,6 +2,7 @@ codes = {"PCT012E071": {"concept": "PCT12E. Sex By Age (Native Hawaiian And Othe
 
 ages = {1: "Under 5 years", 2: "Under 5 years", 3:"Under 5 years", 4:"Under 5 years", 5:"5 to 9 years", 6: "5 to 9 years", 7:"5 to 9 years", 8:"5 to 9 years", 9:"5 to 9 years", 10:"10 to 14 years", 11:"10 to 14 years", 12: "10 to 14 years", 13:"10 to 14 years", 14:"10 to 14 years", 15:"15 to 17 years", 16:"15 to 17 years", 17:"15 to 17 years", 18: "18 and 19 years", 19: "18 and 19 years", 20: "20 years", 21: "21 years", 22: "22 to 24 years", 23: "22 to 24 years", 24: "22 to 24 years", 25: "25 to 29 years", 26: "25 to 29 years", 27: "25 to 29 years", 28: "25 to 29 years", 29:"25 to 29 years", 30: "30 to 34 years", 31:"30 to 34 years", 32:"30 to 34 years", 33:"30 to 34 years", 34:"30 to 34 years", 35:"35 to 39 years", 36:"35 to 39 years", 37:"35 to 39 years", 38:"35 to 39 years", 39:"35 to 39 years", 40: "40 to 44 years", 41:"40 to 44 years", 42:"40 to 44 years", 43:"40 to 44 years", 44:"40 to 44 years", 45:"45 to 49 years", 46:"45 to 49 years", 47:"45 to 49 years", 48:"45 to 49 years", 49:"45 to 49 years", 50: "50 to 54 years", 51:"50 to 54 years", 52:"50 to 54 years", 53:"50 to 54 years", 54:"50 to 54 years", 55:"55 to 59 years", 56:"55 to 59 years", 57:"55 to 59 years", 58:"55 to 59 years", 59:"55 to 59 years", 60: "60 and 61 years", 61: "60 and 61  years", 62: "62 to 64 years", 63:"62 to 64 years", 64:"62 to 64 years", 65: "65 and 66 years", 66: "65 and 66 years", 67: "67 to 69 years", 68:"67 to 69 years", 69:"67 to 69 years", 70:"70 to 74 years", 71:"70 to 74 years", 72:"70 to 74 years", 73:"70 to 74 years", 74:"70 to 74 years", 75: "75 to 79 years", 76:"75 to 79 years", 77:"75 to 79 years", 78:"75 to 79 years", 79:"75 to 79 years", 80:"80 to 84 years", 81 :"80 to 84 years", 82:"80 to 84 years", 83:"80 to 84 years", 84:"80 to 84 years", 85: "85 years and over"}
 def getCodes(myrace, mygender, myage):
+
 	race = myrace
 	gender = mygender
 	agerange = int(myage)
@@ -23,8 +24,10 @@ def getCodes(myrace, mygender, myage):
 	printNextLabel = False
 	#iterate through the codes
 	for key in codes:
+		
 		#iterate through the concepts and labels in the codes
 		if race in codes[key].get("concept", []) and "PCT" not in codes[key].get("concept", []):
+			
 			Concept_matches.append(key)
 
 	for age in range(agerange, agerange_max):

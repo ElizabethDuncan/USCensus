@@ -66,6 +66,7 @@
 
         var density = Boolean({{density}});
         var values = [];
+        var areavalues = [];
         var DensityCoordinates = [];
 
         //TODO: REPLACE 3 WITH THE SIZE OF THE LISTOFVALUES
@@ -86,7 +87,7 @@
 
           var area = google.maps.geometry.spherical.computeArea(DensityPath.getPath()) * Math.pow(10, -6);
           var popdens = (pop / area) 
-          MegaDict[key][length-1] = popdens
+          MegaDict[key][length-1] = [popdens, area]
           values.push(popdens)
           console.log("population, area, density")
           console.log(pop)
@@ -94,8 +95,9 @@
           console.log(popdens)
         } 
           else {
-          MegaDict[key][length-1] = pop
-          values.push(pop) }
+          MegaDict[key][length-1] = [pop, area]
+          values.push(pop)
+        }
       }      
         for ( var key in MegaDict) {
 
@@ -104,11 +106,11 @@
           var largest = Math.max.apply(Math, values);
           var coordinates = value[0];
           if (density == true) {
-          var d = value[length-1];
+          var d = value[length-1][0];
           var f = d / largest
           var shadeValue = lerp(0.1, 1, f); } 
           else {
-          var d = value[length-1]
+          var d = value[length-1][0]
           var f = d / largest
           var shadeValue = lerp(0.1, 1, f); }
 
@@ -129,6 +131,7 @@
             blockValue: value[1],
             blockAcs: null,
             popDensity: null,
+            area: null,
             competitorNum: yelpLength
           }); 
 
@@ -136,8 +139,9 @@
           flightPath.blockAcs = value[2] }
 
           if (density == true) { 
-            flightPath.fillColor = '#0000CD'
-            popDensity: value[length-1]
+            flightPath.fillColor = '#0000CD';
+            flightPath.popDensity= value[length-1][0];
+            flightPath.area = value[length-1][1];
           }
 
           flightPath.setMap(map);
@@ -182,7 +186,7 @@
         $("#blockID").text(this.blockID)
         $("#demoPop").text(this.blockValue)
         if (density == true) { 
-          $("#Density").text("Population per square kilometer: " + this.popDensity + " in km² \n")
+          $("#Density").text("Population per square kilometer: " + this.popDensity + " in km². In area" + this.area + "\n")
         }
 
         if (length == 4) { 
@@ -311,6 +315,13 @@
                   <label class="checkbox">
                     <input type="checkbox" name="race Multiracial" value="True">
                      Multiracial
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="race Other" value="True">
+                     Some Other Race Alone
                     </label>
                 </li>
 
@@ -537,6 +548,80 @@
           </div>
           </div>
 
+          <div class="span3">
+            <div class="dropdown">
+              <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                Education Level (age 25+):
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-form" role="menu">
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="noschool" value="True">
+                     No schooling completed
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="12nodiplomaschool" value="True">
+                     Up to 12th grade, no diploma
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="hsgraduateschool" value="True">
+                     High school graduate, GED, or alternative
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="somecollegeschool" value="True">
+                     Some college, no degree
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="associatesschool" value="True">
+                     Associate's degree
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="bachelorschool" value="True">
+                     Bachelor's degree
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="mastersschool" value="True">
+                     Master's degree
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="professionalschool" value="True">
+                     Professional school degree
+                    </label>
+                </li>
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="doctorate" value="True">
+                     Doctorate degree
+                    </label>
+                </li>
+            
+          </div>
+          </div>
+
 
           <div class="span4">
             <div class="dropdown">
@@ -617,6 +702,8 @@
           </div>
           </div>
 
+          <!--
+
         <h4 id ="weirdTitle">Choose how to display your data:</h4>
           <div class="span3">
 
@@ -632,6 +719,7 @@
                     </label>
           </div >
 
+          -->
 
           <div style="text-align: center; width:270px;">
             <input type="submit" id="submitButton" value="Submit" onclick="$('#myForm').toggle();
@@ -650,6 +738,7 @@
 
         <p>Block ID: <span id="blockID"> select a block </span></p>
         <p>Demographic population: <span id="demoPop"> select a block </span> </p>
+        <span id="Density" style="margin-bottom: 20px;"></span>
         <span id="competitorNum" style="margin-bottom: 20px;"> </span>
         
         <p><span id="ACSvalue"> </span></p>
