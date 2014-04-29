@@ -10,9 +10,9 @@ def getCodes(myrace, mygender, myage):
 
 	if agerange == 0:
 		agerange = agerange + 1
-		agerange_max = agerange+19
+		agerange_max = agerange + 19
 	if agerange == 80:
-		agerange_max = agerange+5
+		agerange_max = agerange + 6
 
 		
 
@@ -32,6 +32,9 @@ def getCodes(myrace, mygender, myage):
 		for key in Concept_matches:
 			if gender + ": !! " + ages[age] in codes[key]["label"]:
 				if key not in Key_matches:
+					print key
+					print codes[key]["label"]
+					print codes[key]["concept"]
 					Key_matches.append(key)
 				#there are occasional instances where more than one key matches the race, gender and age
 				#we break so as only to count each age group once.

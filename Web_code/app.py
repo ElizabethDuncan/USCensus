@@ -224,7 +224,7 @@ def processData():
  #  	with open('businesses.txt', 'wb') as handle:
  #  		pickle.dump(businesses, handle)
 
-	return render_template("shading.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses, density = Bool)
+	return render_template("new.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses, density = Bool)
 
 @app.route('/fromMainPage')
 def loadExample():
