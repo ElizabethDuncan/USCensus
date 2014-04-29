@@ -18,7 +18,7 @@ import pickle
 
 app = Flask(__name__)
 
-codeLookup = {'race AfricanAmerican': 'Sex By Age (Black Or African American Alone)', 'race White': 'Sex By Age (White Alone)', 'race Latino': 'Sex By Age (Hispanic Or Latino)', 'race Asian': 'Sex By Age (Asian Alone)', 'race Hawaiian': '(Native Hawaiian And Other Pacific Islander Alone)', 'race NativeAmerican': 'Sex By Age (American Indian And Alaska Native Alone)', 'race Multiracial': 'Sex By Age (Two Or More Races)', 'gender Male': 'Male', 'gender Female': 'Female', 'age 0': '0', 'age 20': '20', 'age 30': '30', 'age 40': '40', 'age 50': '50', 'age 60': '60', 'age 70': '70', 'age 80': '80'}
+codeLookup = {'race AfricanAmerican': 'Sex By Age (Black Or African American Alone)', 'race White': 'Sex By Age (White Alone, Not Hispanic Or Latino)', 'race Other': 'Sex By Age (Some Other Race Alone)', 'race Latino': 'Sex By Age (Hispanic Or Latino)', 'race Asian': 'Sex By Age (Asian Alone)', 'race Hawaiian': '(Native Hawaiian And Other Pacific Islander Alone)', 'race NativeAmerican': 'Sex By Age (American Indian And Alaska Native Alone)', 'race Multiracial': 'Sex By Age (Two Or More Races)', 'gender Male': 'Male', 'gender Female': 'Female', 'age 0': '0', 'age 20': '20', 'age 30': '30', 'age 40': '40', 'age 50': '50', 'age 60': '60', 'age 70': '70', 'age 80': '80'}
 
 @app.route("/")
 def index():
@@ -74,15 +74,15 @@ def processData():
 
 	
 	#Get race data
-	data = ['race AfricanAmerican','race White', 'race Latino', 'race Asian', 'race Hawaiian', 'race NativeAmerican','race Multiracial', 'gender Male', 'gender Female', 'age 0', 'age 20', 'age 30', 'age 40', 'age 50','age 60','age 70','age 80']
+	data = ['race AfricanAmerican','race White', 'race Latino', 'race Asian', 'race Hawaiian', 'race Other','race NativeAmerican','race Multiracial', 'gender Male', 'gender Female', 'age 0', 'age 20', 'age 30', 'age 40', 'age 50','age 60','age 70','age 80']
 	data_acs = ['widowed','divorced', 'spanish-notAtAll', 'spanish-notWell','spanish-veryWell', 'asian-notAtAll','asian-notWell', 'asian-veryWell', 'less-10', '10to15', '15to20', '20to25', '25to30', '30to35', '35to40', '40to45', '45to50', '50to60', '60to75', '75to100', '100to125', '125to150', '150to200', '200more', 'noschool', '12nodiplomaschool','hsgraduateschool', 'somecollegeschool', 'associatesschool', 'bachelorschool', 'mastersschool', 'professionalschool', 'doctorateschool']
-	data_display = ['density', 'total']
+	#data_display = ['density', 'total']
 
 	for i in range(0, len(data)): 
 		app.vars[data[i]] = request.form.get(data[i])
 	for i in range(0, len(data_acs)): 
 		app.vars['acs-' + data_acs[i]] = request.form.get(data_acs[i])
-	app.vars['density'] = request.form.get('density')
+	#app.vars['density'] = request.form.get('density')
 
 
 	#From name of city requested, get Latitude and Longitude
@@ -95,7 +95,8 @@ def processData():
 	#Note - cast as a string!
 	app.cityID = str(getfips.getfips(lat, lng))
 	
-	Bool = "true" if app.vars['density'] == 'True' else "false"
+	#Bool = "true" if app.vars['density'] == 'True' else "false"
+	Bool = "false"
 
 	#add each demographic to the corresponding variable list (race, gender and age)
 	for demographic in app.vars:
@@ -112,15 +113,19 @@ def processData():
 				app.acsCodes.append(demographic)
 
 
+
 	#Print list of demographics for debugging (City should be listed first
-	
+	print "app.ages:"
+	print app.ages
 	for race in app.races:
 		for gender in app.genders:
 			for age in app.ages:
+				print "about to call codes_Data"
 				app.keys.append(codes_data.getCodes(codeLookup[race], codeLookup[gender], codeLookup[age]))
 	
 
 	newKeys = [val for subl in app.keys for val in subl]
+	print newKeys
 	newKeys.insert(0,"P0010001")
 
 	allTracts, tractAndPop = censusTracts.listTracts(app.cityID)
@@ -237,7 +242,7 @@ def loadExample():
 		exampleBusinesses = pickle.loads(handle.read())
 
 
-	return render_template("fixing.html", data = exampleMegaDict, lat = exampleLat, lng = exampleLng, z = exampleZ, yelpData = exampleBusinesses)
+	return render_template("new.html", data = exampleMegaDict, lat = exampleLat, lng = exampleLng, z = exampleZ, yelpData = exampleBusinesses)
 
 
 """

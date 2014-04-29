@@ -46,6 +46,8 @@ def getpop(wholepoplist, code, level):
 			raise Exception("Data level not valid")
 
 		r = requests.get(link)
+		print "link"
+		print link
 		myfile = r.json()
 
 		"""
