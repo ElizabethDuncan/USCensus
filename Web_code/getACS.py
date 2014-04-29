@@ -84,9 +84,10 @@ def getACSdata(code, pop):
 		blockGroupValues.append(intblockGroupValues)
 
 	
-
+	print blockGroupList
+	print blockGroupValues
 	return (blockGroupList, blockGroupValues)
 
-#getACSdata("36061005400", ["acs-somecollegeschool", "acs-less-10","gender Female"])
+getACSdata("36061005400", ["acs-somecollegeschool", "acs-less-10","gender Female"])
 
 

@@ -129,14 +129,21 @@
             fillOpacity: shadeValue,
             blockID: key,
             blockValue: value[1],
-            blockAcs: null,
+            blockHousehold: null,
+            blockEducation: null,
+            blockMarriage: null,
+            blockLanguage: null,
             popDensity: null,
             area: null,
             competitorNum: yelpLength
           }); 
 
+          //Unpack megadict (3rd argument) to get housing, education, marriage, and language ACS values
           if (length == 4) {
-          flightPath.blockAcs = value[2] }
+          flightPath.blockHousehold = value[2][0],
+          flightPath.blockEducation = value[2][1],
+          flightPath.blockMarriage = value[2][2],
+          flightPath.blockLanguage = value[2][3] }
 
           if (density == true) { 
             flightPath.fillColor = '#0000CD';
@@ -189,11 +196,31 @@
           $("#Density").text("Population per square kilometer: " + this.popDensity + " in km². In area" + this.area + "\n")
         }
 
-        if (length == 4) { 
-          $("#ACSvalue").text("Population with requested ACS traits: " + this.blockAcs + "")
+        //Assign ACS text if the value is not null
+        if (this.blockHousehold != null) { 
+          $("#ACShousehold").text("Population with requested household income: " + this.blockHousehold + "")
         }else{
-          $("#ACSvalue").text("")
+          $("#ACShousehold").text("")
         }
+
+        if (this.blockEducation != null) { 
+          $("#ACSEducation").text("Population with requested education level: " + this.blockEducation + "")
+        }else{
+          $("#ACSEducation").text("")
+        }
+
+        if (this.blockMarriage != null) { 
+          $("#ACSMarriage").text("Population with requested marrital status: " + this.blockMarriage + "")
+        }else{
+          $("#ACSMarriage").text("")
+        }
+
+        if (this.blockLanguage != null) { 
+          $("#ACSLanguage").text("Population with requested native language: " + this.blockLanguage + "")
+        }else{
+          $("#ACSLanguage").text("")
+        }
+
 
         if (yelpLength != 0){
           $("#competitorNum").text("Number of nearby competitors: " + this.competitorNum + "" + "\n" + "  "+ "\n")
@@ -741,7 +768,10 @@
         <span id="Density" style="margin-bottom: 20px;"></span>
         <span id="competitorNum" style="margin-bottom: 20px;"> </span>
         
-        <p><span id="ACSvalue"> </span></p>
+        <p><span id="ACShousehold"> </span></p>
+        <p><span id="ACSEducation"> </span></p>
+        <p><span id="ACSMarriage"> </span></p>
+        <p><span id="ACSLanguage"> </span></p>
         
         
       </div>
