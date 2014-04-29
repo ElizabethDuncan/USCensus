@@ -149,6 +149,21 @@
             flightPath.fillColor = '#0000CD';
             flightPath.popDensity= value[length-1][0];
             flightPath.area = value[length-1][1];
+          }
+
+          flightPath.setMap(map);
+          flightPlanCoordinates = [];
+
+  
+          google.maps.event.addListener(flightPath, 'mouseover', showArrays);
+          google.maps.event.addListener(flightPath, 'mouseout', function (event) {
+                    this.setOptions({
+                        strokeColor: '#ffffff',
+                        strokeOpacity: 0.0
+                    });
+                });
+
+          infoWindow = new google.maps.InfoWindow();
         }
 
       /** @this {google.maps.Polygon} */

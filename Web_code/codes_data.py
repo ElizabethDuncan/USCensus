@@ -14,11 +14,7 @@ def getCodes(myrace, mygender, myage):
 		agerange = agerange + 1
 		agerange_max = agerange + 19
 	if agerange == 80:
-<<<<<<< HEAD
 		agerange_max = agerange + 6
-=======
-		agerange_max = agerange+6
->>>>>>> 460636ab2f12de0d2a1853d2bfe2db0cfabab109
 
 		
 
@@ -40,16 +36,11 @@ def getCodes(myrace, mygender, myage):
 		for key in Concept_matches:
 			if gender + ": !! " + ages[age] in codes[key]["label"]:
 				if key not in Key_matches:
-<<<<<<< HEAD
-					print key
-					print codes[key]["label"]
-					print codes[key]["concept"]
-=======
 					print "in keymatches"
 					if key.endswith('026'):
 						print"ERMYGERDERMYGERDERMYGERDERMYDERD"
 						continue
->>>>>>> 460636ab2f12de0d2a1853d2bfe2db0cfabab109
+
 					Key_matches.append(key)
 
 					#Check that is not buggy key
