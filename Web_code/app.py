@@ -229,7 +229,9 @@ def processData():
  #  	with open('businesses.txt', 'wb') as handle:
  #  		pickle.dump(businesses, handle)
 
-	return render_template("new.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses, density = Bool)
+
+ 	defaultValues = "false"
+	return render_template("new.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses, density = Bool, defaultValues = defaultValues)
 
 @app.route('/fromMainPage')
 def loadExample():
@@ -241,8 +243,9 @@ def loadExample():
 	with open('businesses.txt', 'rb') as handle:
 		exampleBusinesses = pickle.loads(handle.read())
 
+		defaultValues = "true"
 
-	return render_template("new.html", data = exampleMegaDict, lat = exampleLat, lng = exampleLng, z = exampleZ, yelpData = exampleBusinesses)
+	return render_template("new.html", data = exampleMegaDict, lat = exampleLat, lng = exampleLng, z = exampleZ, yelpData = exampleBusinesses, defaultValues = defaultValues)
 
 
 """

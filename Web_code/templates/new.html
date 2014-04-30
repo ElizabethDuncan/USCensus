@@ -6,6 +6,13 @@
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+
+    <!-- Reveal popup dependencies -->
+    <link href=" {{ url_for('static', filename='css/reveal.css') }}" rel="stylesheet" media="screen">
+    <link href=" {{ url_for('static', filename='js/jquery.reveal.js') }}" rel="stylesheet" media="screen">
+    <link href=" {{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+
     <!-- Bootstrap -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href=" {{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
@@ -25,6 +32,71 @@
       }
     </style>
     <script>
+
+    var dataRace = ['race AfricanAmerican','race White', 'race Latino', 'race Asian', 'race Hawaiian', 'race Other','race NativeAmerican','race Multiracial'];
+    var dataGender = ['gender Male', 'gender Female']
+    var dataAge = ['age 0', 'age 20', 'age 30', 'age 40', 'age 50','age 60','age 70','age 80']
+
+
+    function addToBasket(form) {
+        var isRaceChecked = false;
+        var isGenderChecked = false;
+        var isAgeChecked = false;
+        var isLocationSpecified = false;
+        var allGood = false;
+
+        var mystring = document.getElementsByName('city')[0].value; 
+       
+
+        if(mystring) {
+          isLocationSpecified = true;
+        }else{
+          
+          alert ('Please enter a location (ex: house address, intersection or town)');
+        }
+
+        
+
+        for (var race in dataRace) { 
+          var chks = document.getElementsByName(dataRace[race]);
+          
+          if ( chks[0].checked == true) {
+            isRaceChecked = true;
+          }
+        }
+        for (var gender in dataGender) { 
+          var chks = document.getElementsByName(dataGender[gender]);
+          if ( chks[0].checked == true) {
+            isGenderChecked = true;
+          }
+        }
+        for (var age in dataAge) { 
+          var chks = document.getElementsByName(dataAge[age]);
+          if ( chks[0].checked == true) {
+            isAgeChecked = true;
+          }
+        }
+        
+        if ( isRaceChecked == false ) {
+          alert("Please select a race. Then click submit.");
+        }
+        if ( isGenderChecked == false ) {
+          alert("Please select a gender. Then click submit.");
+        }
+        if ( isAgeChecked == false ) {
+          alert("Please select a age. Then click submit.");
+        }
+
+        if (isRaceChecked == true && isGenderChecked == true && isAgeChecked == true && isLocationSpecified == true){
+         
+          $('#myForm').toggle();
+          $('#loading').show();
+          allGood = true;
+        }
+        return allGood;
+      }
+
+    
 
     var map;
     var infoWindow;
@@ -51,7 +123,7 @@
         var yelp = {{yelpData}}
         var yelpLength = yelp.length
         var iconSize = new google.maps.Size(10, 10)
-        console.log(iconSize)
+        
 
         for (var location in yelp){
           var currentLatLong = new google.maps.LatLng(yelp[location][0],yelp[location][1]);
@@ -173,21 +245,8 @@
                         strokeColor: '#000000',
                         strokeOpacity: 1.0
                     });
-        //console.log(event)
 
-        // Since this polygon has only one path, we can call getPath()
-        // to return the MVCArray of LatLngs.
-        /*
-        var vertices = this.getPath(); */
-        // var contentString = "<b>Block Details</b><br>" ; 
-
-        // contentString += '<br>' + "FIPS ID: "  + this.blockID + '<br>';
-
-        // contentString += "Number of people in the requested demographic: "  + this.blockValue + '<br>';
-
-        // if (length == 4) { 
-        // contentString += "Number of people with requested ACS traits: " + this.blockAcs + '<br>';
-        // }
+      
 
 
         $("#blockID").text(this.blockID)
@@ -251,7 +310,6 @@
 
     //Javascript for drop down checkbox menu
       $('.dropdown-menu').on('click', function(e) {
-        console.log("clicked!")
       if($(this).hasClass('dropdown-menu-form')) {
           e.stopPropagation();
       }
@@ -263,7 +321,16 @@
     <div id="map_canvas"></div>
 
     
-    <!-- Example pop-up window -->
+    <!-- Welcome pop-up window -->
+    <div id="myModal" class="reveal-modal">
+       <h1>Modal Title</h1>
+       <p>Any content could go in here.</p>
+       <a class="close-reveal-modal">&#215;</a>
+    </div>
+
+    <a href="#" class="big-link" data-reveal-id="myModal" data-animation="fade">
+      Fade
+    </a>
     
 
     <div id="sidebars">
@@ -749,8 +816,7 @@
           -->
 
           <div style="text-align: center; width:270px;">
-            <input type="submit" id="submitButton" value="Submit" onclick="$('#myForm').toggle();
-    $('#loading').show();">
+            <input type="submit" id="submitButton" value="Submit" onclick="return addToBasket();">
             <br>
           </div>
 
@@ -776,6 +842,13 @@
         
       </div>
     </div>
+
+    <script type="text/javascript">
+      
+    </script>
+
+
+
 
 
 </html>
