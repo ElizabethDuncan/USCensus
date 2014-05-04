@@ -46,8 +46,6 @@ def getpop(wholepoplist, code, level):
 			raise Exception("Data level not valid")
 
 		r = requests.get(link)
-		print "link"
-		print link
 		myfile = r.json()
 
 		"""
@@ -82,6 +80,7 @@ def getpop(wholepoplist, code, level):
 						blockAndPop[str(code)+str(name)] = pop_unit
 						continue
 				sumgroups(pop_unit, name)
+		firstRun = False
 
 	return popgroup, blockAndPop
 

@@ -115,17 +115,13 @@ def processData():
 
 
 	#Print list of demographics for debugging (City should be listed first
-	print "app.ages:"
-	print app.ages
 	for race in app.races:
 		for gender in app.genders:
 			for age in app.ages:
-				print "about to call codes_Data"
 				app.keys.append(codes_data.getCodes(codeLookup[race], codeLookup[gender], codeLookup[age]))
 	
 
 	newKeys = [val for subl in app.keys for val in subl]
-	print newKeys
 	newKeys.insert(0,"P0010001")
 
 	allTracts, tractAndPop = censusTracts.listTracts(app.cityID)
@@ -158,7 +154,6 @@ def processData():
 
 				data, tempBlockAndPop = newGetPopDict.getpop(newKeys, tract, 2)
 				#Add dictionary of blocks with total population to dictionary block adn Pop
-				blockAndPop.update(tempBlockAndPop)
 
 				#JUST ADDED
 				
@@ -173,16 +168,23 @@ def processData():
 							acsSum = 0
 							for element in ACSdata[1][int(blockGroupIndex)-1]:
 								acsSum = acsSum + int(element)
-							AcsDict[int(blockFIPS)] = acsSum
+							grouppop = ACSdata[2][int(blockGroupIndex) -1]
+							blockpop = tempBlockAndPop[blockFIPS]
+							print grouppop
+							if int(grouppop) == 0:
+								newacs = 0
+							else:
+								newacs = int(acsSum * (float(blockpop) / float(grouppop)))
+							AcsDict[int(blockFIPS)] = newacs
+							
 						except NameError: 
 							pass	
 						ValueDict[int(blockFIPS)] = data[item]
 
 				#Clear app.vars so subsequent queries can occur
 				app.vars = {}
-				
 				#Get coordinates from FIPS codes
-
+				
 				d2 = fromFIPStoPixels.getLatLngFromFIPS(listofFips, z)
 				for k, v in d2.iteritems():
 					if FipsPixelDict.has_key(k) == False: 

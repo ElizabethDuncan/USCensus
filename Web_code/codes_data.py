@@ -36,17 +36,11 @@ def getCodes(myrace, mygender, myage):
 		for key in Concept_matches:
 			if gender + ": !! " + ages[age] in codes[key]["label"]:
 				if key not in Key_matches:
-					print "in keymatches"
 					if key.endswith('026'):
-						print"ERMYGERDERMYGERDERMYGERDERMYDERD"
 						continue
-
 					Key_matches.append(key)
 
 					#Check that is not buggy key
-					
-					print "key"
-					print key
 				#there are occasional instances where more than one key matches the race, gender and age
 				#we break so as only to count each age group once.
 				break

@@ -24,6 +24,7 @@ def getACSdata(code, pop):
 	popstring = []
 	blockGroupList = []
 	blockGroupValues = []
+	blockPopList = []
 	interest = 0
 
 	
@@ -76,17 +77,20 @@ def getACSdata(code, pop):
 	r = requests.get(link)
 	myfile = r.json()
 
+	link2 = "http://api.census.gov/data/2010/sf1?key=4be82289939444f20513cd7c3c3eafb42e0d9ccf&get=P0010001&for=block group:*&in=state:" + state + "+county:" + county + "+tract:" + tract
+	r2 = requests.get(link2)
+	myfile2 = r2.json()
+
 	for blockGroup in range(1,len(myfile)):
 		blockGroupList.append(myfile[blockGroup][-1])
+		blockPopList.append(myfile2[blockGroup][0])
 		intblockGroupValues = []
 		for demographic in range(0,interest):
 			intblockGroupValues.append(myfile[blockGroup][demographic])
 		blockGroupValues.append(intblockGroupValues)
 
-	
-	print blockGroupList
-	print blockGroupValues
-	return (blockGroupList, blockGroupValues)
+
+	return (blockGroupList, blockGroupValues, blockPopList)
 
 getACSdata("36061005400", ["acs-somecollegeschool", "acs-less-10","gender Female"])
 
