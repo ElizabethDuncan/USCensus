@@ -206,12 +206,14 @@
             blockMarriage: null,
             blockLanguage: null,
             popDensity: null,
+            blockACS: null,
             area: null,
             competitorNum: yelpLength
           }); 
 
           //Unpack megadict (3rd argument) to get housing, education, marriage, and language ACS values
           if (length == 4) {
+          flightPath.blockACS = value[2],
           flightPath.blockHousehold = value[2][0],
           flightPath.blockEducation = value[2][1],
           flightPath.blockMarriage = value[2][2],
@@ -251,6 +253,7 @@
 
         $("#blockID").text(this.blockID)
         $("#demoPop").text(this.blockValue)
+        $("#blockACS").text("ACS population:" + this.blockACS)
         if (density == true) { 
           $("#Density").text("Population per square kilometer: " + this.popDensity + " in km². In area" + this.area + "\n")
         }
@@ -321,16 +324,7 @@
     <div id="map_canvas"></div>
 
     
-    <!-- Welcome pop-up window -->
-    <div id="myModal" class="reveal-modal">
-       <h1>Modal Title</h1>
-       <p>Any content could go in here.</p>
-       <a class="close-reveal-modal">&#215;</a>
-    </div>
-
-    <a href="#" class="big-link" data-reveal-id="myModal" data-animation="fade">
-      Fade
-    </a>
+   
     
 
     <div id="sidebars">
@@ -831,6 +825,7 @@
 
         <p>Block ID: <span id="blockID"> select a block </span></p>
         <p>Demographic population: <span id="demoPop"> select a block </span> </p>
+         <span id="blockACS" style="margin-bottom: 20px;"></span>
         <span id="Density" style="margin-bottom: 20px;"></span>
         <span id="competitorNum" style="margin-bottom: 20px;"> </span>
         
@@ -843,9 +838,15 @@
       </div>
     </div>
 
-    <script type="text/javascript">
-      
-    </script>
+     <!-- Example pop-up window -->
+    <a href="#" class="big-link" data-reveal-id="myModal" data-animation="fade">
+      Fade
+    </a>
+    <div id="myModal" class="reveal-modal">
+     <h1>Modal Title</h1>
+     <p>Any content could go in here.</p>
+     <a class="close-reveal-modal">&#215;</a>
+    </div>
 
 
 

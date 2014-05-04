@@ -20,6 +20,11 @@ body { height: 100%; margin: 0px; padding: 0px }
     height: 100%;
 }
 
+
+.reveal-modal {
+    position: absolute;
+}
+
 #weirdTitle{
     padding-top: 10px;
 }
