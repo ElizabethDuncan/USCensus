@@ -252,7 +252,7 @@
 
         $("#blockID").text(this.blockID)
         $("#demoPop").text(this.blockValue)
-        $("#blockACS").text("ACS population:" + this.blockACS)
+        $("#blockACS").text("Population with requested household income:" + this.blockACS + "\n")
         if (density == true) { 
           $("#Density").text("Population per square kilometer: " + this.popDensity + " in km². In area" + this.area + "\n")
         }
@@ -718,6 +718,22 @@
               </a>
               <ul class="dropdown-menu dropdown-menu-form" role="menu">
 
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="married" value="True">
+                     Married
+                    </label>
+                </li>
+
+
+                <li>
+                  <label class="checkbox">
+                    <input type="checkbox" name="nevermarried" value="True">
+                     Never Married
+                    </label>
+                </li>
+
                 <li>
                   <label class="checkbox">
                     <input type="checkbox" name="widowed" value="True">
@@ -824,7 +840,7 @@
 
         <p>Block ID: <span id="blockID"> select a block </span></p>
         <p>Demographic population: <span id="demoPop"> select a block </span> </p>
-         <span id="blockACS" style="margin-bottom: 20px;"></span>
+         <p><span id="blockACS" style="margin-bottom: 20px;"></span><p>
         <span id="Density" style="margin-bottom: 20px;"></span>
         <span id="competitorNum" style="margin-bottom: 20px;"> </span>
         
