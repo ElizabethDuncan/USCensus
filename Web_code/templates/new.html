@@ -212,11 +212,15 @@
           }); 
 
           //Unpack megadict (3rd argument) to get housing, education, marriage, and language ACS values
+          // 0 is income
+          //1 is marital
+          // 2 is language
+          //3 is education
           if (length == 4) {
-          flightPath.blockHousehold = value[2]['income'],
-          flightPath.blockEducation = value[2]['education'],
-          flightPath.blockMarriage = value[2]['marital'],
-          flightPath.blockLanguage = value[2]['language'], }
+          flightPath.blockHousehold = value[2][0],
+          flightPath.blockEducation = value[2][3],
+          flightPath.blockMarriage = value[2][1],
+          flightPath.blockLanguage = value[2][2] }
 
           if (density == true) { 
             flightPath.fillColor = '#0000CD';
@@ -252,7 +256,7 @@
 
         $("#blockID").text(this.blockID)
         $("#demoPop").text(this.blockValue)
-        $("#blockACS").text("Population with requested household income:" + this.blockACS + "\n")
+        
         if (density == true) { 
           $("#Density").text("Population per square kilometer: " + this.popDensity + " in km². In area" + this.area + "\n")
         }

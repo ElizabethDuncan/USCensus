@@ -84,7 +84,7 @@ def processData():
 	
 	#Get race data
 	data = ['race AfricanAmerican','race White', 'race Latino', 'race Asian', 'race Hawaiian', 'race Other','race NativeAmerican','race Multiracial', 'gender Male', 'gender Female', 'age 0', 'age 20', 'age 30', 'age 40', 'age 50','age 60','age 70','age 80']
-	data_acs = {('widowed','divorced') : 'marital', ('spanish-notAtAll', 'spanish-notWell','spanish-veryWell', 'asian-notAtAll','asian-notWell', 'asian-veryWell') : 'language', ('less-10', '10to15', '15to20', '20to25', '25to30', '30to35', '35to40', '40to45', '45to50', '50to60', '60to75', '75to100', '100to125', '125to150', '150to200', '200more') : 'income', ('noschool', '12nodiplomaschool','hsgraduateschool', 'somecollegeschool', 'associatesschool', 'bachelorschool', 'mastersschool', 'professionalschool', 'doctorateschool') : 'education'}
+	data_acs = {('widowed','divorced', 'married', 'nevermarried') : 'marital', ('spanish-notAtAll', 'spanish-notWell','spanish-veryWell', 'asian-notAtAll','asian-notWell', 'asian-veryWell') : 'language', ('less-10', '10to15', '15to20', '20to25', '25to30', '30to35', '35to40', '40to45', '45to50', '50to60', '60to75', '75to100', '100to125', '125to150', '150to200', '200more') : 'income', ('noschool', '12nodiplomaschool','hsgraduateschool', 'somecollegeschool', 'associatesschool', 'bachelorschool', 'mastersschool', 'professionalschool', 'doctorateschool') : 'education'}
 	acskeys = data_acs.keys()
 	acstypes = []
 	#data_display = ['density', 'total']
@@ -213,13 +213,13 @@ def processData():
 						try: 
 							AcsDict[int(blockFIPS)] = {}
 							if 'income' in acstypes:
-								AcsDict[int(blockFIPS)]['income'] = int(sum_acs(incomedata))
+								AcsDict[int(blockFIPS)][0] = int(sum_acs(incomedata))
 							if 'marital' in acstypes:
-								AcsDict[int(blockFIPS)]['marital'] = int(sum_acs(maritaldata))
+								AcsDict[int(blockFIPS)][1] = int(sum_acs(maritaldata))
 							if 'language' in acstypes:
-								AcsDict[int(blockFIPS)]['language'] = int(sum_acs(languagedata))
+								AcsDict[int(blockFIPS)][2] = int(sum_acs(languagedata))
 							if 'education' in acstypes:
-								AcsDict[int(blockFIPS)]['education'] = int(sum_acs(educationdata))
+								AcsDict[int(blockFIPS)][3] = int(sum_acs(educationdata))
 							
 						except NameError: 
 							pass	
@@ -262,7 +262,7 @@ def processData():
 		else:
 			MegaDict[key] = [MegaDict[key], ValueDict[key], 0]
 
-	print MegaDict[250250203033000]
+	print MegaDict[360610042001000]
 	businesses = []
 	if len(request.form.get('business')) is not 0:
 		businesses = scrapeYelp.getAddresses([lat, lng], request.form.get('city'), request.form.get('business'), mapDistance)
