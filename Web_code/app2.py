@@ -53,7 +53,15 @@ def processData():
 	app.genders = []
 	app.ages = []
 	app.keys = []
-	app.acsCodes = []
+	app.maritalcodes = []
+	app.languagecodes = []
+	app.incomecodes = []
+	app.educationcodes = []
+	app.gendercodes = []
+	incomedata = []
+	maritaldata = []
+	languagedata = []
+	educationdata = []
 	tractAndPop = {}
 	blockAndPop = {}
 
@@ -68,6 +76,7 @@ def processData():
 	MegaDict = {}
 	ValueDict = {}
 	AcsDict = {}
+	acstypes = []
 
 	displayingSomething = False
 
@@ -75,13 +84,24 @@ def processData():
 	
 	#Get race data
 	data = ['race AfricanAmerican','race White', 'race Latino', 'race Asian', 'race Hawaiian', 'race Other','race NativeAmerican','race Multiracial', 'gender Male', 'gender Female', 'age 0', 'age 20', 'age 30', 'age 40', 'age 50','age 60','age 70','age 80']
-	data_acs = ['widowed','divorced', 'spanish-notAtAll', 'spanish-notWell','spanish-veryWell', 'asian-notAtAll','asian-notWell', 'asian-veryWell', 'less-10', '10to15', '15to20', '20to25', '25to30', '30to35', '35to40', '40to45', '45to50', '50to60', '60to75', '75to100', '100to125', '125to150', '150to200', '200more', 'noschool', '12nodiplomaschool','hsgraduateschool', 'somecollegeschool', 'associatesschool', 'bachelorschool', 'mastersschool', 'professionalschool', 'doctorateschool']
+	data_acs = {('widowed','divorced') : 'marital', ('spanish-notAtAll', 'spanish-notWell','spanish-veryWell', 'asian-notAtAll','asian-notWell', 'asian-veryWell') : 'language', ('less-10', '10to15', '15to20', '20to25', '25to30', '30to35', '35to40', '40to45', '45to50', '50to60', '60to75', '75to100', '100to125', '125to150', '150to200', '200more') : 'income', ('noschool', '12nodiplomaschool','hsgraduateschool', 'somecollegeschool', 'associatesschool', 'bachelorschool', 'mastersschool', 'professionalschool', 'doctorateschool') : 'education'}
+	acskeys = data_acs.keys()
+	acstypes = []
 	#data_display = ['density', 'total']
 
 	for i in range(0, len(data)): 
 		app.vars[data[i]] = request.form.get(data[i])
-	for i in range(0, len(data_acs)): 
-		app.vars['acs-' + data_acs[i]] = request.form.get(data_acs[i])
+
+	for i in range(0, len(acskeys)): 
+		for j in range(0, len(acskeys[i])):
+			lookup = acskeys[i][j]
+			if request.form.get(lookup) == 'True':
+				app.vars['acs-' + lookup] = request.form.get(lookup), data_acs[acskeys[i]]
+				if data_acs[acskeys[i]] not in acstypes:
+					acstypes.append(data_acs[acskeys[i]])
+			else:
+				app.vars['acs-' + lookup] = request.form.get(lookup)
+
 	#app.vars['density'] = request.form.get('density')
 
 
@@ -97,10 +117,9 @@ def processData():
 	
 	#Bool = "true" if app.vars['density'] == 'True' else "false"
 	Bool = "false"
-
 	#add each demographic to the corresponding variable list (race, gender and age)
 	for demographic in app.vars:
-		if app.vars[demographic] == 'True':
+		if "True" in str(app.vars[demographic]):
 			data = True
 			if "race" in demographic:
 				app.races.append(demographic)
@@ -110,11 +129,21 @@ def processData():
 				app.ages.append(demographic)
 			if "acs" in demographic or "gender" in demographic:
 				#Gets acs checked data as well as requested gender
-				print "demographic"
-				print demographic
-				app.acsCodes.append(demographic)
+				value = str(app.vars[demographic])
+				if 'income' in value:
+					app.incomecodes.append(demographic)
+				if 'marital' in value:
+					app.maritalcodes.append(demographic)
+				if 'education' in value:
+					app.educationcodes.append(demographic)
+				if 'language' in value:
+					app.languagecodes.append(demographic)
 
-
+	print app.incomecodes
+	print app.maritalcodes
+	print app.languagecodes
+	print app.educationcodes
+	print app.genders
 
 	#Print list of demographics for debugging (City should be listed first
 	for race in app.races:
@@ -148,18 +177,31 @@ def processData():
 			if tract is app.cityID or (lat - mapDistance < float(allTractsLatLng[iterator][0]) < lat + mapDistance and lng - mapDistance < float(allTractsLatLng[iterator][1]) < lng + mapDistance):
 				displayingSomething = True
 				#Get ACS data
-				print app.acsCodes
-				if len(app.genders) > 0: 
-					if len(app.acsCodes) - len(app.genders) > 0: 
-						ACSdata = getACS.getACSdata(tract, app.acsCodes)
-				elif len(app.acsCodes) > 0: 
-					ACSdata = getACS.getACSdata(tract, app.acsCodes)
+				if len(acstypes) > 0:
+					if 'income' in acstypes:
+						incomedata = getACS.getACSdata(tract, app.incomecodes + app.genders)
+					if 'marital' in acstypes:
+						maritaldata = getACS.getACSdata(tract, app.maritalcodes + app.genders)
+					if 'language' in acstypes:
+						languagedata = getACS.getACSdata(tract, app.languagecodes + app.genders)
+					if 'education' in acstypes:
+						educationdata = getACS.getACSdata(tract, app.educationcodes + app.genders)
 
-				print ACSdata
 				data, tempBlockAndPop = newGetPopDict.getpop(newKeys, tract, 2)
 				#Add dictionary of blocks with total population to dictionary block adn Pop
 
 				#JUST ADDED
+				def sum_acs(ACSdata):
+					acsSum = 0
+					for element in ACSdata[1][int(blockGroupIndex)-1]:
+							acsSum = acsSum + int(element)
+					grouppop = ACSdata[2][int(blockGroupIndex) -1]
+					blockpop = tempBlockAndPop[blockFIPS]
+					if int(grouppop) == 0:
+						newacs = 0
+					else:
+						newacs = int(acsSum * (float(blockpop) / float(grouppop)))
+					return newacs
 				
 				#For every block in the current tract, get lat and long
 				for item in data:
@@ -169,16 +211,15 @@ def processData():
 						blockGroupIndex = blockFIPS[11:12]
 						listofFips.append(blockFIPS)
 						try: 
-							acsSum = 0
-							for element in ACSdata[1][int(blockGroupIndex)-1]:
-								acsSum = acsSum + int(element)
-							grouppop = ACSdata[2][int(blockGroupIndex) -1]
-							blockpop = tempBlockAndPop[blockFIPS]
-							if int(grouppop) == 0:
-								newacs = 0
-							else:
-								newacs = int(acsSum * (float(blockpop) / float(grouppop)))
-							AcsDict[int(blockFIPS)] = newacs
+							AcsDict[int(blockFIPS)] = {}
+							if 'income' in acstypes:
+								AcsDict[int(blockFIPS)]['income'] = int(sum_acs(incomedata))
+							if 'marital' in acstypes:
+								AcsDict[int(blockFIPS)]['marital'] = int(sum_acs(maritaldata))
+							if 'language' in acstypes:
+								AcsDict[int(blockFIPS)]['language'] = int(sum_acs(languagedata))
+							if 'education' in acstypes:
+								AcsDict[int(blockFIPS)]['education'] = int(sum_acs(educationdata))
 							
 						except NameError: 
 							pass	
@@ -221,7 +262,7 @@ def processData():
 		else:
 			MegaDict[key] = [MegaDict[key], ValueDict[key], 0]
 
-
+	print MegaDict[250250203033000]
 	businesses = []
 	if len(request.form.get('business')) is not 0:
 		businesses = scrapeYelp.getAddresses([lat, lng], request.form.get('city'), request.form.get('business'), mapDistance)
