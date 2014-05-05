@@ -13,6 +13,46 @@ body { height: 100%; margin: 0px; padding: 0px }
     height: 100%;
 }
 
+#topbar {
+    position: absolute;
+    right: 315px;
+    top: 5px;
+    height: 100px;
+    width: 240px;
+    padding: 8px 16px 8px 4px;
+    background-color: #FEFEFE;
+    border: 1px solid #AAAAAA;
+    /*border-right: none;*/
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: -1px 2px 3px 1px #AAAAAA;
+    border-radius: 3px 0 0 3px;
+    padding-right: 4px;   
+}
+
+
+#welcomeWindow {
+
+    position: absolute;
+    right: 40%;
+    top: 35%;
+    height: 100px;
+    width: 400px;
+    padding: 8px 16px 8px 4px;
+    background-color: #FEFEFE;
+    border: 1px solid #AAAAAA;
+    /*border-right: none;*/
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: -1px 2px 3px 1px #AAAAAA;
+    border-radius: 3px 0 0 3px;
+    padding-right: 4px;   
+}
+
+#closebutton{
+    top: 0px;
+}
+
 #sidebars {
     position: absolute;
     right: 0px;

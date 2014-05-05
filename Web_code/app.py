@@ -78,7 +78,13 @@ def processData():
 	AcsDict = {}
 	acstypes = []
 
+
+
 	displayingSomething = False
+	
+	raceNumbers = {'race AfricanAmerican': 1,'race White' : 2, 'race Latino':3, 'race Asian':4, 'race Hawaiian':5, 'race Other':6,'race NativeAmerican':7,'race Multiracial':8}
+	genderNumbers = {'gender Male': 1, 'gender Female': 2}
+	ageNumbers = {'age 0':1, 'age 20':2, 'age 30':3, 'age 40':4, 'age 50':5,'age 60':6,'age 70':7,'age 80':8}
 
 
 	
@@ -139,11 +145,10 @@ def processData():
 				if 'language' in value:
 					app.languagecodes.append(demographic)
 
-	print app.incomecodes
-	print app.maritalcodes
-	print app.languagecodes
-	print app.educationcodes
+	print "HERE"
+	print app.races
 	print app.genders
+	print app.ages
 
 	#Print list of demographics for debugging (City should be listed first
 	for race in app.races:
@@ -277,7 +282,8 @@ def processData():
 
 
  	defaultValues = "false"
-	return render_template("new.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses, density = Bool, defaultValues = defaultValues)
+ 	fromMain = "false"
+	return render_template("new.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses, density = Bool, defaultValues = defaultValues, fromMain = fromMain)
 
 @app.route('/fromMainPage')
 def loadExample():
@@ -290,8 +296,10 @@ def loadExample():
 		exampleBusinesses = pickle.loads(handle.read())
 
 		defaultValues = "true"
+		fromMain = "true"
 
-	return render_template("new.html", data = exampleMegaDict, lat = exampleLat, lng = exampleLng, z = exampleZ, yelpData = exampleBusinesses, defaultValues = defaultValues)
+
+	return render_template("new.html", data = exampleMegaDict, lat = exampleLat, lng = exampleLng, z = exampleZ, yelpData = exampleBusinesses, defaultValues = defaultValues, fromMain = fromMain)
 
 
 """
