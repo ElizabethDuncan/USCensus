@@ -308,7 +308,7 @@ def loadExample():
 
 		listofRace = [1]
 		listofGenders = [1]
-		listofAges = [2,1]
+		listofAges = [3,2]
 
 
 	return render_template("new.html", data = exampleMegaDict, lat = exampleLat, lng = exampleLng, z = exampleZ, yelpData = exampleBusinesses, defaultValues = defaultValues, fromMain = fromMain, listofRace = listofRace, listofGenders = listofGenders, listofAges = listofAges)
