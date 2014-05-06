@@ -81,11 +81,13 @@ def processData():
 
 
 	displayingSomething = False
-	
-	raceNumbers = {'race AfricanAmerican': 1,'race White' : 2, 'race Latino':3, 'race Asian':4, 'race Hawaiian':5, 'race Other':6,'race NativeAmerican':7,'race Multiracial':8}
-	genderNumbers = {'gender Male': 1, 'gender Female': 2}
-	ageNumbers = {'age 0':1, 'age 20':2, 'age 30':3, 'age 40':4, 'age 50':5,'age 60':6,'age 70':7,'age 80':8}
 
+	raceNumbers = {'race AfricanAmerican': 0,'race White' : 1, 'race Latino':2, 'race Asian':3, 'race Hawaiian':4, 'race Other':5,'race NativeAmerican':6,'race Multiracial':7}
+	genderNumbers = {'gender Male': 0, 'gender Female': 1}
+	ageNumbers = {'age 0':0, 'age 20':1, 'age 30':2, 'age 40':3, 'age 50':4,'age 60':5,'age 70':6,'age 80':7}
+	listofRace = []
+	listofGenders = []
+	listofAges = []
 
 	
 	#Get race data
@@ -145,10 +147,14 @@ def processData():
 				if 'language' in value:
 					app.languagecodes.append(demographic)
 
-	print "HERE"
-	print app.races
-	print app.genders
-	print app.ages
+	# "Remember" race, gender and age numerically in order to pass to new.html
+	for race in app.races:
+		listofRace.append(raceNumbers[race])
+	for gender in app.genders:
+		listofGenders.append(genderNumbers[gender])
+	for age in app.ages:
+		listofAges.append(ageNumbers[age])
+
 
 	#Print list of demographics for debugging (City should be listed first
 	for race in app.races:
@@ -283,7 +289,7 @@ def processData():
 
  	defaultValues = "false"
  	fromMain = "false"
-	return render_template("new.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses, density = Bool, defaultValues = defaultValues, fromMain = fromMain)
+	return render_template("new.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses, density = Bool, defaultValues = defaultValues, fromMain = fromMain, listofRace = listofRace, listofGenders = listofGenders, listofAges = listofAges)
 
 @app.route('/fromMainPage')
 def loadExample():
@@ -299,7 +305,12 @@ def loadExample():
 		fromMain = "true"
 
 
-	return render_template("new.html", data = exampleMegaDict, lat = exampleLat, lng = exampleLng, z = exampleZ, yelpData = exampleBusinesses, defaultValues = defaultValues, fromMain = fromMain)
+		listofRace = [2]
+		listofGenders = [2]
+		listofAges = [3,2]
+
+
+	return render_template("new.html", data = exampleMegaDict, lat = exampleLat, lng = exampleLng, z = exampleZ, yelpData = exampleBusinesses, defaultValues = defaultValues, fromMain = fromMain, listofRace = listofRace, listofGenders = listofGenders, listofAges = listofAges)
 
 
 """
