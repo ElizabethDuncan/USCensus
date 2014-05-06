@@ -350,6 +350,7 @@
 
 
         $("#blockID").text(this.blockID)
+        $("totalPop").text(this.totalValue)
         $("#demoPop").text(this.blockValue)
         $("#heatDescription").text(this.mapDescription)
 
@@ -373,7 +374,7 @@
         }
 
         if (this.blockMarriage != null) { 
-          $("#ACSMarriage").text("Population with requested marrital status: " + this.blockMarriage + "")
+          $("#ACSMarriage").text("Population with requested marital status: " + this.blockMarriage + "")
         }else{
           $("#ACSMarriage").text("")
         }
@@ -960,7 +961,8 @@
         <h3 class="bartitle">Census Block</h3>
 
 
-        <p>Block ID: <span id="blockID"> select a block </span></p>
+        <!-- <p>Block ID: <span id="blockID"> select a block </span></p> -->
+        <p>Total Population: <span id="totalPop"> select a block </span></p> -->
         <p>Demographic population: <span id="demoPop"> select a block </span> </p>
          <p><span id="blockACS" style="margin-bottom: 20px;"></span><p>
         <span id="Density" style="margin-bottom: 20px;"></span>
