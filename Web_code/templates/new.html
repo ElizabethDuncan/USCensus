@@ -96,6 +96,17 @@
         return allGood;
       }
 
+
+      function hideTopBar(event){
+        $('#topbar').toggle();
+      }
+
+      function dismissWelcome(event){
+        $('#welcomeWindow').toggle();
+      }
+
+      
+      
     
 
     var map;
@@ -323,11 +334,31 @@
     </script>
   </head>
 
-    
-    <div id="map_canvas"></div>
+
 
     
-   
+    <div id="map_canvas" ></div>
+
+    <!-- Welcome window, only shows up when coming from "fromMainPage" -->
+    <div id="welcomeWindow" style="visibility: visible;">
+      <button id="closebutton" class="close" onclick="dismissWelcome();">&times;</button>
+      <h4 class="bartitle"> Welcome to Census Heat Map! </h4> 
+      <p>To the right, enter the information about your target demographic. <p>
+
+      Note that you MUST select a location, race, gender, and age.
+
+    </div>
+
+    
+
+
+    <!--Floating info window on current heat map -->
+    <div id="topbar" style="visibility: visible;">
+      <button id="closebutton" class="close" onclick="hideTopBar();">&times;</button>
+      <h4 class="bartitle"> What Am I Looking At? </h4> 
+      The demographic population is caucasion, african american, hispanic females and males from 20 - 29.
+
+    </div>
     
 
     <div id="sidebars">
@@ -705,7 +736,7 @@
 
                 <li>
                   <label class="checkbox">
-                    <input type="checkbox" name="doctorate" value="True">
+                    <input type="checkbox" name="doctorateschool" value="True">
                      Doctorate degree
                     </label>
                 </li>
@@ -857,16 +888,15 @@
       </div>
     </div>
 
-     <!-- Example pop-up window -->
-    <a href="#" class="big-link" data-reveal-id="myModal" data-animation="fade">
-      Fade
-    </a>
-    <div id="myModal" class="reveal-modal">
-     <h1>Modal Title</h1>
-     <p>Any content could go in here.</p>
-     <a class="close-reveal-modal">&#215;</a>
-    </div>
 
+    <script>
+    var fromMain = Boolean({{fromMain}});
+      
+    if (fromMain==false){
+         $('#welcomeWindow').toggle();
+      }
+      </script>
+     
 
 
 
