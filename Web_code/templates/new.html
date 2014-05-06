@@ -191,7 +191,7 @@
 
       var descdataRace = [' African American',' Caucasian', ' Latino', ' Asian', ' Hawaiian', ' Other',' Native American',' Multiracial'];
     var descdataGender = [' males', ' females']
-    var descdataAge = ['0 to 19', '20 to 29', '30 to 39', '40 to 49', '50 to 59','60 to 69','70 to 79','80 and above']
+    var descdataAge = ['0 - 19', '20 - 29', '30 - 39', '40 - 49', '50 - 59','60 - 69','70 - 79','80 - above']
 
     var description = "This heatmap shows the demographic population of ";
 
@@ -200,16 +200,20 @@
     var listofGenders = {{listofGenders}};
     var listofAges = {{listofAges}};
 
-     raceLength = listofRace.length;
-    for (var x in listofRace){
-      var index = listofRace[x]
-      index = index 
-        var res = description.concat(descdataRace[index]);
-        if (raceLength > 1 && x != (raceLength - 1 )){
-          res = res.concat(" and")
-        }
-        description = res;
-    }
+    raceLength = listofRace.length;
+    if (raceLength == 8){
+      description = description.concat("all races")
+    }else{
+      for (var x in listofRace){
+        var index = listofRace[x]
+        index = index 
+          var res = description.concat(descdataRace[index]);
+          if (raceLength > 1 && x != (raceLength - 1 )){
+            res = res.concat(" and")
+          }
+          description = res;
+      }
+    } 
 
     for (var x in listofGenders){
       var index = listofGenders[x]
@@ -218,54 +222,65 @@
       console.log(descdataGender[listofGenders[x]])
         var res = description.concat(descdataGender[listofGenders[x]]);
         if (listofGenders.length == 2 && x == 0){
-          res = res.concat(" and") 
-        }
+          res = res.concat(" and ") 
+        } 
         description = res;
     }
 
-    description = description.concat(" ages ")
+    
 
-    agesLength = listofAges.length;
-    if (agesLength == 1){
-      
-      var res = description.concat(descdataAge[listofAges[0]]);
-      description = res;
+    // agesLength = listofAges.length;
+    // if (agesLength == 1){
+    //   var res = description.concat(descdataAge[listofAges[0]]);
+    //   description = res;
 
-    } else{
+    // } else{
+    //   for (var x in listofAges){
+    //     if (x == 0){
+    //       var current = descdataAge[(listofAges[x]-1)]
+    //       var last = current.charAt(current.length - 2);
+    //       last = last.concat(current.charAt(current.length - 1));
+    //     }
+    //   if(x == (agesLength - 1)){
+    //     var current = descdataAge[(listofAges[x]-1)]
+    //     console.log(current)
+    //      var temp = current.charAt(0);
+    //       temp = temp.concat(current.charAt(1));
+    //       temp = temp.concat(" to ");
+    //       description = description.concat(temp); 
+    //   }
+    //  }
+    //  description = description.concat(last);
+    //  description = description.concat(".");
+    // }
+    // console.log(description);
+
+    ageLength = listofAges.length;
+    console.log(listofAges)
+    listofAges.sort();
+    console.log(listofAges)
+    if (ageLength == 8){
+      description = description.concat(" ages 0 to 80 and over")
+    }else{
+      description = description.concat(" ages ")
       for (var x in listofAges){
-        if (x == 0){
-          
-          var current = descdataAge[(listofAges[x]-1)]
-         
-          var last = current.charAt(current.length - 2);
-        
-          last = last.concat(current.charAt(current.length - 1));
-          
-          
-          
-        }
-      if(x == (agesLength - 1)){
-        var current = descdataAge[(listofAges[x]-1)]
-         var temp = current.charAt(0);
-
-          temp = temp.concat(current.charAt(1));
-          temp = temp.concat(" to ");
-
-          
-          description = description.concat(temp);
-        
+        var index = listofAges[x]
+        index = index 
+          var res = description.concat(descdataAge[index]);
+          if (x == (ageLength - 1 )){
+            //do nothing
+          }else if (ageLength > 2 && x == (ageLength - 2 )){
+            console.log()
+            res = res.concat(" and ")
+          }else if (ageLength > 2){
+            console.log("comma")
+            console.log(ageLength)
+              res = res.concat(", ") 
+          }
+          description = res;
       }
-      
-     }
-     description = description.concat(last);
-     description = description.concat(".");
     }
-    //$("#heatDescription").text("BLAH");
-    
-
-    
-
-    console.log(description);
+      description = description.concat(".");
 
 
         for ( var key in MegaDict) {
