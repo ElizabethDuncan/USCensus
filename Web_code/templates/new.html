@@ -33,7 +33,16 @@
     </style>
     <script>
 
-    var dataRace = ['race AfricanAmerican','race White', 'race Latino', 'race Asian', 'race Hawaiian', 'race Other','race NativeAmerican','race Multiracial'];
+
+  
+
+   
+
+     
+    </script>
+    <script>
+
+     var dataRace = ['race AfricanAmerican','race White', 'race Latino', 'race Asian', 'race Hawaiian', 'race Other','race NativeAmerican','race Multiracial'];
     var dataGender = ['gender Male', 'gender Female']
     var dataAge = ['age 0', 'age 20', 'age 30', 'age 40', 'age 50','age 60','age 70','age 80']
 
@@ -172,16 +181,90 @@
           var popdens = (pop / area) 
           MegaDict[key][length-1] = [popdens, area]
           values.push(popdens)
-          console.log("population, area, density")
-          console.log(pop)
-          console.log(area)
-          console.log(popdens)
+          
         } 
           else {
           MegaDict[key][length-1] = [pop, area]
           values.push(pop)
         }
-      }      
+      }  
+
+      var descdataRace = [' African American',' Caucasian', ' Latino', ' Asian', ' Hawaiian', ' Other',' Native American',' Multiracial'];
+    var descdataGender = [' males', ' females']
+    var descdataAge = ['0 to 19', '20 to 29', '30 to 39', '40 to 49', '50 to 59','60 to 69','70 to 79','80 and above']
+
+    var description = "This heatmap shows the demographic population of ";
+
+
+    var listofRace = {{listofRace}};
+    var listofGenders = {{listofGenders}};
+    var listofAges = {{listofAges}};
+
+     raceLength = listofRace.length;
+    for (var x in listofRace){
+      var index = listofRace[x]
+      index = index - 1
+        var res = description.concat(descdataRace[index]);
+        if (raceLength > 1 && x != (raceLength - 1 )){
+          res = res.concat(" and")
+        }
+        description = res;
+    }
+
+    for (var x in listofGenders){
+      var index = listofGenders[x]
+      index = index - 1
+        var res = description.concat(descdataGender[index]);
+        if (listofGenders.length == 2 && x == 0){
+          res = res.concat(" and") 
+        }
+        description = res;
+    }
+
+    description = description.concat(" ages ")
+
+    agesLength = listofAges.length;
+    if (agesLength == 1){
+      var res = description.concat(descdataAge[0]);
+      description = res;
+
+    } else{
+      for (var x in listofAges){
+        if (x == 0){
+          
+          var current = descdataAge[(listofAges[x]-1)]
+         
+          var last = current.charAt(current.length - 2);
+        
+          last = last.concat(current.charAt(current.length - 1));
+          
+          
+          
+        }
+      if(x == (agesLength - 1)){
+        var current = descdataAge[(listofAges[x]-1)]
+         var temp = current.charAt(0);
+
+          temp = temp.concat(current.charAt(1));
+          temp = temp.concat(" to ");
+
+          
+          description = description.concat(temp);
+        
+      }
+      
+     }
+     description = description.concat(last);
+     description = description.concat(".");
+    }
+    //$("#heatDescription").text("BLAH");
+    
+
+    
+
+    console.log(description);
+
+
         for ( var key in MegaDict) {
 
           var value = MegaDict[key]
@@ -220,6 +303,7 @@
             popDensity: null,
             blockACS: null,
             area: null,
+            mapDescription: description,
             competitorNum: yelpLength
           }); 
 
@@ -268,6 +352,9 @@
 
         $("#blockID").text(this.blockID)
         $("#demoPop").text(this.blockValue)
+        $("#heatDescription").text(this.mapDescription)
+
+        
         
         if (density == true) { 
           $("#Density").text("Population per square kilometer: " + this.popDensity + " in km². In area" + this.area + "\n")
@@ -357,7 +444,7 @@
     <div id="topbar" style="visibility: visible;">
       <button id="closebutton" class="close" onclick="hideTopBar();">&times;</button>
       <h4 class="bartitle"> What Am I Looking At? </h4> 
-      The demographic population is caucasion, african american, hispanic females and males from 20 - 29.
+      <span id="heatDescription"> Hover over a block</span>
 
     </div>
     
