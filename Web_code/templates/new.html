@@ -203,7 +203,7 @@
      raceLength = listofRace.length;
     for (var x in listofRace){
       var index = listofRace[x]
-      index = index - 1
+      index = index 
         var res = description.concat(descdataRace[index]);
         if (raceLength > 1 && x != (raceLength - 1 )){
           res = res.concat(" and")
@@ -214,6 +214,8 @@
     for (var x in listofGenders){
       var index = listofGenders[x]
       index = index - 1
+      console.log(listofGenders[x])
+      console.log(descdataGender[listofGenders[x]])
         var res = description.concat(descdataGender[listofGenders[x]]);
         if (listofGenders.length == 2 && x == 0){
           res = res.concat(" and") 
