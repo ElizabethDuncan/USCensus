@@ -267,10 +267,11 @@
         var index = listofAges[x]
         index = index 
           var res = description.concat(descdataAge[index]);
-          if (x == (ageLength - 1 )){
-            //do nothing
+          if (ageLength == 2 && x ==0){
+            res = res.concat(" and ")
+            console.log("doing nothing")
           }else if (ageLength > 2 && x == (ageLength - 2 )){
-            console.log()
+            console.log("adding and")
             res = res.concat(" and ")
           }else if (ageLength > 2){
             console.log("comma")
