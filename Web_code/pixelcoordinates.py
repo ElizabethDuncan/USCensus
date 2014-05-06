@@ -1,7 +1,7 @@
 import gmerc2
 import getfips
 import requests
-import simplejson as json
+import json
 import os
 
 def getblockcoor(fipslist, x, y, zoom):

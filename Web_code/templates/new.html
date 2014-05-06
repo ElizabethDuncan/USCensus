@@ -214,7 +214,7 @@
     for (var x in listofGenders){
       var index = listofGenders[x]
       index = index - 1
-        var res = description.concat(descdataGender[index]);
+        var res = description.concat(descdataGender[listofGenders[x]]);
         if (listofGenders.length == 2 && x == 0){
           res = res.concat(" and") 
         }
@@ -225,7 +225,8 @@
 
     agesLength = listofAges.length;
     if (agesLength == 1){
-      var res = description.concat(descdataAge[0]);
+      
+      var res = description.concat(descdataAge[listofAges[0]]);
       description = res;
 
     } else{
