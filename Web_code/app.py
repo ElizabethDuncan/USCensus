@@ -261,8 +261,7 @@ def processData():
 			MegaDict[key] = [MegaDict[key], ValueDict[key], AcsDict[key], 0]
 		else:
 			MegaDict[key] = [MegaDict[key], ValueDict[key], 0]
-
-	#print MegaDict[360610042001000]
+			
 	businesses = []
 	if len(request.form.get('business')) is not 0:
 		businesses = scrapeYelp.getAddresses([lat, lng], request.form.get('city'), request.form.get('business'), mapDistance)
