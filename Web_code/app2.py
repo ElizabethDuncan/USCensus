@@ -78,19 +78,13 @@ def processData():
 	AcsDict = {}
 	acstypes = []
 
-
-
 	displayingSomething = False
-	
-	raceNumbers = {'race AfricanAmerican': 1,'race White' : 2, 'race Latino':3, 'race Asian':4, 'race Hawaiian':5, 'race Other':6,'race NativeAmerican':7,'race Multiracial':8}
-	genderNumbers = {'gender Male': 1, 'gender Female': 2}
-	ageNumbers = {'age 0':1, 'age 20':2, 'age 30':3, 'age 40':4, 'age 50':5,'age 60':6,'age 70':7,'age 80':8}
 
 
 	
 	#Get race data
 	data = ['race AfricanAmerican','race White', 'race Latino', 'race Asian', 'race Hawaiian', 'race Other','race NativeAmerican','race Multiracial', 'gender Male', 'gender Female', 'age 0', 'age 20', 'age 30', 'age 40', 'age 50','age 60','age 70','age 80']
-	data_acs = {('widowed','divorced', 'married', 'nevermarried') : 'marital', ('spanish-notAtAll', 'spanish-notWell','spanish-veryWell', 'asian-notAtAll','asian-notWell', 'asian-veryWell') : 'language', ('less-10', '10to15', '15to20', '20to25', '25to30', '30to35', '35to40', '40to45', '45to50', '50to60', '60to75', '75to100', '100to125', '125to150', '150to200', '200more') : 'income', ('noschool', '12nodiplomaschool','hsgraduateschool', 'somecollegeschool', 'associatesschool', 'bachelorschool', 'mastersschool', 'professionalschool', 'doctorateschool') : 'education'}
+	data_acs = {('widowed','divorced') : 'marital', ('spanish-notAtAll', 'spanish-notWell','spanish-veryWell', 'asian-notAtAll','asian-notWell', 'asian-veryWell') : 'language', ('less-10', '10to15', '15to20', '20to25', '25to30', '30to35', '35to40', '40to45', '45to50', '50to60', '60to75', '75to100', '100to125', '125to150', '150to200', '200more') : 'income', ('noschool', '12nodiplomaschool','hsgraduateschool', 'somecollegeschool', 'associatesschool', 'bachelorschool', 'mastersschool', 'professionalschool', 'doctorateschool') : 'education'}
 	acskeys = data_acs.keys()
 	acstypes = []
 	#data_display = ['density', 'total']
@@ -145,10 +139,11 @@ def processData():
 				if 'language' in value:
 					app.languagecodes.append(demographic)
 
-	print "HERE"
-	print app.races
+	print app.incomecodes
+	print app.maritalcodes
+	print app.languagecodes
+	print app.educationcodes
 	print app.genders
-	print app.ages
 
 	#Print list of demographics for debugging (City should be listed first
 	for race in app.races:
@@ -218,19 +213,18 @@ def processData():
 						try: 
 							AcsDict[int(blockFIPS)] = {}
 							if 'income' in acstypes:
-								AcsDict[int(blockFIPS)][0] = int(sum_acs(incomedata))
+								AcsDict[int(blockFIPS)]['income'] = int(sum_acs(incomedata))
 							if 'marital' in acstypes:
-								AcsDict[int(blockFIPS)][1] = int(sum_acs(maritaldata))
+								AcsDict[int(blockFIPS)]['marital'] = int(sum_acs(maritaldata))
 							if 'language' in acstypes:
-								AcsDict[int(blockFIPS)][2] = int(sum_acs(languagedata))
+								AcsDict[int(blockFIPS)]['language'] = int(sum_acs(languagedata))
 							if 'education' in acstypes:
-								AcsDict[int(blockFIPS)][3] = int(sum_acs(educationdata))
+								AcsDict[int(blockFIPS)]['education'] = int(sum_acs(educationdata))
 							
 						except NameError: 
 							pass	
-						ValueDict[int(blockFIPS)] = {}
-						ValueDict[int(blockFIPS)][0] = data[item]
-						ValueDict[int(blockFIPS)][1] = tempBlockAndPop[blockFIPS]
+						print tempBlockAndPop[item]
+						ValueDict[int(blockFIPS)] = data[item]
 
 				#Clear app.vars so subsequent queries can occur
 				app.vars = {}
@@ -268,7 +262,8 @@ def processData():
 			MegaDict[key] = [MegaDict[key], ValueDict[key], AcsDict[key], 0]
 		else:
 			MegaDict[key] = [MegaDict[key], ValueDict[key], 0]
-			
+
+	print MegaDict[250250203033000]
 	businesses = []
 	if len(request.form.get('business')) is not 0:
 		businesses = scrapeYelp.getAddresses([lat, lng], request.form.get('city'), request.form.get('business'), mapDistance)
@@ -283,8 +278,7 @@ def processData():
 
 
  	defaultValues = "false"
- 	fromMain = "false"
-	return render_template("new.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses, density = Bool, defaultValues = defaultValues, fromMain = fromMain)
+	return render_template("new.html", data = MegaDict, lat = lat, lng = lng, z = z, yelpData = businesses, density = Bool, defaultValues = defaultValues)
 
 @app.route('/fromMainPage')
 def loadExample():
@@ -297,10 +291,8 @@ def loadExample():
 		exampleBusinesses = pickle.loads(handle.read())
 
 		defaultValues = "true"
-		fromMain = "true"
 
-
-	return render_template("new.html", data = exampleMegaDict, lat = exampleLat, lng = exampleLng, z = exampleZ, yelpData = exampleBusinesses, defaultValues = defaultValues, fromMain = fromMain)
+	return render_template("new.html", data = exampleMegaDict, lat = exampleLat, lng = exampleLng, z = exampleZ, yelpData = exampleBusinesses, defaultValues = defaultValues)
 
 
 """

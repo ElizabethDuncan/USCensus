@@ -156,7 +156,7 @@
        for (var key in MegaDict) { 
           var value = MegaDict[key]
           var coordinates = value[0] 
-          var pop = value[1]
+          var pop = value[1][0]
           var length = value.length
 
           if (density == true) {
@@ -211,7 +211,8 @@
             fillColor: '#ff0000',
             fillOpacity: shadeValue,
             blockID: key,
-            blockValue: value[1],
+            blockValue: value[1][0],
+            totalValue: value[1][1],
             blockHousehold: null,
             blockEducation: null,
             blockMarriage: null,
