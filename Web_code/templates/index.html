@@ -4,60 +4,83 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 101 Template</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
-    <!-- Bootstrap -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="static/css/bootstrap.min.css" rel="stylesheet" media="screen">
-  <link href="static/css/census.css" rel="stylesheet" media="screen">
-  <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.9.1.min.js') }}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename='js/layout.js') }}"></script>
+    <title>Census Marketing</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href=" {{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+
+    <!-- Custom styles for this template -->
+    <link href=" {{ url_for('static', filename='css/cover.css') }}" rel="stylesheet">
+
+   
   
 
-    
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
   </head>
-  <!-- Fixed navbar -->
-    <div class="container-fluid">
-      <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-          <a class="brand" id="main-icon" href="{{ url_for('index') }}">CensusMarketing</a>
-          <ul class="nav pull-right">
-            <li><a href="{{ url_for('The_Data') }}">The Data</a></li>
-            <li><a href="{{ url_for('The_Process') }}">The Process</a></li>
-            <li><a href="{{ url_for('About_Us') }}">About Us</a></li>
-          </ul>
+
+  <body background="{{ url_for('static', filename='images/background.jpg')}}">
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand">Census Marketing</h3>
+              <ul class="nav masthead-nav">
+                <li class="active"><a href="#">Data</a></li>
+                <li><a href="#">The Process</a></li>
+                <li><a href="#">About Us</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="inner cover">
+            <h1 class="cover-heading">Welcome to Census Marketing!</h1>
+            <p class="lead">Using data from the U.S. Census surveys and information about your target demographic, Census Marketing recommends the your best location.</p>
+            <p class="lead">
+          
+            <!-- Demographic survey form -->
+            <form class="demographic-form" action="/fromMainPage" >
+                <div>
+                <input class="btn btn-lg btn-default" type="submit" id="mainButton" value="Go To Heat Map">
+             </div>
+
+            </form>
+              
+            </p>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Olin College project by <a href="https://github.com/ElizabethDuncan">Elizabeth Duncan</a> and <a href="https://github.com/marenar"> Marena Richardson</a>.</p>
+            </div>
+          </div>
+
         </div>
-      </div>
-    </div>
-  </head>
 
-  <body>
-  	
-    <!-- Website title -->
-    <div style="text-align: center;">
-      <h1> Welcome to Census Marketing! </h1>
-      <h3> Using data from the U.S. Census surveys and information about your target demographic, Census Marketing recommends the best location for your new business. </h3>
-      
-    </div>
-
-
-
-    <!-- Demographic survey form -->
-    <form class="demographic-form" action="/fromMainPage" >
-  
-      <div style="text-align: center">
-        <h5>Select YOUR target demographic.<h5>
-        <input type="submit" id="submitButton" value="Go To Map">
-        <br>
       </div>
 
-    </form>
-    
+    </div>
 
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+     <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="../../assets/js/docs.min.js"></script>
   </body>
 </html>
