@@ -1,12 +1,169 @@
-<!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<HTML>
-   <HEAD>
-      <TITLE>
-         A Small Hello 
-      </TITLE>
-   </HEAD>
-<BODY>
-   <H1>Hi</H1>
-   <P>This is very minimal "hello world" HTML document.</P> 
-</BODY>
-</HTML>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+    <title>Census Marketing</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href=" {{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+
+    <!-- Custom styles for this template -->
+    <link href=" {{ url_for('static', filename='css/cover.css') }}" rel="stylesheet">
+
+   
+  
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+
+body {
+  background-repeat: no-repeat;
+  background-size: 100%;
+  }
+</style>
+  </head>
+
+  <body background="{{ url_for('static', filename='images/background.jpg')}}">
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand" style="color: #000;"><a class = "beBlack" href="{{ url_for('index') }}">Census Marketing</a></h3>
+              <ul class="nav masthead-nav">
+                <li class="active"><a href="{{ url_for('The_Data') }}">Data</a></li>
+                <li><a href="{{ url_for('The_Process') }}">The Process</a></li>
+                <li><a href="{{ url_for('About_Us') }}">About Us</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="inner textBubble" style=" height:500px;">
+            <h1 class="cover-heading">The Data</h1>
+            <div style="text-align: left;">
+            	<h4>Decennial 2010 survey</h4>
+				<p>A Decennial 2010 US Census web API call contains four essential parts. Data is returned in the form of a json file. The basic structure is shown below where bracketed sections are variable parts.</p>
+
+				<p>http://api.census.gov/data/2010/sf1?key=[Key]&get=[Code],NAME&for=[Level]:*&in=[previousLevels]</p>
+
+				<p>Key:</p>
+				<p>Keys are requested from the US Census Bureau main page. All that is needed to request a key is an organization name and email address. Keys track individual users of the web API and help the Census Bureau understand who is accessing their data and why.</p>
+
+				<p>Codes:</p>
+<p>Codes for the decennial 2010 survey can be found at http://api.census.gov/data/2010/sf1/variables.json. This list gives is a json dictionary with the key being the code used in the API web call and the values a “label” and “concept”. The label field describes race and age while the concept field details race. </p>
+
+<p>All the codes are divided into population tables (identified with a code starting with a “P”) and housing tables (identified with an “H”). An example population and housing code, respectively, is shown below.</p>
+
+<p>"PCT012D119": {</p>
+      <p>"label": "Female: !! 12 years",</p>
+      <p>"concept": "PCT12D. Sex By Age (Asian Alone) [209]"</p>
+<p>}</p>
+
+<p>"H0040002": {</p>
+      <p>"label": "Owned with a mortgage or a loan",</p>
+      <p>"concept": "H4. TENURE [4]"</p>
+<p>}</p>
+
+<p>Additionally, all the population tables are divided into P tables and PCT tables. P tables are codes that start with just the letter P with following numbers. PCT tables start with the letters PCT with following numbers. P tables describe data at the block level. PCT tables describe data at the tract, county, or state level. An example P and PCT code is shown below.</p>
+
+<p>"P012C010": {</p>
+      <p>"label": "Male: !! 22 to 24 years",</p>
+      <p>"concept": "P12C. Sex By Age (American Indian And Alaska Native Alone) [49]"</p>
+<p>}
+
+<p>"PCT012H181": {
+      <p>"label": "Female: !! 74 years",</p>
+      <p>"concept": "PCT12H. Sex By Age (Hispanic Or Latino) [209]"</p>
+<p>}</p>
+
+<p>It is important to note that codes can be separated by commas in order to include multiple codes in one API call.</p>
+
+<p>Level/previousLevel:</p>
+<p>Level can be “block”, “tract”, or “county”. As mentioned in the introduction, in order to access any geographic level, the previous levels (such as state and county) must be specified. For example, if level was blocks, previousLevels could be “state:08+county:059+tract:012035”. If listing the state level, previousLevels is not included in the web call (since state level is the highest geographic level).</p>
+
+<p>In the example API format above, an asterisk follows the [Level] field. The asterisk that means all of the specified blocks, tracts, or counties will be listed.</p>
+<br>
+
+<h4>American Community Survey</h4>
+<p>A 5-year American Community Survey US Census web API call contains four essential parts. Data is returned in the form of a json file. The basic structure is shown below where bracketed sections are variable parts.</p>
+
+<p/>http://api.census.gov/data/2012/acs5/profile?&key=[Key]&get=[Code]&for=[Level]:*&in=[previousLevel]</p>
+
+<p>Key:</p>
+<p>Keys are requested from the US Census Bureau main page. All that is needed to request a key is an organization name and email address. Keys track individual users of the web API and help the Census Bureau understand who is accessing their data and why.</p>
+
+<p>Code:</p>
+<p>Codes for the ACS are listed at http://api.census.gov/data/2012/acs5/profile/variables.json.
+Like the 2010 Decennial survey, each code has an associated label and concept. However, in the ACS the concept field specifies whether the code is social, economic, housing, or demographic characteristic. The label gives more detail on the code. For example, if the concept is demographic characteristic, the label describes what race is represented by the code. An example code of each of the possible concept fields is shown below.</p>
+
+<p>"DP02_0060E": {</p>
+      <p>"label": "EDUCATIONAL ATTAINMENT!!Population 25 years and over!!9th to 12th grade, no diploma",</p>
+      <p>"concept": "SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES"</p>
+    <p>}</p>
+<p>"DP03_0034M": {</p>
+      <p>"label": "INDUSTRY!!Civilian employed population 16 years and over!!Construction",</p>
+      <p>"concept": "SELECTED ECONOMIC CHARACTERISTICS"</p>
+    <p>}</p>
+<p>"DP04_0020M": {</p>
+      <p>"label": "YEAR STRUCTURE BUILT!!Built 1980 to 1989",</p>
+      <p>"concept": "SELECTED HOUSING CHARACTERISTICS"</p>
+    <p>}</p>
+<p>"DP05_0032E": {</p>
+      <p>"label": "RACE!!One race!!White",</p>
+      <p>"concept": "ACS DEMOGRAPHIC AND HOUSING ESTIMATES"</p>
+    <p>}</p>
+
+
+<p>Level/previousLevel:</p>
+<p>The most detailed level in the ACS is block group - block data is no given for confidentiality. As mentioned in the introduction, in order to access any geographic level, the previous levels (such as state and county) must be specified. For example, if level was tract, previousLevels could be “state:08+county:059”. If listing the state level, previousLevels is not included in the web call (since state level is the highest geographic level).</p>
+
+<p>In the example API format above, an asterisk follows the [Level] field. The asterisk that means all of the specified tracts or counties will be listed.</p>
+
+<p>In order to preserve anonymity, block data from the ACS is not available.</p>
+
+
+            </div>
+            <p class="lead">
+          
+            
+              
+            </p>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Olin College project by <a href="https://github.com/ElizabethDuncan">Elizabeth Duncan</a> and <a href="https://github.com/marenar"> Marena Richardson</a>.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+     <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="../../assets/js/docs.min.js"></script>
+  </body>
+</html>

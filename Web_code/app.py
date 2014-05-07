@@ -24,6 +24,8 @@ codeLookup = {'race AfricanAmerican': 'Sex By Age (Black Or African American Alo
 def index():
 	return render_template("index.html")
 
+
+
 @app.route("/The_Data")
 def The_Data():
 	return render_template("The_Data.html")

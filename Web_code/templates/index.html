@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
-    <title>Census Marketing</title>
+     <title>Census Marketing</title>
 
     <!-- Bootstrap core CSS -->
     <link href=" {{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
@@ -27,6 +27,13 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+
+body {
+  background-repeat: no-repeat;
+  background-size: 100%;
+  }
+</style>
   </head>
 
   <body background="{{ url_for('static', filename='images/background.jpg')}}">
@@ -39,18 +46,18 @@
 
           <div class="masthead clearfix">
             <div class="inner">
-              <h3 class="masthead-brand">Census Marketing</h3>
+              <h3 class="masthead-brand" style="color: #000;"><a class = "beBlack" href="{{ url_for('index') }}">Census Marketing</a></h3>
               <ul class="nav masthead-nav">
-                <li class="active"><a href="#">Data</a></li>
-                <li><a href="#">The Process</a></li>
-                <li><a href="#">About Us</a></li>
+                <li ><a href="{{ url_for('The_Data') }}">Data</a></li>
+                <li><a href="{{ url_for('The_Process') }}">The Process</a></li>
+                <li><a href="{{ url_for('About_Us') }}">About Us</a></li>
               </ul>
             </div>
           </div>
 
-          <div class="inner cover">
+          <div class="inner cover outlineText" style="margin-top:-100px">
             <h1 class="cover-heading">Welcome to Census Marketing!</h1>
-            <p class="lead">Using data from the U.S. Census surveys and information about your target demographic, Census Marketing recommends the your best location.</p>
+            <p class="lead">Using data from the U.S. Census surveys and information about your target demographic, Census Marketing helps you find the best location for your new business.</p>
             <p class="lead">
           
             <!-- Demographic survey form -->
@@ -66,7 +73,7 @@
 
           <div class="mastfoot">
             <div class="inner">
-              <p>Olin College project by <a href="https://github.com/ElizabethDuncan">Elizabeth Duncan</a> and <a href="https://github.com/marenar"> Marena Richardson</a>.</p>
+              <p>Olin College project by <a class = "beWhite" href="https://github.com/ElizabethDuncan">Elizabeth Duncan</a> and <a class = "beWhite" href="https://github.com/marenar"> Marena Richardson</a>.</p>
             </div>
           </div>
 
