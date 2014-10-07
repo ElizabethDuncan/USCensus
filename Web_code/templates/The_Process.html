@@ -58,8 +58,28 @@ body {
           <div class="inner textBubble" style=" height:500px;">
             <h1 class="cover-heading">The Process</h1>
             <div style="text-align: left;">
-            	<h4>title</h4>
-            	<p> Put text here</h>
+            	<h4>Abstract</h4>
+            	<p>The US Census Bureau collects all sorts of demographic information about the people of the United States. For any given census block, which is comparable to a city block, though the area can be larger in rural setting, there is race, gender, and age information about the people who live there in the US Census decennial census. In addition to the relatively basic statistics found in the decennial census, the US Census American Community Survey contains detailed information about household income, family and marital status, education level, and more. The goal of Census Marketing is to make the vast amounts of information provided by the US Census Bureau accessible and applicable for small business owners who are looking to make informed location choices based on their target demographic. We partnered with the US Census Bureau and BusinessUSA to create a website that provides a Google Maps heat map interface with accompanying demographic information, allowing users to easily locate their target market. </p>
+
+				
+
+				<h4>User Scenario Introduction</h4>
+				<p>After clicking to the heat map, users can enter their desired demographic (age, race, gender, education, income, marital status, and native language) and location. The age, race, and gender information is used to create a heat map and the total population and requested demographic population are displayed in the sidebar. The ACS data is displayed in the sidebar, but is not used to create the heat map.  To demonstrate how the website can be used, we have created an example user and the resulting heat maps of her query. <p>
+
+				<h4>User Scenario</h4>
+				<p>Lana is a yoga instructor moving to New York City. She has friends in the area of Union Square; she would like to live and work in that area. However, New York City is a big and diverse place. She is not sure where is the best location to open up a new yoga studio. She hears about Census Marketing and goes to the website.</p> 
+
+				<p>The first thing she sees is a prompt for her to consider her target demographic. Until now, she hadn’t really considered who would be going to her studio. She wants her studio to be hip - targeted at young women. Furthermore, she acknowledges that yoga can be expensive. Therefore, her studio would be for professionals with a steady and high income. </p>
+
+				<img  class="mapImage aboutImage" src = "{{ url_for('static', filename='images/LanaBetter.png')}}" />
+
+				<p>With this knowledge, she moves to the heat mapping page. In the form to the right of the page she enters the location “Union Square Manhattan, NY” and a business of “yoga studio.” She selects all races, females only, and ages 20 - 39. After looking at the available ACS options, she selects only income (and checks all incomes above $50,000). </p>
+
+
+				<p>The heat map returned by Census Marketing is below. Looking at the map, one particular block stands out immediately to Lana. The NE block at the intersection of W 13th St and 4th Ave has a very high concentration of her target demographic. It is very clear that a studio near this population would be ideal. However, there is a competitor that is also very near to this block. Lana decides that she will look for studio locations near 3rd Ave and E 13th St (far enough away from the competitor but still close to a majority of the target demographic). She also plans to research the competition so that she can distinguish from them in advertisement. </p>
+
+				
+
 
 
             </div>

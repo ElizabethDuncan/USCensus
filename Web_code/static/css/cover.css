@@ -77,6 +77,12 @@ body {
 
 }
 
+.mapImage{
+  width:300px;
+  padding-right:30px;
+  padding-bottom:10px;
+}
+
 /* Extra markup and styles for table-esque vertical and horizontal centering */
 .site-wrapper {
   display: table;
@@ -120,7 +126,9 @@ body {
 
 }
 
-
+#main-background {
+  background-attachment: fixed;
+}
 
 /*
  * Header
